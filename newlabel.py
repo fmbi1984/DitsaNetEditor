@@ -6,7 +6,6 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
@@ -49,6 +48,7 @@ class Ui_NewLabel(QtWidgets.QDialog):
 		self.lineFont = QtWidgets.QLineEdit(self.widget)
 		self.lineFont.setEnabled(True)
 		self.lineFont.setObjectName("lineFont")
+		self.lineFont.setText("8")
 		self.gridLayout.addWidget(self.lineFont, 3, 1, 1, 1)
 		self.cbFont = QtWidgets.QComboBox(self.widget)
 		self.cbFont.setEnabled(True)
@@ -70,7 +70,6 @@ class Ui_NewLabel(QtWidgets.QDialog):
 		#self.lineFont.editingFinished.connect(self.sizeTexto)
 
 
-
 	def retranslateUi(self, NewLabel):
 		_translate = QtCore.QCoreApplication.translate
 		self.setWindowTitle(_translate("NewLabel", "New Label")) ##New
@@ -84,11 +83,6 @@ class Ui_NewLabel(QtWidgets.QDialog):
 		else:
 			x = self.lblLabel.text()
 			print("x:",x)
-	
-
-			#self.parent.tableValue(sizeW,x)
-			#self.parent.tableWidget.setItem(3,3,QtWidgets.QTableWidgetItem("hola"))
-			#tableWidget.setItem(3,3,QtWidgets.QTableWidgetItem(x))
 		
 	def sizeTexto(self):
 		sizeW = self.lineFont.text()
@@ -102,11 +96,13 @@ class Ui_NewLabel(QtWidgets.QDialog):
 			align = 'AlignTop'
 		if self.cbFont.currentIndex() == 1:
 			align = 'AlignBottom'
-		self.parent.tableValue(sizeW,x,align)
+		self.parent.tableLabel(sizeW,x,align)
+		
+		self.close()
 		
 
 	def bttnCancel(self):
-		print("BttnCancel")
+		self.close()
 
 	#def buttons(self):
 	#	print("bttn")

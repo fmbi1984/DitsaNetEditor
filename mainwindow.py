@@ -6,7 +6,6 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 from newlabel import Ui_NewLabel
@@ -200,26 +199,125 @@ class Ui_MainWindow(object):
 	def tabSelected(self):
 		print("tabSelect")
 		
-	def tableValue(self,sizeW,text,textAlign):
-		vx = self.tableWidget.currentRow()
-		vy = self.tableWidget.currentColumn()
-		print("x1",vx)
-		print("y1",vy)
-
+	def tableLabel(self,sizeW,text,textAlign):
 		item = QtWidgets.QTableWidgetItem(text)
 		lblt = QtGui.QFont("Arial",int(sizeW), QtGui.QFont.Black)
 
 		if textAlign == 'AlignTop':
 			item.setTextAlignment(QtCore.Qt.AlignTop)
 			item.setFont(lblt)
+			item.setBackground(QtGui.QColor('lightyellow'))
+			
 		else:
 			item.setTextAlignment(QtCore.Qt.AlignBottom)
 			item.setFont(lblt)
-
-		self.tableWidget.setItem(vx,vy,item)
-
+			item.setBackground(QtGui.QColor('lightyellow'))
 		
+		if self.tableWidget.isVisible()==True:
+			vx = self.tableWidget.currentRow()
+			vy = self.tableWidget.currentColumn()
+			self.tableWidget.setItem(vx,vy,item)
 
+		if self.tableWidget_2.isVisible()==True:
+			vx = self.tableWidget_2.currentRow()
+			vy = self.tableWidget_2.currentColumn()
+			self.tableWidget_2.setItem(vx,vy,item)
+
+		if self.tableWidget_3.isVisible()==True:
+			vx = self.tableWidget_3.currentRow()
+			vy = self.tableWidget_3.currentColumn()
+			self.tableWidget_3.setItem(vx,vy,item)
+
+		if self.tableWidget_4.isVisible()==True:
+			vx = self.tableWidget_4.currentRow()
+			vy = self.tableWidget_4.currentColumn()
+			self.tableWidget_4.setItem(vx,vy,item)
+
+		if self.tableWidget_5.isVisible()==True:
+			vx = self.tableWidget_5.currentRow()
+			vy = self.tableWidget_5.currentColumn()
+			self.tableWidget_5.setItem(vx,vy,item)
+
+		if self.tableWidget_6.isVisible()==True:
+			vx = self.tableWidget_6.currentRow()
+			vy = self.tableWidget_6.currentColumn()
+			self.tableWidget_6.setItem(vx,vy,item)
+
+		if self.tableWidget_7.isVisible()==True:
+			vx = self.tableWidget_7.currentRow()
+			vy = self.tableWidget_7.currentColumn()
+			self.tableWidget_7.setItem(vx,vy,item)
+
+		if self.tableWidget_8.isVisible()==True:
+			vx = self.tableWidget_8.currentRow()
+			vy = self.tableWidget_8.currentColumn()
+			self.tableWidget_8.setItem(vx,vy,item)
+
+		if self.tableWidget_9.isVisible()==True:
+			vx = self.tableWidget_9.currentRow()
+			vy = self.tableWidget_9.currentColumn()
+			self.tableWidget_9.setItem(vx,vy,item)
+
+		if self.tableWidget_10.isVisible()==True:
+			vx = self.tableWidget_10.currentRow()
+			vy = self.tableWidget_10.currentColumn()
+			self.tableWidget_10.setItem(vx,vy,item)
+
+	def tableCircuit(self,name,addr):
+		lblt = QtGui.QFont("Arial",10, QtGui.QFont.Normal)
+		item = QtWidgets.QTableWidgetItem("N="+name+'\n'+"A="+addr)
+		item.setFont(lblt)
+		item.setBackground(QtGui.QColor('lightblue'))
+
+		if self.tableWidget.isVisible()==True:
+			vx = self.tableWidget.currentRow()
+			vy = self.tableWidget.currentColumn()
+			self.tableWidget.setItem(vx,vy,item)
+
+		if self.tableWidget_2.isVisible()==True:
+			vx = self.tableWidget_2.currentRow()
+			vy = self.tableWidget_2.currentColumn()
+			self.tableWidget_2.setItem(vx,vy,item)
+
+		if self.tableWidget_3.isVisible()==True:
+			vx = self.tableWidget_3.currentRow()
+			vy = self.tableWidget_3.currentColumn()
+			self.tableWidget_3.setItem(vx,vy,item)
+		
+		if self.tableWidget_4.isVisible()==True:
+			vx = self.tableWidget_4.currentRow()
+			vy = self.tableWidget_4.currentColumn()
+			self.tableWidget_4.setItem(vx,vy,item)
+		
+		if self.tableWidget_5.isVisible()==True:
+			vx = self.tableWidget_5.currentRow()
+			vy = self.tableWidget_5.currentColumn()
+			self.tableWidget_5.setItem(vx,vy,item)
+
+		if self.tableWidget_6.isVisible()==True:
+			vx = self.tableWidget_6.currentRow()
+			vy = self.tableWidget_6.currentColumn()
+			self.tableWidget_6.setItem(vx,vy,item)
+
+		if self.tableWidget_7.isVisible()==True:
+			vx = self.tableWidget_7.currentRow()
+			vy = self.tableWidget_7.currentColumn()
+			self.tableWidget_7.setItem(vx,vy,item)
+
+		if self.tableWidget_8.isVisible()==True:
+			vx = self.tableWidget_8.currentRow()
+			vy = self.tableWidget_8.currentColumn()
+			self.tableWidget_8.setItem(vx,vy,item)
+
+		if self.tableWidget_9.isVisible()==True:
+			vx = self.tableWidget_9.currentRow()
+			vy = self.tableWidget_9.currentColumn()
+			self.tableWidget_9.setItem(vx,vy,item)
+
+		if self.tableWidget_10.isVisible()==True:
+			vx = self.tableWidget_10.currentRow()
+			vy = self.tableWidget_10.currentColumn()
+			self.tableWidget_10.setItem(vx,vy,item)
 
 	def on_cellClickedTableW(self):
 		if self.tableWidget.isVisible()==True:
@@ -326,11 +424,12 @@ class Ui_MainWindow(object):
 	def on_doubleClickedTableW(self):
 		if self.rbCM.text()=='Circuit Mode':
 			if self.rbCM.isChecked()==True:
-				self.CircuitWindow = QtWidgets.QDialog()
-				self.CircuitWindow.setModal(True)
-				self.ui = Ui_NewCircuit()
-				self.ui.setupUi(self.CircuitWindow)
-				self.CircuitWindow.show()
+				#self.CircuitWindow = QtWidgets.QDialog()
+				#self.CircuitWindow.setModal(True)
+				#self.ui = Ui_NewCircuit()
+				#self.ui.setupUi(self.CircuitWindow)
+				#self.CircuitWindow.show()
+				Ui_NewCircuit(self).exec_()
 			else:
 				#self.LabelWindow = QtWidgets.QDialog()
 				#self.LabelWindow.setModal(True)
@@ -373,6 +472,7 @@ class Ui_MainWindow(object):
 
 	def exitLayout(self):
 		print("Exit")
+		MainWindow.close()
 
 	def countPage2(self):
 		#self.tab_2 = QtWidgets.QWidget()
