@@ -200,9 +200,26 @@ class Ui_MainWindow(object):
 	def tabSelected(self):
 		print("tabSelect")
 		
-	def tableValue(self,x,y,text):
-		print("tableValue")
-		self.tableWidget.setItem(x,y,QtWidgets.QTableWidgetItem(text))
+	def tableValue(self,sizeW,text,textAlign):
+		vx = self.tableWidget.currentRow()
+		vy = self.tableWidget.currentColumn()
+		print("x1",vx)
+		print("y1",vy)
+
+		item = QtWidgets.QTableWidgetItem(text)
+		lblt = QtGui.QFont("Arial",int(sizeW), QtGui.QFont.Black)
+
+		if textAlign == 'AlignTop':
+			item.setTextAlignment(QtCore.Qt.AlignTop)
+			item.setFont(lblt)
+		else:
+			item.setTextAlignment(QtCore.Qt.AlignBottom)
+			item.setFont(lblt)
+
+		self.tableWidget.setItem(vx,vy,item)
+
+		
+
 
 	def on_cellClickedTableW(self):
 		if self.tableWidget.isVisible()==True:

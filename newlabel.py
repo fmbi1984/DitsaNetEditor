@@ -22,51 +22,52 @@ class Ui_NewLabel(QtWidgets.QDialog):
 		#NewLabel.resize(340, 228)
 
 		self.setObjectName("NewLabel")
-		self.resize(340,228)
+		self.resize(354,200) #340 228
 		self.widget = QtWidgets.QWidget(self) #NEw
-		self.widget.setGeometry(QtCore.QRect(20, 40, 306, 160))
+		self.widget.setGeometry(QtCore.QRect(20, 20, 321, 151)) #20,40,306,160
 		self.widget.setObjectName("widget")
-		self.verticalLayout = QtWidgets.QVBoxLayout(self.widget)
-		self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-		self.verticalLayout.setObjectName("verticalLayout")
+		self.gridLayout = QtWidgets.QGridLayout(self.widget)
+		self.gridLayout.setContentsMargins(0, 0, 0, 0)
+		self.gridLayout.setObjectName("gridLayout")
 		self.lblLabel = QtWidgets.QLineEdit(self.widget)
 		self.lblLabel.setObjectName("lblLabel")
-		self.verticalLayout.addWidget(self.lblLabel)
-		spacerItem = QtWidgets.QSpacerItem(20, 17, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-		self.verticalLayout.addItem(spacerItem)
-		self.horizontalLayout = QtWidgets.QHBoxLayout()
-		self.horizontalLayout.setObjectName("horizontalLayout")
-		self.lblFont = QtWidgets.QLabel(self.widget)
-		self.lblFont.setObjectName("lblFont")
-		self.horizontalLayout.addWidget(self.lblFont)
-		self.lineFont = QtWidgets.QLineEdit(self.widget)
-		self.lineFont.setEnabled(True)
-		self.lineFont.setObjectName("lineFont")
-		self.horizontalLayout.addWidget(self.lineFont)
-		self.cbFont = QtWidgets.QComboBox(self.widget)
-		self.cbFont.setObjectName("cbFont")
-		self.horizontalLayout.addWidget(self.cbFont)
-		self.verticalLayout.addLayout(self.horizontalLayout)
-		spacerItem1 = QtWidgets.QSpacerItem(20, 38, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-		self.verticalLayout.addItem(spacerItem1)
-		self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
-		self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-		spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-		self.horizontalLayout_2.addItem(spacerItem2)
+		self.gridLayout.addWidget(self.lblLabel, 0, 0, 1, 4)
 		self.buttonBox = QtWidgets.QDialogButtonBox(self.widget)
 		self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
 		self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
 		self.buttonBox.setObjectName("buttonBox")
-		self.horizontalLayout_2.addWidget(self.buttonBox)
-		self.verticalLayout.addLayout(self.horizontalLayout_2)
+		self.gridLayout.addWidget(self.buttonBox, 6, 3, 1, 1)
+		self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
+		self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+		spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+		self.horizontalLayout_2.addItem(spacerItem)
+		self.gridLayout.addLayout(self.horizontalLayout_2, 6, 0, 1, 2)
+		spacerItem1 = QtWidgets.QSpacerItem(108, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+		self.gridLayout.addItem(spacerItem1, 1, 0, 1, 2)
+		spacerItem2 = QtWidgets.QSpacerItem(118, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+		self.gridLayout.addItem(spacerItem2, 1, 3, 1, 1)
+		self.lineFont = QtWidgets.QLineEdit(self.widget)
+		self.lineFont.setEnabled(True)
+		self.lineFont.setObjectName("lineFont")
+		self.gridLayout.addWidget(self.lineFont, 3, 1, 1, 1)
+		self.cbFont = QtWidgets.QComboBox(self.widget)
+		self.cbFont.setEnabled(True)
+		self.cbFont.setObjectName("cbFont")
+		self.gridLayout.addWidget(self.cbFont, 3, 3, 1, 1)
+		self.lblFont = QtWidgets.QLabel(self.widget)
+		self.lblFont.setObjectName("lblFont")
+		self.gridLayout.addWidget(self.lblFont, 3, 0, 1, 1)
+		spacerItem3 = QtWidgets.QSpacerItem(20, 38, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+		self.gridLayout.addItem(spacerItem3, 4, 1, 1, 1)
 
 		self.retranslateUi(self) ##New
 		self.buttonBox.accepted.connect(self.bttnOK)	#NewLabel.accept
 		self.buttonBox.rejected.connect(self.bttnCancel)
 		QtCore.QMetaObject.connectSlotsByName(self)  ##NEw
 
-
-		self.lblLabel.editingFinished.connect(self.lbltexto)
+		self.cbFont.addItems(['Align Top','Align Bottom'])
+		#self.lblLabel.editingFinished.connect(self.lbltexto)
+		#self.lineFont.editingFinished.connect(self.sizeTexto)
 
 
 
@@ -79,16 +80,29 @@ class Ui_NewLabel(QtWidgets.QDialog):
 	def lbltexto(self):
 		if self.lblLabel.text()=="" or self.lblLabel.text() == " ":
 			print("vacio")
+			
 		else:
 			x = self.lblLabel.text()
-			self.parent.tableValue(3,3,x)
+			print("x:",x)
+	
+
+			#self.parent.tableValue(sizeW,x)
 			#self.parent.tableWidget.setItem(3,3,QtWidgets.QTableWidgetItem("hola"))
 			#tableWidget.setItem(3,3,QtWidgets.QTableWidgetItem(x))
-			print("x:",x)
-
+		
+	def sizeTexto(self):
+		sizeW = self.lineFont.text()
+		print("sizeW:",sizeW)
 	
 	def bttnOK(self):
-		print("BttnOK")
+		x = self.lblLabel.text()
+		sizeW = self.lineFont.text()
+
+		if self.cbFont.currentIndex() == 0:
+			align = 'AlignTop'
+		if self.cbFont.currentIndex() == 1:
+			align = 'AlignBottom'
+		self.parent.tableValue(sizeW,x,align)
 		
 
 	def bttnCancel(self):
