@@ -21,7 +21,8 @@ class Ui_NewLabel(QtWidgets.QDialog):
 		#NewLabel.resize(340, 228)
 
 		self.setObjectName("NewLabel")
-		self.resize(354,200) #340 228
+		self.setFixedSize(354, 200)
+		#self.resize(354,200) #340 228
 		self.widget = QtWidgets.QWidget(self) #NEw
 		self.widget.setGeometry(QtCore.QRect(20, 20, 321, 151)) #20,40,306,160
 		self.widget.setObjectName("widget")
