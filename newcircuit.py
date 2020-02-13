@@ -57,7 +57,9 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 		self.retranslateUi(self) #New
 		self.buttonBox.accepted.connect(self.bttnDone)
 		self.buttonBox.rejected.connect(self.bttnCancel)
+		self.passEdit = False
 		#self.lineName.editingFinished.connect(self.fname)
+		#NewCircuit.showEvent = self.showEvent
 		QtCore.QMetaObject.connectSlotsByName(self) #NEw
 
 	def retranslateUi(self, NewCircuit):
@@ -66,9 +68,37 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 		self.lblName.setText(_translate("NewCircuit", "Name	"))
 		self.lblAddrs.setText(_translate("NewCircuit", "Address"))
 
+	def showEvent(self,event):
+		print("ShowEventNEW")
+
+		vx = self.parent.tableWidget.currentRow()
+		vy = self.parent.tableWidget.currentColumn()
+		value = "X="+str(vx)+" Y="+str(vy)
+		print(value)
+		print(len(self.parent.mylist))
+
+		for i in range(len(self.parent.mylist)): 
+			if self.parent.mylist[i] == value:
+				print("entro")
+				print("i:",i)
+				valueName = self.parent.mylist[i+1]
+				valueAddr = self.parent.mylist[i+2]
+				valueName = valueName.replace('N=','')
+				valueAddr = valueAddr.replace('A=','')
+				print(self.parent.mylist)
+				self.x = i
+				self.passEdit = True 
+
+		if self.passEdit == True:
+			self.parent.mylist.pop(self.x+2)
+			self.parent.mylist.pop(self.x+1)
+			self.parent.mylist.pop(self.x) #se recorre un lugar a la izquierda
+			print(self.parent.mylist)
+			self.lineName.setText(valueName)
+			self.lineAddrs.setText(valueAddr)
+
 	def bttnCancel(self):
 		self.close()
-
 
 	validatorName = False
 	validatorAddr = False
@@ -78,17 +108,14 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 
 		if not self.lineName.text():
 			msgN = QtWidgets.QMessageBox()
-			msgN.about(self,'Error','Enter a name')
+			msgN.critical(self,'Error','Enter a name')
 
 		else:
 			if not self.lineAddrs.text():
 				msgA = QtWidgets.QMessageBox()
-				msgA.about(self,'Error','Invalid address data')
+				msgA.critical(self,'Error','Invalid address data')
 			else:
 				if len(self.parent.mylist) == 0:
-					self.parent.mylist.append("N="+name)
-					self.parent.mylist.append("A="+addr)
-
 					lblt = QtGui.QFont("Arial",10, QtGui.QFont.Normal)
 					item = QtWidgets.QTableWidgetItem("N="+name+'\n'+"A="+addr)
 					item.setFont(lblt)
@@ -98,9 +125,10 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 					if self.parent.tableWidget.isVisible()==True:
 						vx = self.parent.tableWidget.currentRow()
 						vy = self.parent.tableWidget.currentColumn()
-						print("vx:",vx)
-						print("vy:",vy)
+						#print("vx:",vx)
+						#print("vy:",vy)
 						self.parent.tableWidget.setItem(vx,vy,item)
+						self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
 
 					if self.parent.tableWidget_2.isVisible()==True:
 						vx = self.parent.tableWidget_2.currentRow()
@@ -146,6 +174,10 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 						vx = self.parent.tableWidget_10.currentRow()
 						vy = self.parent.tableWidget_10.currentColumn()
 						self.parent.tableWidget_10.setItem(vx,vy,item)
+
+					self.parent.mylist.append("N="+name)
+					self.parent.mylist.append("A="+addr)
+
 					self.close()
 				else:
 					#mylistString = ','.join(self.parent.mylist)
@@ -174,8 +206,6 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 							msg.about(self,'Error','Address already exist')
 							self.validatorAddr = False
 						else:
-							self.parent.mylist.append("N="+name)
-							self.parent.mylist.append("A="+addr)
 							lblt = QtGui.QFont("Arial",10, QtGui.QFont.Normal)
 							item = QtWidgets.QTableWidgetItem("N="+name+'\n'+"A="+addr)
 							item.setFont(lblt)
@@ -186,8 +216,9 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 								vx = self.parent.tableWidget.currentRow()
 								vy = self.parent.tableWidget.currentColumn()
 								self.parent.tableWidget.setItem(vx,vy,item)
-								print("vx:",vx)
-								print("vy:",vy)
+								#print("vx:",vx)
+								#print("vy:",vy)
+								self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
 
 							if self.parent.tableWidget_2.isVisible()==True:
 								vx = self.parent.tableWidget_2.currentRow()
@@ -233,9 +264,10 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 								vx = self.parent.tableWidget_10.currentRow()
 								vy = self.parent.tableWidget_10.currentColumn()
 								self.parent.tableWidget_10.setItem(vx,vy,item)
+
+							self.parent.mylist.append("N="+name)
+							self.parent.mylist.append("A="+addr)
 							self.close()
-							#self.parent.tableCircuit(name,addr)
-				
 
 '''
 if __name__ == "__main__":

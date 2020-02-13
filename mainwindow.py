@@ -55,6 +55,7 @@ class Ui_MainWindow(object):
 		self.tableWidget.verticalHeader().setVisible(False)
 		self.tableWidget.verticalHeader().setDefaultSectionSize(60)
 		#self.tableWidget.verticalHeader().setMinimumSectionSize(20)
+
 		self.verticalLayout_2.addWidget(self.tableWidget)
 		self.tabWidget.addTab(self.tab, "Page 1")
 		
@@ -133,6 +134,8 @@ class Ui_MainWindow(object):
 
 		MainWindow.showEvent = self.showEvent
 		MainWindow.closeEvent = self.closeEvent
+		#self.tableWidget.mousePressEvent = self.mousePressEvent
+		self.tableWidget.contextMenuEvent = self.contextMenuEvent
 
 		self.mylist = list()
 		self.newtb.triggered.connect(self.newPage)
@@ -163,7 +166,6 @@ class Ui_MainWindow(object):
 		self.tableWidget_9.cellClicked.connect(self.on_cellClickedTableW)
 		self.tableWidget_10.cellClicked.connect(self.on_cellClickedTableW)
 		
-
 		self.MainWindow = MainWindow
 
 	def retranslateUi(self, MainWindow):
@@ -191,11 +193,73 @@ class Ui_MainWindow(object):
 		self.toolB.addAction(self.deletetb)
 		self.toolB.addAction(self.exittb)
 
+		#self.popMenu = QtGui.QMenu(self) 
+	
+		#self.popMenu.addSeparator() 
+		#self.popMenu.addAction(QtGui.QAction('test2', self)) 
+
 	def showEvent(self,event):
 		print("ShowEvent")
 
 	def closeEvent(self,event):
 		print("CloseEvent")
+
+	#def mousePressEvent(self,event):
+	#	if event.button() == QtCore.Qt.RightButton:
+	#		print("Click Right")
+			
+	valContex = False
+	def contextMenuEvent(self,event):
+		self.popMenu = QtWidgets.QMenu(MainWindow)
+		cutAct = self.popMenu.addAction('Cut') 
+		pasAct = self.popMenu.addAction('Paste') 
+		delAct = self.popMenu.addAction('Delete')
+
+		action = self.popMenu.exec_(self.tableWidget.mapToGlobal(event.pos()))
+
+		if action == delAct:
+			self.items_clear()
+
+		if action == pasAct:
+			print("Paste")
+
+		if action == cutAct:
+			print("Cut")
+			self.valContex = True
+
+	editDelete = False
+	secondEdit = False
+	def items_clear(self):
+		msgClear = QtWidgets.QMessageBox()
+		for item in self.tableWidget.selectedItems(): 
+			#print("entroitem")
+			self.editDelete = True 
+
+		if self.editDelete == True:
+			returnValue = msgClear.warning(self.MainWindow,'Warning','Are you sure you want to delete?',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
+			self.editDelete = False
+
+			if returnValue == msgClear.Yes:
+				for item in self.tableWidget.selectedItems(): 
+					vy = item.column()
+					vx = item.row()
+					value = "X="+str(vx)+" Y="+str(vy)
+
+					item.setBackground(QtGui.QColor('white'))
+					item.setText('')
+
+					for i in range(len(self.mylist)): 
+						if self.mylist[i] == value:
+							self.x = i
+							self.secondEdit = True
+
+					if self.secondEdit == True: 
+						self.mylist.pop(self.x+2)
+						self.mylist.pop(self.x+1)
+						self.mylist.pop(self.x) #se recorre un lugar a la izquierda
+						self.secondEdit = False
+					
+					print(self.mylist)
 
 	def tabSelected(self):
 		print("tabSelect")
@@ -203,6 +267,7 @@ class Ui_MainWindow(object):
 	def tableLabel(self,sizeW,text,textAlign):
 		item = QtWidgets.QTableWidgetItem(text)
 		lblt = QtGui.QFont("Arial",int(sizeW), QtGui.QFont.Black)
+		item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
 
 		if textAlign == 'AlignTop':
 			item.setTextAlignment(QtCore.Qt.AlignTop)
@@ -264,10 +329,8 @@ class Ui_MainWindow(object):
 			vy = self.tableWidget_10.currentColumn()
 			self.tableWidget_10.setItem(vx,vy,item)
 
-	def tableCircuit(self):
-		print("TCR")
-
 	def on_cellClickedTableW(self):
+		print("mylist",self.mylist)
 		if self.tableWidget.isVisible()==True:
 			print("Tabla1")
 			#self.tableWidget.setItem(3,3,QtWidgets.QTableWidgetItem("Hola"))
