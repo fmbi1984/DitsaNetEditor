@@ -136,8 +136,29 @@ class Ui_MainWindow(object):
 		MainWindow.closeEvent = self.closeEvent
 		#self.tableWidget.mousePressEvent = self.mousePressEvent
 		self.tableWidget.contextMenuEvent = self.contextMenuEvent
+		self.tableWidget.keyPressEvent = self.keyPressEvent
+
+		self.tableWidget_2.contextMenuEvent = self.contextMenuEvent
+		self.tableWidget_2.keyPressEvent = self.keyPressEvent
+		self.tableWidget_3.contextMenuEvent = self.contextMenuEvent
+		self.tableWidget_3.keyPressEvent = self.keyPressEvent
+		self.tableWidget_4.contextMenuEvent = self.contextMenuEvent
+		self.tableWidget_4.keyPressEvent = self.keyPressEvent
+		self.tableWidget_5.contextMenuEvent = self.contextMenuEvent
+		self.tableWidget_5.keyPressEvent = self.keyPressEvent
+		self.tableWidget_6.contextMenuEvent = self.contextMenuEvent
+		self.tableWidget_6.keyPressEvent = self.keyPressEvent
+		self.tableWidget_7.contextMenuEvent = self.contextMenuEvent
+		self.tableWidget_7.keyPressEvent = self.keyPressEvent
+		self.tableWidget_8.contextMenuEvent = self.contextMenuEvent
+		self.tableWidget_8.keyPressEvent = self.keyPressEvent
+		self.tableWidget_9.contextMenuEvent = self.contextMenuEvent
+		self.tableWidget_9.keyPressEvent = self.keyPressEvent
+		self.tableWidget_10.contextMenuEvent = self.contextMenuEvent
+		self.tableWidget_10.keyPressEvent = self.keyPressEvent
 
 		self.mylist = list()
+		self.tempCut = {}
 		self.newtb.triggered.connect(self.newPage)
 		self.savetb.triggered.connect(self.saveLayout)
 		self.deletetb.triggered.connect(self.deletePage)
@@ -165,6 +186,8 @@ class Ui_MainWindow(object):
 		self.tableWidget_8.cellClicked.connect(self.on_cellClickedTableW)
 		self.tableWidget_9.cellClicked.connect(self.on_cellClickedTableW)
 		self.tableWidget_10.cellClicked.connect(self.on_cellClickedTableW)
+
+		self.tableWidget.itemClicked.connect(self.prueba)
 		
 		self.MainWindow = MainWindow
 
@@ -208,12 +231,28 @@ class Ui_MainWindow(object):
 	#	if event.button() == QtCore.Qt.RightButton:
 	#		print("Click Right")
 			
-	valContex = False
+
+	def keyPressEvent(self,event):
+		if event.key() == QtCore.Qt.Key_Enter: # mac fn + enter
+			self.on_doubleClickedTableW()
+
+	def prueba(self):
+		print("prueba")
+		#x = self.tableWidget.font()
+		#print("x:",x)
+		
+
+	valCut = False
 	def contextMenuEvent(self,event):
 		self.popMenu = QtWidgets.QMenu(MainWindow)
-		cutAct = self.popMenu.addAction('Cut') 
-		pasAct = self.popMenu.addAction('Paste') 
+		cutAct = self.popMenu.addAction('Cut')
+		pasAct = self.popMenu.addAction('Paste')
 		delAct = self.popMenu.addAction('Delete')
+	
+		if self.valCut == False:
+			pasAct.setDisabled(True)
+		else:
+			pasAct.setDisabled(False)
 
 		action = self.popMenu.exec_(self.tableWidget.mapToGlobal(event.pos()))
 
@@ -221,18 +260,87 @@ class Ui_MainWindow(object):
 			self.items_clear()
 
 		if action == pasAct:
-			print("Paste")
+			self.valCut = False
+			self.items_paste()
 
 		if action == cutAct:
-			print("Cut")
-			self.valContex = True
+			self.items_cut()
+	
+	i = 0
+	def items_cut(self):
+		print("cut")
+		for item in self.tableWidget.selectedItems():
+			#print("i:",self.i)
+			self.valCut = True
+			self.i = self.i + 1
+			txt = item.text()
+			coord2 = u"(%i,%i)/" % (item.row(), item.column())
+			#print("txt:",txt)
+			#print("coord2:",coord2)
+			
+			self.tempCut[self.i] = coord2 + txt 
+			#self.tempCut.append(coord2 + txt)
+
+			item.setBackground(QtGui.QColor('white'))
+			item.setText('')
+		
+		print("tempCut",self.tempCut)
+
+	def items_paste(self):
+		print("paste")
+		item = QtWidgets.QTableWidgetItem()
+		copy = self.tempCut[1]
+
+		x = copy.split("/")
+		vx = self.tableWidget.currentRow()
+		vy = self.tableWidget.currentColumn()
+
+		#item.setFont(x[2])
+		item.setText(x[1])
+		#print("vx:",vx)
+		#print("vy:",vy)
+		self.tableWidget.setItem(vx,vy,item)
+
+		for i in range(len(self.tempCut)-1):
+			copy2 = self.tempCut[i+2]
+			new = u"(%i,%i)/" % (vx,vy)
+			print("new:",new)
+			print("copy:",copy)
+			y = copy2.split("/") 
+			print("y:",y)
+			for i in range(1,4,2):
+				if copy[i] == copy2[i]:	#1,3
+					if i == 1:
+						row = int(new[1])
+					else:
+						column = int(new[3])
+				else:
+					if i == 1:
+						if copy[1] > copy2[1]:
+							row = int(copy[1]) - int(copy2[1])
+						else:
+							row = int(copy2[1]) - int(copy[1])
+						row = int(new[1]) + row
+					else:
+						if copy[3] > copy2[3]:
+							column = int(copy[3]) - int(copy2[3])
+						else:
+							column = int(copy2[3]) - int(copy[3])
+						column = int(new[3]) + column
+			
+			item = QtWidgets.QTableWidgetItem()
+			item.setText(y[1])
+			self.tableWidget.setItem(row,column,item)
+		self.tempCut.clear()
+		self.i = 0
+		print(self.tempCut)
+
 
 	editDelete = False
 	secondEdit = False
 	def items_clear(self):
 		msgClear = QtWidgets.QMessageBox()
-		for item in self.tableWidget.selectedItems(): 
-			#print("entroitem")
+		for item in self.tableWidget.selectedItems():
 			self.editDelete = True 
 
 		if self.editDelete == True:
@@ -259,7 +367,7 @@ class Ui_MainWindow(object):
 						self.mylist.pop(self.x) #se recorre un lugar a la izquierda
 						self.secondEdit = False
 					
-					print(self.mylist)
+					#print(self.mylist)
 
 	def tabSelected(self):
 		print("tabSelect")

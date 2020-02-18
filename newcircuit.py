@@ -69,8 +69,6 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 		self.lblAddrs.setText(_translate("NewCircuit", "Address"))
 
 	def showEvent(self,event):
-		print("ShowEventNEW")
-
 		vx = self.parent.tableWidget.currentRow()
 		vy = self.parent.tableWidget.currentColumn()
 		value = "X="+str(vx)+" Y="+str(vy)
@@ -79,8 +77,6 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 
 		for i in range(len(self.parent.mylist)): 
 			if self.parent.mylist[i] == value:
-				print("entro")
-				print("i:",i)
 				valueName = self.parent.mylist[i+1]
 				valueAddr = self.parent.mylist[i+2]
 				valueName = valueName.replace('N=','')
