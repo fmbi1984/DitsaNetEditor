@@ -20,6 +20,7 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 		self.setObjectName("NewCircuit")
 		self.setFixedSize(268, 186)
 		#self.resize(268, 186)
+		self.setWindowFlags(QtCore.Qt.CustomizeWindowHint|QtCore.Qt.WindowTitleHint)
 		self.widget = QtWidgets.QWidget(self) #NEw
 		self.widget.setGeometry(QtCore.QRect(18, 24, 221, 131))
 		self.widget.setObjectName("widget")
@@ -94,6 +95,7 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 			self.lineAddrs.setText(valueAddr)
 
 	def bttnCancel(self):
+		self.parent.bttnCancel()
 		self.close()
 
 	validatorName = False
@@ -121,8 +123,6 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 					if self.parent.tableWidget.isVisible()==True:
 						vx = self.parent.tableWidget.currentRow()
 						vy = self.parent.tableWidget.currentColumn()
-						#print("vx:",vx)
-						#print("vy:",vy)
 						self.parent.tableWidget.setItem(vx,vy,item)
 						self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
 
@@ -212,8 +212,6 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 								vx = self.parent.tableWidget.currentRow()
 								vy = self.parent.tableWidget.currentColumn()
 								self.parent.tableWidget.setItem(vx,vy,item)
-								#print("vx:",vx)
-								#print("vy:",vy)
 								self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
 
 							if self.parent.tableWidget_2.isVisible()==True:

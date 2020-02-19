@@ -158,7 +158,8 @@ class Ui_MainWindow(object):
 		self.tableWidget_10.keyPressEvent = self.keyPressEvent
 
 		self.mylist = list()
-		self.tempCut = {}
+		self.tempCut = list()
+		#self.tempCut = {}
 		self.newtb.triggered.connect(self.newPage)
 		self.savetb.triggered.connect(self.saveLayout)
 		self.deletetb.triggered.connect(self.deletePage)
@@ -193,7 +194,7 @@ class Ui_MainWindow(object):
 
 	def retranslateUi(self, MainWindow):
 		_translate = QtCore.QCoreApplication.translate
-		MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+		MainWindow.setWindowTitle(_translate("MainWindow", "Layout Editor"))
 		#self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Tab 1"))
 		#self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Tab 2"))
 
@@ -240,7 +241,6 @@ class Ui_MainWindow(object):
 		print("prueba")
 		#x = self.tableWidget.font()
 		#print("x:",x)
-		
 
 	valCut = False
 	def contextMenuEvent(self,event):
@@ -274,12 +274,13 @@ class Ui_MainWindow(object):
 			self.valCut = True
 			self.i = self.i + 1
 			txt = item.text()
-			coord2 = u"(%i,%i)/" % (item.row(), item.column())
+			coord2 = u"X=%i Y=%i/" % (item.row(), item.column())
 			#print("txt:",txt)
 			#print("coord2:",coord2)
 			
-			self.tempCut[self.i] = coord2 + txt 
-			#self.tempCut.append(coord2 + txt)
+			#self.tempCut[self.i] = coord2 + txt 
+			self.tempCut.append(coord2+txt)
+			#self.tempCut.append(txt)
 
 			item.setBackground(QtGui.QColor('white'))
 			item.setText('')
@@ -289,7 +290,7 @@ class Ui_MainWindow(object):
 	def items_paste(self):
 		print("paste")
 		item = QtWidgets.QTableWidgetItem()
-		copy = self.tempCut[1]
+		copy = self.tempCut[0] #1
 
 		x = copy.split("/")
 		vx = self.tableWidget.currentRow()
@@ -297,44 +298,66 @@ class Ui_MainWindow(object):
 
 		#item.setFont(x[2])
 		item.setText(x[1])
+		#item.setText(copy)
 		#print("vx:",vx)
 		#print("vy:",vy)
 		self.tableWidget.setItem(vx,vy,item)
 
 		for i in range(len(self.tempCut)-1):
-			copy2 = self.tempCut[i+2]
-			new = u"(%i,%i)/" % (vx,vy)
+			copy2 = self.tempCut[i+1]  #i+2
+			new = u"X=%i Y=%i/" % (vx,vy)
 			print("new:",new)
 			print("copy:",copy)
 			y = copy2.split("/") 
 			print("y:",y)
-			for i in range(1,4,2):
+			for i in range(2,7,4): 	#(1,4,2):  
 				if copy[i] == copy2[i]:	#1,3
-					if i == 1:
-						row = int(new[1])
+					if i == 2:
+						row = int(new[2]) #1
 					else:
-						column = int(new[3])
+						column = int(new[6]) #3
 				else:
-					if i == 1:
-						if copy[1] > copy2[1]:
-							row = int(copy[1]) - int(copy2[1])
+					if i == 2:
+						if copy[2] > copy2[2]: #1
+							row = int(copy[2]) - int(copy2[2])
 						else:
-							row = int(copy2[1]) - int(copy[1])
-						row = int(new[1]) + row
+							row = int(copy2[2]) - int(copy[2])
+						row = int(new[2]) + row
 					else:
-						if copy[3] > copy2[3]:
-							column = int(copy[3]) - int(copy2[3])
+						if copy[6] > copy2[6]:  #3
+							column = int(copy[6]) - int(copy2[6])
 						else:
-							column = int(copy2[3]) - int(copy[3])
-						column = int(new[3]) + column
+							column = int(copy2[6]) - int(copy[6])
+						column = int(new[6]) + column
 			
 			item = QtWidgets.QTableWidgetItem()
 			item.setText(y[1])
 			self.tableWidget.setItem(row,column,item)
+
+		self.cleanMylist()
 		self.tempCut.clear()
 		self.i = 0
 		print(self.tempCut)
 
+	def cleanMylist(self):
+		print("CLEANMYLIST")
+		for i in range(len(self.tempCut)):
+			value = self.tempCut[i].split("/")
+			
+			for i in range(len(value)):
+				for j in range(len(self.mylist)):
+					if value[i] == self.mylist[j]:
+						print(value[i])
+
+						self.mylist.pop(j+2)
+						self.mylist.pop(j+1)
+						self.mylist.pop(j) #se recorre un lugar a la izquierda
+						print("newList:",self.mylist)
+						print("temCut:",self.tempCut)
+						
+						break
+
+						##agregar nuevos valores a mylist##
 
 	editDelete = False
 	secondEdit = False
@@ -371,6 +394,61 @@ class Ui_MainWindow(object):
 
 	def tabSelected(self):
 		print("tabSelect")
+
+	def bttnCancel(self):
+		item = QtWidgets.QTableWidgetItem()
+		item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+
+		if self.tableWidget.isVisible()==True:
+			vx = self.tableWidget.currentRow()
+			vy = self.tableWidget.currentColumn()
+			self.tableWidget.setItem(vx,vy,item)
+
+		if self.tableWidget_2.isVisible()==True:
+			vx = self.tableWidget_2.currentRow()
+			vy = self.tableWidget_2.currentColumn()
+			self.tableWidget_2.setItem(vx,vy,item)
+
+		if self.tableWidget_3.isVisible()==True:
+			vx = self.tableWidget_3.currentRow()
+			vy = self.tableWidget_3.currentColumn()
+			self.tableWidget_3.setItem(vx,vy,item)
+
+		if self.tableWidget_4.isVisible()==True:
+			vx = self.tableWidget_4.currentRow()
+			vy = self.tableWidget_4.currentColumn()
+			self.tableWidget_4.setItem(vx,vy,item)
+
+		if self.tableWidget_5.isVisible()==True:
+			vx = self.tableWidget_5.currentRow()
+			vy = self.tableWidget_5.currentColumn()
+			self.tableWidget_5.setItem(vx,vy,item)
+
+		if self.tableWidget_6.isVisible()==True:
+			vx = self.tableWidget_6.currentRow()
+			vy = self.tableWidget_6.currentColumn()
+			self.tableWidget_6.setItem(vx,vy,item)
+
+		if self.tableWidget_7.isVisible()==True:
+			vx = self.tableWidget_7.currentRow()
+			vy = self.tableWidget_7.currentColumn()
+			self.tableWidget_7.setItem(vx,vy,item)
+
+		if self.tableWidget_8.isVisible()==True:
+			vx = self.tableWidget_8.currentRow()
+			vy = self.tableWidget_8.currentColumn()
+			self.tableWidget_8.setItem(vx,vy,item)
+
+		if self.tableWidget_9.isVisible()==True:
+			vx = self.tableWidget_9.currentRow()
+			vy = self.tableWidget_9.currentColumn()
+			self.tableWidget_9.setItem(vx,vy,item)
+
+		if self.tableWidget_10.isVisible()==True:
+			vx = self.tableWidget_10.currentRow()
+			vy = self.tableWidget_10.currentColumn()
+			self.tableWidget_10.setItem(vx,vy,item)
+
 			
 	def tableLabel(self,sizeW,text,textAlign):
 		item = QtWidgets.QTableWidgetItem(text)

@@ -23,6 +23,7 @@ class Ui_NewLabel(QtWidgets.QDialog):
 		self.setObjectName("NewLabel")
 		self.setFixedSize(354, 200)
 		#self.resize(354,200) #340 228
+		self.setWindowFlags(QtCore.Qt.CustomizeWindowHint|QtCore.Qt.WindowTitleHint)
 		self.widget = QtWidgets.QWidget(self) #NEw
 		self.widget.setGeometry(QtCore.QRect(20, 20, 321, 151)) #20,40,306,160
 		self.widget.setObjectName("widget")
@@ -67,29 +68,14 @@ class Ui_NewLabel(QtWidgets.QDialog):
 		QtCore.QMetaObject.connectSlotsByName(self)  ##NEw
 
 		self.cbFont.addItems(['Align Top','Align Bottom'])
-		#self.lblLabel.editingFinished.connect(self.lbltexto)
-		#self.lineFont.editingFinished.connect(self.sizeTexto)
-
 
 	def retranslateUi(self, NewLabel):
 		_translate = QtCore.QCoreApplication.translate
 		self.setWindowTitle(_translate("NewLabel", "New Label")) ##New
 		self.lblFont.setText(_translate("NewLabel", "Font Size"))
-
-
-	def lbltexto(self):
-		if self.lblLabel.text()=="" or self.lblLabel.text() == " ":
-			print("vacio")
-			
-		else:
-			x = self.lblLabel.text()
-			print("x:",x)
-		
-	def sizeTexto(self):
-		sizeW = self.lineFont.text()
-		print("sizeW:",sizeW)
 	
 	def bttnOK(self):
+		print("bttnOk")
 		x = self.lblLabel.text()
 		sizeW = self.lineFont.text()
 
@@ -98,17 +84,12 @@ class Ui_NewLabel(QtWidgets.QDialog):
 		if self.cbFont.currentIndex() == 1:
 			align = 'AlignBottom'
 		self.parent.tableLabel(sizeW,x,align)
-		
 		self.close()
 		
-
 	def bttnCancel(self):
+		self.parent.bttnCancel()
 		self.close()
 
-	#def buttons(self):
-	#	print("bttn")
-	#	y = self.buttonBox.Ok()
-	#	print(y)
 '''
 if __name__ == "__main__":
 
