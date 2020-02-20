@@ -159,6 +159,7 @@ class Ui_MainWindow(object):
 
 		self.mylist = list()
 		self.tempCut = list()
+		self.newCut = list()
 		#self.tempCut = {}
 		self.newtb.triggered.connect(self.newPage)
 		self.savetb.triggered.connect(self.saveLayout)
@@ -279,9 +280,21 @@ class Ui_MainWindow(object):
 			#print("coord2:",coord2)
 			
 			#self.tempCut[self.i] = coord2 + txt 
-			self.tempCut.append(coord2+txt)
-			#self.tempCut.append(txt)
+		#	self.tempCut.append(coord2)
 
+		#	dble = txt.split("\n")
+		#	print("filtro:",dble)
+		#	if len(dble) == 2:
+		#		for i in range(2):
+		#			nw = dble[i].replace('[]','')
+		#			print("dble:",nw)
+		#			self.tempCut.append(nw)
+		#	else:
+		#		nw = dble[0].replace('[]','')
+		#		print("dble:",nw)
+		#		self.tempCut.append(nw)
+
+			self.tempCut.append(coord2+txt)
 			item.setBackground(QtGui.QColor('white'))
 			item.setText('')
 		
@@ -297,11 +310,15 @@ class Ui_MainWindow(object):
 		vy = self.tableWidget.currentColumn()
 
 		#item.setFont(x[2])
+		#print("copy:",copy)
 		item.setText(x[1])
 		#item.setText(copy)
 		#print("vx:",vx)
 		#print("vy:",vy)
 		self.tableWidget.setItem(vx,vy,item)
+
+		self.newCut.append("X="+str(vx)+" Y="+str(vy))
+		self.newCut.append(x[1])
 
 		for i in range(len(self.tempCut)-1):
 			copy2 = self.tempCut[i+1]  #i+2
@@ -333,8 +350,12 @@ class Ui_MainWindow(object):
 			item = QtWidgets.QTableWidgetItem()
 			item.setText(y[1])
 			self.tableWidget.setItem(row,column,item)
+			self.newCut.append("X="+str(vx)+" Y="+str(vy))
+			self.newCut.append(y[1])
 
+		print("newCut:",self.newCut)
 		self.cleanMylist()
+		self.newMylist()
 		self.tempCut.clear()
 		self.i = 0
 		print(self.tempCut)
@@ -354,10 +375,30 @@ class Ui_MainWindow(object):
 						self.mylist.pop(j) #se recorre un lugar a la izquierda
 						print("newList:",self.mylist)
 						print("temCut:",self.tempCut)
-						
 						break
 
 						##agregar nuevos valores a mylist##
+						##terminar de cortar y pegar con items correspondientes
+						##guardar y borrar valores 
+	
+	def newMylist(self):
+		for i in range(len(self.tempCut)):
+			x = self.tempCut[i].split("/")
+			for j in range(len(x)):
+				y = x[j].split("\n")
+				
+				print("y:",y)
+				if len(y) == 2:
+					for i in range(2):
+						nw = y[i].replace('[]','')
+						print("nw+:",nw)
+						self.mylist.append(nw)
+				else:
+					nw = y[0].replace('[]','')
+					print("nw:",nw)
+					self.mylist.append(nw)
+				
+		print("temCutNEW",self.tempCut)
 
 	editDelete = False
 	secondEdit = False
