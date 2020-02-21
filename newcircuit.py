@@ -73,8 +73,8 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 		vx = self.parent.tableWidget.currentRow()
 		vy = self.parent.tableWidget.currentColumn()
 		value = "X="+str(vx)+" Y="+str(vy)
-		print(value)
-		print(len(self.parent.mylist))
+		#print(value)
+		#print(len(self.parent.mylist))
 
 		for i in range(len(self.parent.mylist)): 
 			if self.parent.mylist[i] == value:
@@ -82,7 +82,7 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 				valueAddr = self.parent.mylist[i+2]
 				valueName = valueName.replace('N=','')
 				valueAddr = valueAddr.replace('A=','')
-				print(self.parent.mylist)
+				#print(self.parent.mylist)
 				self.x = i
 				self.passEdit = True 
 
@@ -90,7 +90,7 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 			self.parent.mylist.pop(self.x+2)
 			self.parent.mylist.pop(self.x+1)
 			self.parent.mylist.pop(self.x) #se recorre un lugar a la izquierda
-			print(self.parent.mylist)
+			#print(self.parent.mylist)
 			self.lineName.setText(valueName)
 			self.lineAddrs.setText(valueAddr)
 

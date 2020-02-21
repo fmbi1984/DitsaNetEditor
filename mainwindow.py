@@ -208,8 +208,8 @@ class Ui_MainWindow(object):
 		
 		self.rbCM = QtWidgets.QRadioButton('Circuit Mode')
 		self.rbLM = QtWidgets.QRadioButton('Label Mode')
-		self.rbCM.setChecked(False)
-		self.rbLM.setChecked(True)
+		self.rbCM.setChecked(True)
+		self.rbLM.setChecked(False)
 
 		self.toolB.addWidget(self.rbCM)
 		self.toolB.addWidget(self.rbLM)
@@ -271,28 +271,10 @@ class Ui_MainWindow(object):
 	def items_cut(self):
 		print("cut")
 		for item in self.tableWidget.selectedItems():
-			#print("i:",self.i)
 			self.valCut = True
 			self.i = self.i + 1
 			txt = item.text()
 			coord2 = u"X=%i Y=%i/" % (item.row(), item.column())
-			#print("txt:",txt)
-			#print("coord2:",coord2)
-			
-			#self.tempCut[self.i] = coord2 + txt 
-		#	self.tempCut.append(coord2)
-
-		#	dble = txt.split("\n")
-		#	print("filtro:",dble)
-		#	if len(dble) == 2:
-		#		for i in range(2):
-		#			nw = dble[i].replace('[]','')
-		#			print("dble:",nw)
-		#			self.tempCut.append(nw)
-		#	else:
-		#		nw = dble[0].replace('[]','')
-		#		print("dble:",nw)
-		#		self.tempCut.append(nw)
 
 			self.tempCut.append(coord2+txt)
 			item.setBackground(QtGui.QColor('white'))
@@ -309,12 +291,7 @@ class Ui_MainWindow(object):
 		vx = self.tableWidget.currentRow()
 		vy = self.tableWidget.currentColumn()
 
-		#item.setFont(x[2])
-		#print("copy:",copy)
 		item.setText(x[1])
-		#item.setText(copy)
-		#print("vx:",vx)
-		#print("vy:",vy)
 		self.tableWidget.setItem(vx,vy,item)
 
 		self.newCut.append("X="+str(vx)+" Y="+str(vy))
@@ -323,10 +300,10 @@ class Ui_MainWindow(object):
 		for i in range(len(self.tempCut)-1):
 			copy2 = self.tempCut[i+1]  #i+2
 			new = u"X=%i Y=%i/" % (vx,vy)
-			print("new:",new)
-			print("copy:",copy)
+			#print("new:",new)
+			#print("copy:",copy)
 			y = copy2.split("/") 
-			print("y:",y)
+			#print("y:",y)
 			for i in range(2,7,4): 	#(1,4,2):  
 				if copy[i] == copy2[i]:	#1,3
 					if i == 2:
@@ -350,55 +327,45 @@ class Ui_MainWindow(object):
 			item = QtWidgets.QTableWidgetItem()
 			item.setText(y[1])
 			self.tableWidget.setItem(row,column,item)
-			self.newCut.append("X="+str(vx)+" Y="+str(vy))
+			self.newCut.append("X="+str(row)+" Y="+str(column))
 			self.newCut.append(y[1])
 
-		print("newCut:",self.newCut)
 		self.cleanMylist()
 		self.newMylist()
 		self.tempCut.clear()
+		self.newCut.clear()
 		self.i = 0
-		print(self.tempCut)
+		print("temCutClean:",self.tempCut)
+		print("newCut:",self.newCut)
 
 	def cleanMylist(self):
-		print("CLEANMYLIST")
 		for i in range(len(self.tempCut)):
 			value = self.tempCut[i].split("/")
-			
 			for i in range(len(value)):
 				for j in range(len(self.mylist)):
 					if value[i] == self.mylist[j]:
-						print(value[i])
-
 						self.mylist.pop(j+2)
 						self.mylist.pop(j+1)
 						self.mylist.pop(j) #se recorre un lugar a la izquierda
-						print("newList:",self.mylist)
-						print("temCut:",self.tempCut)
 						break
-
-						##agregar nuevos valores a mylist##
 						##terminar de cortar y pegar con items correspondientes
 						##guardar y borrar valores 
 	
 	def newMylist(self):
-		for i in range(len(self.tempCut)):
-			x = self.tempCut[i].split("/")
-			for j in range(len(x)):
-				y = x[j].split("\n")
-				
-				print("y:",y)
-				if len(y) == 2:
-					for i in range(2):
-						nw = y[i].replace('[]','')
-						print("nw+:",nw)
-						self.mylist.append(nw)
-				else:
-					nw = y[0].replace('[]','')
-					print("nw:",nw)
+		for j in range(len(self.newCut)):
+			x = self.newCut[j].split("\n")
+			#print(x)
+			if len(x) == 2:
+				#print("t:",self.newCut[j-1])
+				self.mylist.append(self.newCut[j-1])
+				for i in range(2):
+					nw = x[i].replace('[]','')
+					#print("nw+:",nw)
 					self.mylist.append(nw)
-				
-		print("temCutNEW",self.tempCut)
+			#else:
+			#	nw = x[0].replace('[]','')
+			#	print("nw:",nw)
+				#self.mylist.append(nw)
 
 	editDelete = False
 	secondEdit = False
@@ -430,8 +397,6 @@ class Ui_MainWindow(object):
 						self.mylist.pop(self.x+1)
 						self.mylist.pop(self.x) #se recorre un lugar a la izquierda
 						self.secondEdit = False
-					
-					#print(self.mylist)
 
 	def tabSelected(self):
 		print("tabSelect")
@@ -490,7 +455,6 @@ class Ui_MainWindow(object):
 			vy = self.tableWidget_10.currentColumn()
 			self.tableWidget_10.setItem(vx,vy,item)
 
-			
 	def tableLabel(self,sizeW,text,textAlign):
 		item = QtWidgets.QTableWidgetItem(text)
 		lblt = QtGui.QFont("Arial",int(sizeW), QtGui.QFont.Black)
@@ -665,7 +629,6 @@ class Ui_MainWindow(object):
 				Ui_NewCircuit(self).exec_()
 			else:
 				Ui_NewLabel(self).exec_()
-
 
 	count = 1
 	def newPage(self):

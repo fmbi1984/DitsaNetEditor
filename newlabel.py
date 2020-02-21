@@ -75,7 +75,6 @@ class Ui_NewLabel(QtWidgets.QDialog):
 		self.lblFont.setText(_translate("NewLabel", "Font Size"))
 	
 	def bttnOK(self):
-		print("bttnOk")
 		x = self.lblLabel.text()
 		sizeW = self.lineFont.text()
 
