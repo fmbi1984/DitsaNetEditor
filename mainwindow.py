@@ -158,9 +158,11 @@ class Ui_MainWindow(object):
 		self.tableWidget_10.keyPressEvent = self.keyPressEvent
 
 		self.mylist = list()
+		self.mylabel = list()
 		self.tempCut = list()
 		self.newCut = list()
-		#self.tempCut = {}
+		self.newCutL = list()
+
 		self.newtb.triggered.connect(self.newPage)
 		self.savetb.triggered.connect(self.saveLayout)
 		self.deletetb.triggered.connect(self.deletePage)
@@ -284,15 +286,15 @@ class Ui_MainWindow(object):
 
 	def items_paste(self):
 		print("paste")
-		item = QtWidgets.QTableWidgetItem()
+		#item = QtWidgets.QTableWidgetItem()
 		copy = self.tempCut[0] #1
 
 		x = copy.split("/")
 		vx = self.tableWidget.currentRow()
 		vy = self.tableWidget.currentColumn()
 
-		item.setText(x[1])
-		self.tableWidget.setItem(vx,vy,item)
+		#item.setText(x[1])
+		#self.tableWidget.setItem(vx,vy,item)
 
 		self.newCut.append("X="+str(vx)+" Y="+str(vy))
 		self.newCut.append(x[1])
@@ -324,12 +326,13 @@ class Ui_MainWindow(object):
 							column = int(copy2[6]) - int(copy[6])
 						column = int(new[6]) + column
 			
-			item = QtWidgets.QTableWidgetItem()
-			item.setText(y[1])
-			self.tableWidget.setItem(row,column,item)
+			#item = QtWidgets.QTableWidgetItem()
+			#item.setText(y[1])
+			#self.tableWidget.setItem(row,column,item)
 			self.newCut.append("X="+str(row)+" Y="+str(column))
 			self.newCut.append(y[1])
 
+		print("NEWCUT:",self.newCut)
 		self.cleanMylist()
 		self.newMylist()
 		self.tempCut.clear()
@@ -338,9 +341,10 @@ class Ui_MainWindow(object):
 		print("temCutClean:",self.tempCut)
 		print("newCut:",self.newCut)
 
-	def cleanMylist(self):
+	def cleanMylist(self): #clean mylist and mylabel
 		for i in range(len(self.tempCut)):
 			value = self.tempCut[i].split("/")
+			print("VALUE:",value)
 			for i in range(len(value)):
 				for j in range(len(self.mylist)):
 					if value[i] == self.mylist[j]:
@@ -348,27 +352,61 @@ class Ui_MainWindow(object):
 						self.mylist.pop(j+1)
 						self.mylist.pop(j) #se recorre un lugar a la izquierda
 						break
-						##terminar de cortar y pegar con items correspondientes
-						##guardar y borrar valores 
+
+				for k in range(len(self.mylabel)):
+					if value[i] == self.mylabel[k]:
+						self.mylabel.pop(k+1)
+						self.mylabel.pop(k) #se recorre un lugar a la izquierda
+						break
+				
 	
 	def newMylist(self):
 		for j in range(len(self.newCut)):
 			x = self.newCut[j].split("\n")
-			#print(x)
 			if len(x) == 2:
-				#print("t:",self.newCut[j-1])
+				t = self.newCut[j-1]
+				#self.newCutL.remove(t)
+				lblt = QtGui.QFont("Arial",10, QtGui.QFont.Normal)
+				item = QtWidgets.QTableWidgetItem(self.newCut[j])
+				item.setFont(lblt)
+				item.setBackground(QtGui.QColor('lightblue'))
+				item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+				self.tableWidget.setItem(int(t[2]),int(t[6]),item)
+
 				self.mylist.append(self.newCut[j-1])
 				for i in range(2):
 					nw = x[i].replace('[]','')
-					#print("nw+:",nw)
 					self.mylist.append(nw)
-			#else:
-			#	nw = x[0].replace('[]','')
-			#	print("nw:",nw)
-				#self.mylist.append(nw)
+			else:
+				nw = x[0].replace('[]','')
+				w = str(nw)
+
+				if w[0] != 'X':
+					t = self.newCut[j-1]
+					lblt = QtGui.QFont("Arial",10, QtGui.QFont.Black)
+					item = QtWidgets.QTableWidgetItem(self.newCut[j])
+					item.setFont(lblt)
+					item.setBackground(QtGui.QColor('lightyellow'))
+					item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+					self.tableWidget.setItem(int(t[2]),int(t[6]),item)
+
+					self.mylabel.append(self.newCut[j-1])
+					self.mylabel.append(nw)
+					print("M:",self.mylabel)
+
+				#w  = nw[0].split('')
+				
+				#item = QtWidgets.QTableWidgetItem(self.newCut[j])
+				#lblt = QtGui.QFont("Arial",int(sizeW), QtGui.QFont.Black)
+				#item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+
+				#nw = x[0].replace('[]','')
+				#print("nw:",nw)
+				#self.mylabel.append(nw)
 
 	editDelete = False
 	secondEdit = False
+	flagEdit = False
 	def items_clear(self):
 		msgClear = QtWidgets.QMessageBox()
 		for item in self.tableWidget.selectedItems():
@@ -392,6 +430,16 @@ class Ui_MainWindow(object):
 							self.x = i
 							self.secondEdit = True
 
+					for i in range(len(self.mylabel)):
+						if self.mylabel[i] == value:
+							self.y = i
+							self.flagEdit = True
+
+					if self.flagEdit == True:
+						self.mylabel.pop(self.y+1)
+						self.mylabel.pop(self.y)
+						self.flagEdit = False
+
 					if self.secondEdit == True: 
 						self.mylist.pop(self.x+2)
 						self.mylist.pop(self.x+1)
@@ -402,6 +450,7 @@ class Ui_MainWindow(object):
 		print("tabSelect")
 
 	def bttnCancel(self):
+		print("Cancel")  ##verificar 
 		item = QtWidgets.QTableWidgetItem()
 		item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
 
@@ -474,6 +523,7 @@ class Ui_MainWindow(object):
 			vx = self.tableWidget.currentRow()
 			vy = self.tableWidget.currentColumn()
 			self.tableWidget.setItem(vx,vy,item)
+			self.mylabel.append("X="+str(vx)+" Y="+str(vy))
 
 		if self.tableWidget_2.isVisible()==True:
 			vx = self.tableWidget_2.currentRow()
@@ -520,8 +570,11 @@ class Ui_MainWindow(object):
 			vy = self.tableWidget_10.currentColumn()
 			self.tableWidget_10.setItem(vx,vy,item)
 
+		self.mylabel.append(text)
+
 	def on_cellClickedTableW(self):
 		print("mylist",self.mylist)
+		print("mylabel",self.mylabel)
 		if self.tableWidget.isVisible()==True:
 			print("Tabla1")
 			#self.tableWidget.setItem(3,3,QtWidgets.QTableWidgetItem("Hola"))

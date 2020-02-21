@@ -74,16 +74,162 @@ class Ui_NewLabel(QtWidgets.QDialog):
 		self.setWindowTitle(_translate("NewLabel", "New Label")) ##New
 		self.lblFont.setText(_translate("NewLabel", "Font Size"))
 	
+	validatorLabel = False
 	def bttnOK(self):
-		x = self.lblLabel.text()
+		text = self.lblLabel.text()
 		sizeW = self.lineFont.text()
 
-		if self.cbFont.currentIndex() == 0:
-			align = 'AlignTop'
-		if self.cbFont.currentIndex() == 1:
-			align = 'AlignBottom'
-		self.parent.tableLabel(sizeW,x,align)
-		self.close()
+		if not self.lblLabel.text():
+			msgN = QtWidgets.QMessageBox()
+			msgN.critical(self,'Error','Enter a label')
+		else:
+			if len(self.parent.mylabel) == 0:
+				item = QtWidgets.QTableWidgetItem(text)
+				lblt = QtGui.QFont("Arial",int(sizeW), QtGui.QFont.Black)
+				item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+
+				if self.cbFont.currentIndex() == 0:
+					item.setTextAlignment(QtCore.Qt.AlignTop)
+					item.setFont(lblt)
+
+				if self.cbFont.currentIndex() == 1:
+					item.setTextAlignment(QtCore.Qt.AlignBottom)
+					item.setFont(lblt)
+				
+				item.setBackground(QtGui.QColor('lightyellow'))
+				
+				if self.parent.tableWidget.isVisible()==True:
+					vx = self.parent.tableWidget.currentRow()
+					vy = self.parent.tableWidget.currentColumn()
+					self.parent.tableWidget.setItem(vx,vy,item)
+					self.parent.mylabel.append("X="+str(vx)+" Y="+str(vy))
+
+				if self.parent.tableWidget_2.isVisible()==True:
+					vx = self.parent.tableWidget_2.currentRow()
+					vy = self.parent.tableWidget_2.currentColumn()
+					self.parent.tableWidget_2.setItem(vx,vy,item)
+
+				if self.parent.tableWidget_3.isVisible()==True:
+					vx = self.parent.tableWidget_3.currentRow()
+					vy = self.parent.tableWidget_3.currentColumn()
+					self.parent.tableWidget_3.setItem(vx,vy,item)
+
+				if self.parent.tableWidget_4.isVisible()==True:
+					vx = self.parent.tableWidget_4.currentRow()
+					vy = self.parent.tableWidget_4.currentColumn()
+					self.parent.tableWidget_4.setItem(vx,vy,item)
+
+				if self.parent.tableWidget_5.isVisible()==True:
+					vx = self.parent.tableWidget_5.currentRow()
+					vy = self.parent.tableWidget_5.currentColumn()
+					self.parent.tableWidget_5.setItem(vx,vy,item)
+
+				if self.parent.tableWidget_6.isVisible()==True:
+					vx = self.parent.tableWidget_6.currentRow()
+					vy = self.parent.tableWidget_6.currentColumn()
+					self.parent.tableWidget_6.setItem(vx,vy,item)
+
+				if self.parent.tableWidget_7.isVisible()==True:
+					vx = self.parent.tableWidget_7.currentRow()
+					vy = self.parent.tableWidget_7.currentColumn()
+					self.parent.tableWidget_7.setItem(vx,vy,item)
+
+				if self.parent.tableWidget_8.isVisible()==True:
+					vx = self.parent.tableWidget_8.currentRow()
+					vy = self.parent.tableWidget_8.currentColumn()
+					self.parent.tableWidget_8.setItem(vx,vy,item)
+
+				if self.parent.tableWidget_9.isVisible()==True:
+					vx = self.parent.tableWidget_9.currentRow()
+					vy = self.parent.tableWidget_9.currentColumn()
+					self.parent.tableWidget_9.setItem(vx,vy,item)
+
+				if self.parent.tableWidget_10.isVisible()==True:
+					vx = self.parent.tableWidget_10.currentRow()
+					vy = self.parent.tableWidget_10.currentColumn()
+					self.parent.tableWidget_10.setItem(vx,vy,item)
+
+				self.parent.mylabel.append(text)
+				self.close()
+			
+			else:
+				for i in range(len(self.parent.mylabel)):
+					if self.parent.mylabel[i] ==text:
+						self.validatorLabel = True
+
+				if self.validatorLabel != False:
+					msg = QtWidgets.QMessageBox()
+					msg.about(self,'Error','Label already exist')
+					self.validatorLabel = False
+
+				else:
+					item = QtWidgets.QTableWidgetItem(text)
+					lblt = QtGui.QFont("Arial",int(sizeW), QtGui.QFont.Black)
+					item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+
+					if self.cbFont.currentIndex() == 0:
+						item.setTextAlignment(QtCore.Qt.AlignTop)
+						item.setFont(lblt)
+
+					if self.cbFont.currentIndex() == 1:
+						item.setTextAlignment(QtCore.Qt.AlignBottom)
+						item.setFont(lblt)
+					
+					item.setBackground(QtGui.QColor('lightyellow'))
+					
+					if self.parent.tableWidget.isVisible()==True:
+						vx = self.parent.tableWidget.currentRow()
+						vy = self.parent.tableWidget.currentColumn()
+						self.parent.tableWidget.setItem(vx,vy,item)
+						self.parent.mylabel.append("X="+str(vx)+" Y="+str(vy))
+
+					if self.parent.tableWidget_2.isVisible()==True:
+						vx = self.parent.tableWidget_2.currentRow()
+						vy = self.parent.tableWidget_2.currentColumn()
+						self.parent.tableWidget_2.setItem(vx,vy,item)
+
+					if self.parent.tableWidget_3.isVisible()==True:
+						vx = self.parent.tableWidget_3.currentRow()
+						vy = self.parent.tableWidget_3.currentColumn()
+						self.parent.tableWidget_3.setItem(vx,vy,item)
+
+					if self.parent.tableWidget_4.isVisible()==True:
+						vx = self.parent.tableWidget_4.currentRow()
+						vy = self.parent.tableWidget_4.currentColumn()
+						self.parent.tableWidget_4.setItem(vx,vy,item)
+
+					if self.parent.tableWidget_5.isVisible()==True:
+						vx = self.parent.tableWidget_5.currentRow()
+						vy = self.parent.tableWidget_5.currentColumn()
+						self.parent.tableWidget_5.setItem(vx,vy,item)
+
+					if self.parent.tableWidget_6.isVisible()==True:
+						vx = self.parent.tableWidget_6.currentRow()
+						vy = self.parent.tableWidget_6.currentColumn()
+						self.parent.tableWidget_6.setItem(vx,vy,item)
+
+					if self.parent.tableWidget_7.isVisible()==True:
+						vx = self.parent.tableWidget_7.currentRow()
+						vy = self.parent.tableWidget_7.currentColumn()
+						self.parent.tableWidget_7.setItem(vx,vy,item)
+
+					if self.parent.tableWidget_8.isVisible()==True:
+						vx = self.parent.tableWidget_8.currentRow()
+						vy = self.parent.tableWidget_8.currentColumn()
+						self.parent.tableWidget_8.setItem(vx,vy,item)
+
+					if self.parent.tableWidget_9.isVisible()==True:
+						vx = self.parent.tableWidget_9.currentRow()
+						vy = self.parent.tableWidget_9.currentColumn()
+						self.parent.tableWidget_9.setItem(vx,vy,item)
+
+					if self.parent.tableWidget_10.isVisible()==True:
+						vx = self.parent.tableWidget_10.currentRow()
+						vy = self.parent.tableWidget_10.currentColumn()
+						self.parent.tableWidget_10.setItem(vx,vy,item)
+
+					self.parent.mylabel.append(text)
+					self.close()
 		
 	def bttnCancel(self):
 		self.parent.bttnCancel()
