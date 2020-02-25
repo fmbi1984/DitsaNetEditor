@@ -293,14 +293,33 @@ class Ui_MainWindow(object):
 						
 					item.setBackground(QtGui.QColor('white'))
 					item.setText('')
-		
-			print("tempCut",self.tempCut)
+			print("tempCut1",self.tempCut)
 		else:
 			msgCut = QtWidgets.QMessageBox()
-			returnCut = msgCut.warning(self.MainWindow,'Warning','Memory Full!!',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
-
+			returnCut = msgCut.warning(self.MainWindow,'Warning','You alredy have circuit copied to memory. If you continue those circuit will be deleted. Are you sure you want to continue?',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
 			if returnCut == msgCut.Yes:
-				print("Se sustituyen loa valores anteriores por los nuevos")
+				print("tempCutElse",self.tempCut)
+
+				self.cleanMylist()
+				self.tempCut.clear()
+				for item in self.tableWidget.selectedItems():
+					if item.text()!='':
+						self.flagLabel = False
+						self.i = self.i + 1
+						txt = item.text()
+						coord2 = u"X=%i Y=%i/" % (item.row(), item.column())
+
+						for i in range(len(self.mylabel)):
+							x = coord2.replace('/','')
+							if self.mylabel[i] == x:
+								self.flagLabel = True
+								self.tempCut.append(coord2+self.mylabel[i+1])
+
+						if self.flagLabel != True:
+							self.tempCut.append(coord2+txt)
+
+						item.setBackground(QtGui.QColor('white'))
+						item.setText('')
 
 	def items_paste(self):
 		print("paste")
@@ -359,6 +378,7 @@ class Ui_MainWindow(object):
 		print("newCut:",self.newCut)
 
 	def cleanMylist(self): #clean mylist and mylabel
+		print("CleanMylist")
 		for i in range(len(self.tempCut)):
 			value = self.tempCut[i].split("/")
 			print("VALUE:",value)
