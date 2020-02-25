@@ -263,30 +263,47 @@ class Ui_MainWindow(object):
 			self.items_clear()
 
 		if action == pasAct:
-			self.valCut = False
+			self.valCut = False   
 			self.items_paste()
 
 		if action == cutAct:
 			self.items_cut()
 	
 	i = 0
+	flagLabel = False
 	def items_cut(self):
 		print("cut")
-		for item in self.tableWidget.selectedItems():
-			self.valCut = True
-			self.i = self.i + 1
-			txt = item.text()
-			coord2 = u"X=%i Y=%i/" % (item.row(), item.column())
+		if self.i == 0:
+			for item in self.tableWidget.selectedItems():
+				if item.text()!='':
+					self.flagLabel = False
+					self.valCut = True
+					self.i = self.i + 1
+					txt = item.text()
+					coord2 = u"X=%i Y=%i/" % (item.row(), item.column())
 
-			self.tempCut.append(coord2+txt)
-			item.setBackground(QtGui.QColor('white'))
-			item.setText('')
+					for i in range(len(self.mylabel)):
+						x = coord2.replace('/','')
+						if self.mylabel[i] == x:
+							self.flagLabel = True
+							self.tempCut.append(coord2+self.mylabel[i+1])
+
+					if self.flagLabel != True:
+						self.tempCut.append(coord2+txt)
+						
+					item.setBackground(QtGui.QColor('white'))
+					item.setText('')
 		
-		print("tempCut",self.tempCut)
+			print("tempCut",self.tempCut)
+		else:
+			msgCut = QtWidgets.QMessageBox()
+			returnCut = msgCut.warning(self.MainWindow,'Warning','Memory Full!!',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
+
+			if returnCut == msgCut.Yes:
+				print("Se sustituyen loa valores anteriores por los nuevos")
 
 	def items_paste(self):
 		print("paste")
-		#item = QtWidgets.QTableWidgetItem()
 		copy = self.tempCut[0] #1
 
 		x = copy.split("/")
@@ -383,8 +400,15 @@ class Ui_MainWindow(object):
 
 				if w[0] != 'X':
 					t = self.newCut[j-1]
-					lblt = QtGui.QFont("Arial",10, QtGui.QFont.Black)
-					item = QtWidgets.QTableWidgetItem(self.newCut[j])
+					label = self.newCut[j].split('#')
+					number = label[1].split('$')
+					lblt = QtGui.QFont("Arial",int(number[0]), QtGui.QFont.Black)
+					item = QtWidgets.QTableWidgetItem(label[0])
+					if number[1] == 'AT':
+						item.setTextAlignment(QtCore.Qt.AlignTop)
+					else:
+						item.setTextAlignment(QtCore.Qt.AlignBottom)
+
 					item.setFont(lblt)
 					item.setBackground(QtGui.QColor('lightyellow'))
 					item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
@@ -392,7 +416,7 @@ class Ui_MainWindow(object):
 
 					self.mylabel.append(self.newCut[j-1])
 					self.mylabel.append(nw)
-					print("M:",self.mylabel)
+					#print("M:",self.mylabel)
 
 				#w  = nw[0].split('')
 				
@@ -410,7 +434,8 @@ class Ui_MainWindow(object):
 	def items_clear(self):
 		msgClear = QtWidgets.QMessageBox()
 		for item in self.tableWidget.selectedItems():
-			self.editDelete = True 
+			if item.text()!='':
+				self.editDelete = True 
 
 		if self.editDelete == True:
 			returnValue = msgClear.warning(self.MainWindow,'Warning','Are you sure you want to delete?',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
@@ -449,8 +474,24 @@ class Ui_MainWindow(object):
 	def tabSelected(self):
 		print("tabSelect")
 
+	flagCancel = False
 	def bttnCancel(self):
 		print("Cancel")  ##verificar 
+
+		self.flagCancel = False
+		for item in self.tableWidget.selectedItems():
+			self.flagCancel = True
+			c = item.text()
+			print("c:",c)
+			if item.text():
+				print("Con text-Cancel")
+			else:
+				self.continuesCancel()
+
+		if self.flagCancel != True:
+			self.continuesCancel()
+
+	def continuesCancel(self):
 		item = QtWidgets.QTableWidgetItem()
 		item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
 
@@ -503,6 +544,8 @@ class Ui_MainWindow(object):
 			vx = self.tableWidget_10.currentRow()
 			vy = self.tableWidget_10.currentColumn()
 			self.tableWidget_10.setItem(vx,vy,item)
+
+		
 
 	def tableLabel(self,sizeW,text,textAlign):
 		item = QtWidgets.QTableWidgetItem(text)

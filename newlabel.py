@@ -78,6 +78,7 @@ class Ui_NewLabel(QtWidgets.QDialog):
 	def bttnOK(self):
 		text = self.lblLabel.text()
 		sizeW = self.lineFont.text()
+		txtA = None
 
 		if not self.lblLabel.text():
 			msgN = QtWidgets.QMessageBox()
@@ -91,10 +92,12 @@ class Ui_NewLabel(QtWidgets.QDialog):
 				if self.cbFont.currentIndex() == 0:
 					item.setTextAlignment(QtCore.Qt.AlignTop)
 					item.setFont(lblt)
+					txtA = 'AT'
 
 				if self.cbFont.currentIndex() == 1:
 					item.setTextAlignment(QtCore.Qt.AlignBottom)
 					item.setFont(lblt)
+					txtA = 'AB'
 				
 				item.setBackground(QtGui.QColor('lightyellow'))
 				
@@ -149,7 +152,8 @@ class Ui_NewLabel(QtWidgets.QDialog):
 					vy = self.parent.tableWidget_10.currentColumn()
 					self.parent.tableWidget_10.setItem(vx,vy,item)
 
-				self.parent.mylabel.append(text)
+				#self.parent.mylabel.append(text)
+				self.parent.mylabel.append(text+"#"+sizeW+"$"+txtA)
 				self.close()
 			
 			else:
@@ -170,10 +174,12 @@ class Ui_NewLabel(QtWidgets.QDialog):
 					if self.cbFont.currentIndex() == 0:
 						item.setTextAlignment(QtCore.Qt.AlignTop)
 						item.setFont(lblt)
+						txtA = 'AT'
 
 					if self.cbFont.currentIndex() == 1:
 						item.setTextAlignment(QtCore.Qt.AlignBottom)
 						item.setFont(lblt)
+						txtA = 'AB'
 					
 					item.setBackground(QtGui.QColor('lightyellow'))
 					
@@ -228,7 +234,8 @@ class Ui_NewLabel(QtWidgets.QDialog):
 						vy = self.parent.tableWidget_10.currentColumn()
 						self.parent.tableWidget_10.setItem(vx,vy,item)
 
-					self.parent.mylabel.append(text)
+					#self.parent.mylabel.append(text)
+					self.parent.mylabel.append(text+"#"+sizeW+"$"+txtA)
 					self.close()
 		
 	def bttnCancel(self):
