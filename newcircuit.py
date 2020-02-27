@@ -87,6 +87,10 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 				self.passEdit = True 
 
 		if self.passEdit == True:
+			self.coord = self.parent.mylist[self.x]
+			self.CircuitName = self.parent.mylist[self.x+1]
+			self.CircuitAddrs = self.parent.mylist[self.x+2]
+
 			self.parent.mylist.pop(self.x+2)
 			self.parent.mylist.pop(self.x+1)
 			self.parent.mylist.pop(self.x) #se recorre un lugar a la izquierda
@@ -95,6 +99,9 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 			self.lineAddrs.setText(valueAddr)
 
 	def bttnCancel(self):
+		self.parent.mylist.append(self.coord)
+		self.parent.mylist.append(self.CircuitName)
+		self.parent.mylist.append(self.CircuitAddrs)
 		self.parent.bttnCancel()
 		self.close()
 

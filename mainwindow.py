@@ -163,6 +163,10 @@ class Ui_MainWindow(object):
 		self.newCut = list()
 		self.newCutL = list()
 
+		self.tmplist = list() 
+		self.comp1 = list()
+		self.comp2 = list()
+
 		self.newtb.triggered.connect(self.newPage)
 		self.savetb.triggered.connect(self.saveLayout)
 		self.deletetb.triggered.connect(self.deletePage)
@@ -190,8 +194,6 @@ class Ui_MainWindow(object):
 		self.tableWidget_8.cellClicked.connect(self.on_cellClickedTableW)
 		self.tableWidget_9.cellClicked.connect(self.on_cellClickedTableW)
 		self.tableWidget_10.cellClicked.connect(self.on_cellClickedTableW)
-
-		self.tableWidget.itemClicked.connect(self.prueba)
 		
 		self.MainWindow = MainWindow
 
@@ -240,11 +242,6 @@ class Ui_MainWindow(object):
 		if event.key() == QtCore.Qt.Key_Enter: # mac fn + enter
 			self.on_doubleClickedTableW()
 
-	def prueba(self):
-		print("prueba")
-		#x = self.tableWidget.font()
-		#print("x:",x)
-
 	valCut = False
 	def contextMenuEvent(self,event):
 		self.popMenu = QtWidgets.QMenu(MainWindow)
@@ -271,6 +268,8 @@ class Ui_MainWindow(object):
 	
 	i = 0
 	flagLabel = False
+	flagOverLabel = False
+	flagOverList = False
 	def items_cut(self):
 		print("cut")
 		if self.i == 0:
@@ -293,7 +292,9 @@ class Ui_MainWindow(object):
 						
 					item.setBackground(QtGui.QColor('white'))
 					item.setText('')
+
 			print("tempCut1",self.tempCut)
+			self.cleanMylist()
 		else:
 			msgCut = QtWidgets.QMessageBox()
 			returnCut = msgCut.warning(self.MainWindow,'Warning','You alredy have circuit copied to memory. If you continue those circuit will be deleted. Are you sure you want to continue?',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
@@ -321,19 +322,60 @@ class Ui_MainWindow(object):
 						item.setBackground(QtGui.QColor('white'))
 						item.setText('')
 
+	flagEmpty = False
 	def items_paste(self):
 		print("paste")
-		copy = self.tempCut[0] #1
+		self.flagEmpty = False
+		self.tmplist.clear()
+		for i in range(len(self.tempCut)):
+			tmp = self.tempCut[i].split("/")
+			print("tmp:",tmp[0])
+			self.tmplist.append(tmp[0]) 
+			'''
+			for i in range(2,7,4): 
+				if comp1[i] != comp2[i]:
+					if i == 6: #Column
+						if comp2[6] < comp1[6]:
+							if comp1[2] < comp2[2]:
+								self.tempCut.insert(0,"X="+comp1[2]+" Y="+comp2[6]+"/empty")
+			'''
+		for i in range(len(self.tmplist)):
+			new = self.tmplist[i]
+			for j in range(2,7,4):
+				if j == 2:
+					self.comp1.append(new[j])
+					
+				if j == 6:
+					self.comp2.append(new[j])
+		
+		print("C1:",self.comp1)
+		print("C2:",self.comp2)
+		compT = "X="+min(self.comp1)+" Y="+min(self.comp2)
+		print("compT:",compT)
 
+		for i in range(len(self.tmplist)):
+			if compT == self.tmplist[i]:
+				print("No hay espacio Vacio")
+				self.flagEmpty = True
+				#self.tempCut.insert(0,"X="+comp1[2]+" Y="+comp2[6]+"/empty")
+
+		#print("minX:",min(self.comp1))
+		#print("minY:",min(self.comp2))
+		if self.flagEmpty != True:
+			self.tempCut.insert(0,"X="+min(self.comp1)+" Y="+min(self.comp2)+"/empty")
+			self.comp1.clear()
+			self.comp2.clear()
+
+		print("tempC:",self.tempCut)
+		print("tempC:",self.tempCut[0])
+		copy = self.tempCut[0] #1
 		x = copy.split("/")
 		vx = self.tableWidget.currentRow()
 		vy = self.tableWidget.currentColumn()
 
-		#item.setText(x[1])
-		#self.tableWidget.setItem(vx,vy,item)
-
 		self.newCut.append("X="+str(vx)+" Y="+str(vy))
 		self.newCut.append(x[1])
+		#print("Nuevo:",self.newCut)
 
 		for i in range(len(self.tempCut)-1):
 			copy2 = self.tempCut[i+1]  #i+2
@@ -344,6 +386,7 @@ class Ui_MainWindow(object):
 			#print("y:",y)
 			for i in range(2,7,4): 	#(1,4,2):  
 				if copy[i] == copy2[i]:	#1,3
+					#print("same")
 					if i == 2:
 						row = int(new[2]) #1
 					else:
@@ -351,37 +394,68 @@ class Ui_MainWindow(object):
 				else:
 					if i == 2:
 						if copy[2] > copy2[2]: #1
+							#print("primerDigitoM")
 							row = int(copy[2]) - int(copy2[2])
+							row = int(new[2]) - row 
 						else:
+							#print("primerDigitom")
 							row = int(copy2[2]) - int(copy[2])
-						row = int(new[2]) + row
+							row = int(new[2]) + row
+						#print("row:",row)
 					else:
 						if copy[6] > copy2[6]:  #3
+							#print("SegundoDigitoM")
 							column = int(copy[6]) - int(copy2[6])
+							column = int(new[6]) - column
 						else:
+							#print("SegundoDigitom")
 							column = int(copy2[6]) - int(copy[6])
-						column = int(new[6]) + column
-			
-			#item = QtWidgets.QTableWidgetItem()
-			#item.setText(y[1])
-			#self.tableWidget.setItem(row,column,item)
+							column = int(new[6]) + column
+						#print("column:",column)
+
 			self.newCut.append("X="+str(row)+" Y="+str(column))
 			self.newCut.append(y[1])
+			#print("Nuevo2:",self.newCut)
 
-		print("NEWCUT:",self.newCut)
-		self.cleanMylist()
-		self.newMylist()
-		self.tempCut.clear()
-		self.newCut.clear()
-		self.i = 0
+			for i in range(len(self.mylist)):  #Mylist
+				for j in range(0,len(self.newCut),2):
+					if self.newCut[j] == self.mylist[i]:
+						#print("Entro list")
+						#print("mylist:",self.mylist[i])
+						#print("newCut:",self.newCut[j])
+						self.flagOverList = True
+
+			for i in range(len(self.mylabel)): 
+				for j in range(0,len(self.newCut),2):
+					if self.newCut[j] == self.mylabel[i]:
+						#print("Entro label")
+						#print("mylabel:",self.mylabel[i])
+						#print("newCut:",self.newCut[j])
+						self.flagOverLabel = True
+
+		if self.flagOverLabel != False or self.flagOverList != False:
+			self.flagOverList = False
+			self.flagOverLabel = False
+			msgPasteNot = QtWidgets.QMessageBox()
+			msgPasteNot.critical(self.MainWindow,'Error','The location is taken')
+			self.valCut = True
+			self.newCut.clear()
+		else:
+			print("NEWCUT:",self.newCut)
+			#self.cleanMylist()
+			self.newMylist()
+			self.tempCut.clear()
+			self.newCut.clear()
+			self.i = 0
+
 		print("temCutClean:",self.tempCut)
-		print("newCut:",self.newCut)
+		print("newCutFinal:",self.newCut)
 
 	def cleanMylist(self): #clean mylist and mylabel
 		print("CleanMylist")
 		for i in range(len(self.tempCut)):
 			value = self.tempCut[i].split("/")
-			print("VALUE:",value)
+			#print("VALUE:",value)
 			for i in range(len(value)):
 				for j in range(len(self.mylist)):
 					if value[i] == self.mylist[j]:
@@ -396,13 +470,11 @@ class Ui_MainWindow(object):
 						self.mylabel.pop(k) #se recorre un lugar a la izquierda
 						break
 				
-	
 	def newMylist(self):
 		for j in range(len(self.newCut)):
 			x = self.newCut[j].split("\n")
 			if len(x) == 2:
 				t = self.newCut[j-1]
-				#self.newCutL.remove(t)
 				lblt = QtGui.QFont("Arial",10, QtGui.QFont.Normal)
 				item = QtWidgets.QTableWidgetItem(self.newCut[j])
 				item.setFont(lblt)
@@ -420,22 +492,30 @@ class Ui_MainWindow(object):
 
 				if w[0] != 'X':
 					t = self.newCut[j-1]
-					label = self.newCut[j].split('#')
-					number = label[1].split('$')
-					lblt = QtGui.QFont("Arial",int(number[0]), QtGui.QFont.Black)
-					item = QtWidgets.QTableWidgetItem(label[0])
-					if number[1] == 'AT':
-						item.setTextAlignment(QtCore.Qt.AlignTop)
+					if self.newCut[j] == 'empty':
+						item = QtWidgets.QTableWidgetItem()
+						item.setBackground(QtGui.QColor('white'))
 					else:
-						item.setTextAlignment(QtCore.Qt.AlignBottom)
+						label = self.newCut[j].split('#')
+						number = label[1].split('$')
+						lblt = QtGui.QFont("Arial",int(number[0]), QtGui.QFont.Black)
+						item = QtWidgets.QTableWidgetItem(label[0])
 
-					item.setFont(lblt)
-					item.setBackground(QtGui.QColor('lightyellow'))
+						if number[1] == 'AT':
+							item.setTextAlignment(QtCore.Qt.AlignTop)
+						else:
+							item.setTextAlignment(QtCore.Qt.AlignBottom)
+
+						item.setFont(lblt)
+						item.setBackground(QtGui.QColor('lightyellow'))
+
+						self.mylabel.append(self.newCut[j-1])
+						self.mylabel.append(nw)
+					
 					item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
 					self.tableWidget.setItem(int(t[2]),int(t[6]),item)
 
-					self.mylabel.append(self.newCut[j-1])
-					self.mylabel.append(nw)
+						
 					#print("M:",self.mylabel)
 
 				#w  = nw[0].split('')
@@ -497,7 +577,6 @@ class Ui_MainWindow(object):
 	flagCancel = False
 	def bttnCancel(self):
 		print("Cancel")  ##verificar 
-
 		self.flagCancel = False
 		for item in self.tableWidget.selectedItems():
 			self.flagCancel = True

@@ -158,7 +158,9 @@ class Ui_NewLabel(QtWidgets.QDialog):
 			
 			else:
 				for i in range(len(self.parent.mylabel)):
-					if self.parent.mylabel[i] ==text:
+					x = self.parent.mylabel[i].split('#')
+					#if self.parent.mylabel[i] ==text:
+					if x[0] == text:
 						self.validatorLabel = True
 
 				if self.validatorLabel != False:
