@@ -244,28 +244,236 @@ class Ui_MainWindow(object):
 
 	valCut = False
 	def contextMenuEvent(self,event):
-		self.popMenu = QtWidgets.QMenu(MainWindow)
-		cutAct = self.popMenu.addAction('Cut')
-		pasAct = self.popMenu.addAction('Paste')
-		delAct = self.popMenu.addAction('Delete')
-	
-		if self.valCut == False:
-			pasAct.setDisabled(True)
-		else:
-			pasAct.setDisabled(False)
+		if self.tableWidget.isVisible()==True:
+			self.popMenu = QtWidgets.QMenu(MainWindow)
+			cutAct = self.popMenu.addAction('Cut')
+			pasAct = self.popMenu.addAction('Paste')
+			delAct = self.popMenu.addAction('Delete')
+		
+			if self.valCut == False:
+				pasAct.setDisabled(True)
+			else:
+				pasAct.setDisabled(False)
 
-		action = self.popMenu.exec_(self.tableWidget.mapToGlobal(event.pos()))
+			action = self.popMenu.exec_(self.tableWidget.mapToGlobal(event.pos()))
 
-		if action == delAct:
-			self.items_clear()
+			if action == delAct:
+				self.items_clear()
 
-		if action == pasAct:
-			self.valCut = False   
-			self.items_paste()
+			if action == pasAct:
+				self.valCut = False   
+				self.items_paste()
 
-		if action == cutAct:
-			self.items_cut()
-	
+			if action == cutAct:
+				self.items_cut()
+
+		if self.tableWidget_2.isVisible()==True:
+			self.popMenu = QtWidgets.QMenu(MainWindow)
+			cutAct = self.popMenu.addAction('Cut')
+			pasAct = self.popMenu.addAction('Paste')
+			delAct = self.popMenu.addAction('Delete')
+		
+			if self.valCut == False:
+				pasAct.setDisabled(True)
+			else:
+				pasAct.setDisabled(False)
+
+			action = self.popMenu.exec_(self.tableWidget_2.mapToGlobal(event.pos()))
+
+			if action == delAct:
+				self.items_clear()
+
+			if action == pasAct:
+				self.valCut = False
+				self.items_paste()
+
+			if action == cutAct:
+				self.items_cut()
+
+		if self.tableWidget_3.isVisible()==True:
+			self.popMenu = QtWidgets.QMenu(MainWindow)
+			cutAct = self.popMenu.addAction('Cut')
+			pasAct = self.popMenu.addAction('Paste')
+			delAct = self.popMenu.addAction('Delete')
+		
+			if self.valCut == False:
+				pasAct.setDisabled(True)
+			else:
+				pasAct.setDisabled(False)
+
+			action = self.popMenu.exec_(self.tableWidget_3.mapToGlobal(event.pos()))
+
+			if action == delAct:
+				self.items_clear()
+
+			if action == pasAct:
+				self.valCut = False
+				self.items_paste()
+
+			if action == cutAct:
+				self.items_cut()
+
+		if self.tableWidget_4.isVisible()==True:
+			self.popMenu = QtWidgets.QMenu(MainWindow)
+			cutAct = self.popMenu.addAction('Cut')
+			pasAct = self.popMenu.addAction('Paste')
+			delAct = self.popMenu.addAction('Delete')
+		
+			if self.valCut == False:
+				pasAct.setDisabled(True)
+			else:
+				pasAct.setDisabled(False)
+
+			action = self.popMenu.exec_(self.tableWidget_4.mapToGlobal(event.pos()))
+
+			if action == delAct:
+				self.items_clear()
+
+			if action == pasAct:
+				self.valCut = False
+				self.items_paste()
+
+			if action == cutAct:
+				self.items_cut()
+
+		if self.tableWidget_5.isVisible()==True:
+			self.popMenu = QtWidgets.QMenu(MainWindow)
+			cutAct = self.popMenu.addAction('Cut')
+			pasAct = self.popMenu.addAction('Paste')
+			delAct = self.popMenu.addAction('Delete')
+		
+			if self.valCut == False:
+				pasAct.setDisabled(True)
+			else:
+				pasAct.setDisabled(False)
+
+			action = self.popMenu.exec_(self.tableWidget_5.mapToGlobal(event.pos()))
+
+			if action == delAct:
+				self.items_clear()
+
+			if action == pasAct:
+				self.valCut = False
+				self.items_paste()
+
+			if action == cutAct:
+				self.items_cut()
+
+		if self.tableWidget_6.isVisible()==True:
+			self.popMenu = QtWidgets.QMenu(MainWindow)
+			cutAct = self.popMenu.addAction('Cut')
+			pasAct = self.popMenu.addAction('Paste')
+			delAct = self.popMenu.addAction('Delete')
+		
+			if self.valCut == False:
+				pasAct.setDisabled(True)
+			else:
+				pasAct.setDisabled(False)
+
+			action = self.popMenu.exec_(self.tableWidget_6.mapToGlobal(event.pos()))
+
+			if action == delAct:
+				self.items_clear()
+
+			if action == pasAct:
+				self.valCut = False
+				self.items_paste()
+
+			if action == cutAct:
+				self.items_cut()
+
+		if self.tableWidget_7.isVisible()==True:
+			self.popMenu = QtWidgets.QMenu(MainWindow)
+			cutAct = self.popMenu.addAction('Cut')
+			pasAct = self.popMenu.addAction('Paste')
+			delAct = self.popMenu.addAction('Delete')
+		
+			if self.valCut == False:
+				pasAct.setDisabled(True)
+			else:
+				pasAct.setDisabled(False)
+
+			action = self.popMenu.exec_(self.tableWidget_7.mapToGlobal(event.pos()))
+
+			if action == delAct:
+				self.items_clear()
+
+			if action == pasAct:
+				self.valCut = False
+				self.items_paste()
+
+			if action == cutAct:
+				self.items_cut()
+
+		if self.tableWidget_8.isVisible()==True:
+			self.popMenu = QtWidgets.QMenu(MainWindow)
+			cutAct = self.popMenu.addAction('Cut')
+			pasAct = self.popMenu.addAction('Paste')
+			delAct = self.popMenu.addAction('Delete')
+		
+			if self.valCut == False:
+				pasAct.setDisabled(True)
+			else:
+				pasAct.setDisabled(False)
+
+			action = self.popMenu.exec_(self.tableWidget_8.mapToGlobal(event.pos()))
+
+			if action == delAct:
+				self.items_clear()
+
+			if action == pasAct:
+				self.valCut = False
+				self.items_paste()
+
+			if action == cutAct:
+				self.items_cut()
+		
+		if self.tableWidget_9.isVisible()==True:
+			self.popMenu = QtWidgets.QMenu(MainWindow)
+			cutAct = self.popMenu.addAction('Cut')
+			pasAct = self.popMenu.addAction('Paste')
+			delAct = self.popMenu.addAction('Delete')
+		
+			if self.valCut == False:
+				pasAct.setDisabled(True)
+			else:
+				pasAct.setDisabled(False)
+
+			action = self.popMenu.exec_(self.tableWidget_9.mapToGlobal(event.pos()))
+
+			if action == delAct:
+				self.items_clear()
+
+			if action == pasAct:
+				self.valCut = False
+				self.items_paste()
+
+			if action == cutAct:
+				self.items_cut()
+
+		if self.tableWidget_10.isVisible()==True:
+			self.popMenu = QtWidgets.QMenu(MainWindow)
+			cutAct = self.popMenu.addAction('Cut')
+			pasAct = self.popMenu.addAction('Paste')
+			delAct = self.popMenu.addAction('Delete')
+		
+			if self.valCut == False:
+				pasAct.setDisabled(True)
+			else:
+				pasAct.setDisabled(False)
+
+			action = self.popMenu.exec_(self.tableWidget_10.mapToGlobal(event.pos()))
+
+			if action == delAct:
+				self.items_clear()
+
+			if action == pasAct:
+				self.valCut = False
+				self.items_paste()
+
+			if action == cutAct:
+				self.items_cut()
+
 	i = 0
 	flagLabel = False
 	flagOverLabel = False
@@ -273,39 +481,11 @@ class Ui_MainWindow(object):
 	def items_cut(self):
 		print("cut")
 		if self.i == 0:
-			for item in self.tableWidget.selectedItems():
-				if item.text()!='':
-					self.flagLabel = False
-					self.valCut = True
-					self.i = self.i + 1
-					txt = item.text()
-					coord2 = u"X=%i Y=%i/" % (item.row(), item.column())
-
-					for i in range(len(self.mylabel)):
-						x = coord2.replace('/','')
-						if self.mylabel[i] == x:
-							self.flagLabel = True
-							self.tempCut.append(coord2+self.mylabel[i+1])
-
-					if self.flagLabel != True:
-						self.tempCut.append(coord2+txt)
-						
-					item.setBackground(QtGui.QColor('white'))
-					item.setText('')
-
-			print("tempCut1",self.tempCut)
-			self.cleanMylist()
-		else:
-			msgCut = QtWidgets.QMessageBox()
-			returnCut = msgCut.warning(self.MainWindow,'Warning','You alredy have circuit copied to memory. If you continue those circuit will be deleted. Are you sure you want to continue?',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
-			if returnCut == msgCut.Yes:
-				print("tempCutElse",self.tempCut)
-
-				self.cleanMylist()
-				self.tempCut.clear()
+			if self.tableWidget.isVisible()==True:
 				for item in self.tableWidget.selectedItems():
 					if item.text()!='':
 						self.flagLabel = False
+						self.valCut = True
 						self.i = self.i + 1
 						txt = item.text()
 						coord2 = u"X=%i Y=%i/" % (item.row(), item.column())
@@ -318,27 +498,420 @@ class Ui_MainWindow(object):
 
 						if self.flagLabel != True:
 							self.tempCut.append(coord2+txt)
-
+							
 						item.setBackground(QtGui.QColor('white'))
 						item.setText('')
 
+			if self.tableWidget_2.isVisible()==True:
+				for item in self.tableWidget_2.selectedItems():
+					if item.text()!='':
+						self.flagLabel = False
+						self.valCut = True
+						self.i = self.i + 1
+						txt = item.text()
+						coord2 = u"X=%i Y=%i/" % (item.row(), item.column())
+
+						for i in range(len(self.mylabel)):
+							x = coord2.replace('/','')
+							if self.mylabel[i] == x:
+								self.flagLabel = True
+								self.tempCut.append(coord2+self.mylabel[i+1])
+
+						if self.flagLabel != True:
+							self.tempCut.append(coord2+txt)
+							
+						item.setBackground(QtGui.QColor('white'))
+						item.setText('')
+
+			if self.tableWidget_3.isVisible()==True:
+				for item in self.tableWidget_3.selectedItems():
+					if item.text()!='':
+						self.flagLabel = False
+						self.valCut = True
+						self.i = self.i + 1
+						txt = item.text()
+						coord2 = u"X=%i Y=%i/" % (item.row(), item.column())
+
+						for i in range(len(self.mylabel)):
+							x = coord2.replace('/','')
+							if self.mylabel[i] == x:
+								self.flagLabel = True
+								self.tempCut.append(coord2+self.mylabel[i+1])
+
+						if self.flagLabel != True:
+							self.tempCut.append(coord2+txt)
+							
+						item.setBackground(QtGui.QColor('white'))
+						item.setText('')
+
+			if self.tableWidget_4.isVisible()==True:
+				for item in self.tableWidget_4.selectedItems():
+					if item.text()!='':
+						self.flagLabel = False
+						self.valCut = True
+						self.i = self.i + 1
+						txt = item.text()
+						coord2 = u"X=%i Y=%i/" % (item.row(), item.column())
+
+						for i in range(len(self.mylabel)):
+							x = coord2.replace('/','')
+							if self.mylabel[i] == x:
+								self.flagLabel = True
+								self.tempCut.append(coord2+self.mylabel[i+1])
+
+						if self.flagLabel != True:
+							self.tempCut.append(coord2+txt)
+							
+						item.setBackground(QtGui.QColor('white'))
+						item.setText('')
+
+			if self.tableWidget_5.isVisible()==True:
+				for item in self.tableWidget_5.selectedItems():
+					if item.text()!='':
+						self.flagLabel = False
+						self.valCut = True
+						self.i = self.i + 1
+						txt = item.text()
+						coord2 = u"X=%i Y=%i/" % (item.row(), item.column())
+
+						for i in range(len(self.mylabel)):
+							x = coord2.replace('/','')
+							if self.mylabel[i] == x:
+								self.flagLabel = True
+								self.tempCut.append(coord2+self.mylabel[i+1])
+
+						if self.flagLabel != True:
+							self.tempCut.append(coord2+txt)
+							
+						item.setBackground(QtGui.QColor('white'))
+						item.setText('')
+
+			if self.tableWidget_6.isVisible()==True:
+				for item in self.tableWidget_6.selectedItems():
+					if item.text()!='':
+						self.flagLabel = False
+						self.valCut = True
+						self.i = self.i + 1
+						txt = item.text()
+						coord2 = u"X=%i Y=%i/" % (item.row(), item.column())
+
+						for i in range(len(self.mylabel)):
+							x = coord2.replace('/','')
+							if self.mylabel[i] == x:
+								self.flagLabel = True
+								self.tempCut.append(coord2+self.mylabel[i+1])
+
+						if self.flagLabel != True:
+							self.tempCut.append(coord2+txt)
+							
+						item.setBackground(QtGui.QColor('white'))
+						item.setText('')
+
+			if self.tableWidget_7.isVisible()==True:
+				for item in self.tableWidget_7.selectedItems():
+					if item.text()!='':
+						self.flagLabel = False
+						self.valCut = True
+						self.i = self.i + 1
+						txt = item.text()
+						coord2 = u"X=%i Y=%i/" % (item.row(), item.column())
+
+						for i in range(len(self.mylabel)):
+							x = coord2.replace('/','')
+							if self.mylabel[i] == x:
+								self.flagLabel = True
+								self.tempCut.append(coord2+self.mylabel[i+1])
+
+						if self.flagLabel != True:
+							self.tempCut.append(coord2+txt)
+							
+						item.setBackground(QtGui.QColor('white'))
+						item.setText('')
+
+			if self.tableWidget_8.isVisible()==True:
+				for item in self.tableWidget_8.selectedItems():
+					if item.text()!='':
+						self.flagLabel = False
+						self.valCut = True
+						self.i = self.i + 1
+						txt = item.text()
+						coord2 = u"X=%i Y=%i/" % (item.row(), item.column())
+
+						for i in range(len(self.mylabel)):
+							x = coord2.replace('/','')
+							if self.mylabel[i] == x:
+								self.flagLabel = True
+								self.tempCut.append(coord2+self.mylabel[i+1])
+
+						if self.flagLabel != True:
+							self.tempCut.append(coord2+txt)
+							
+						item.setBackground(QtGui.QColor('white'))
+						item.setText('')
+
+			if self.tableWidget_9.isVisible()==True:
+				for item in self.tableWidget_9.selectedItems():
+					if item.text()!='':
+						self.flagLabel = False
+						self.valCut = True
+						self.i = self.i + 1
+						txt = item.text()
+						coord2 = u"X=%i Y=%i/" % (item.row(), item.column())
+
+						for i in range(len(self.mylabel)):
+							x = coord2.replace('/','')
+							if self.mylabel[i] == x:
+								self.flagLabel = True
+								self.tempCut.append(coord2+self.mylabel[i+1])
+
+						if self.flagLabel != True:
+							self.tempCut.append(coord2+txt)
+							
+						item.setBackground(QtGui.QColor('white'))
+						item.setText('')
+
+			if self.tableWidget_10.isVisible()==True:
+				for item in self.tableWidget_10.selectedItems():
+					if item.text()!='':
+						self.flagLabel = False
+						self.valCut = True
+						self.i = self.i + 1
+						txt = item.text()
+						coord2 = u"X=%i Y=%i/" % (item.row(), item.column())
+
+						for i in range(len(self.mylabel)):
+							x = coord2.replace('/','')
+							if self.mylabel[i] == x:
+								self.flagLabel = True
+								self.tempCut.append(coord2+self.mylabel[i+1])
+
+						if self.flagLabel != True:
+							self.tempCut.append(coord2+txt)
+							
+						item.setBackground(QtGui.QColor('white'))
+						item.setText('')
+
+			print("tempCut1",self.tempCut)
+			self.cleanMylist()
+		else:
+			msgCut = QtWidgets.QMessageBox()
+			returnCut = msgCut.warning(self.MainWindow,'Warning','You alredy have circuit copied to memory. If you continue those circuit will be deleted. Are you sure you want to continue?',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
+			if returnCut == msgCut.Yes:
+				print("tempCutElse",self.tempCut)
+
+				self.cleanMylist()
+				self.tempCut.clear()
+				
+				if self.tableWidget.isVisible()==True:
+					for item in self.tableWidget.selectedItems():
+						if item.text()!='':
+							self.flagLabel = False
+							self.i = self.i + 1
+							txt = item.text()
+							coord2 = u"X=%i Y=%i/" % (item.row(), item.column())
+
+							for i in range(len(self.mylabel)):
+								x = coord2.replace('/','')
+								if self.mylabel[i] == x:
+									self.flagLabel = True
+									self.tempCut.append(coord2+self.mylabel[i+1])
+
+							if self.flagLabel != True:
+								self.tempCut.append(coord2+txt)
+
+							item.setBackground(QtGui.QColor('white'))
+							item.setText('')
+				
+				if self.tableWidget_2.isVisible()==True:
+					for item in self.tableWidget_2.selectedItems():
+						if item.text()!='':
+							self.flagLabel = False
+							self.i = self.i + 1
+							txt = item.text()
+							coord2 = u"X=%i Y=%i/" % (item.row(), item.column())
+
+							for i in range(len(self.mylabel)):
+								x = coord2.replace('/','')
+								if self.mylabel[i] == x:
+									self.flagLabel = True
+									self.tempCut.append(coord2+self.mylabel[i+1])
+
+							if self.flagLabel != True:
+								self.tempCut.append(coord2+txt)
+
+							item.setBackground(QtGui.QColor('white'))
+							item.setText('')
+
+				if self.tableWidget_3.isVisible()==True:
+					for item in self.tableWidget_3.selectedItems():
+						if item.text()!='':
+							self.flagLabel = False
+							self.i = self.i + 1
+							txt = item.text()
+							coord2 = u"X=%i Y=%i/" % (item.row(), item.column())
+
+							for i in range(len(self.mylabel)):
+								x = coord2.replace('/','')
+								if self.mylabel[i] == x:
+									self.flagLabel = True
+									self.tempCut.append(coord2+self.mylabel[i+1])
+
+							if self.flagLabel != True:
+								self.tempCut.append(coord2+txt)
+
+							item.setBackground(QtGui.QColor('white'))
+							item.setText('')
+
+				if self.tableWidget_4.isVisible()==True:
+					for item in self.tableWidget_4.selectedItems():
+						if item.text()!='':
+							self.flagLabel = False
+							self.i = self.i + 1
+							txt = item.text()
+							coord2 = u"X=%i Y=%i/" % (item.row(), item.column())
+
+							for i in range(len(self.mylabel)):
+								x = coord2.replace('/','')
+								if self.mylabel[i] == x:
+									self.flagLabel = True
+									self.tempCut.append(coord2+self.mylabel[i+1])
+
+							if self.flagLabel != True:
+								self.tempCut.append(coord2+txt)
+
+							item.setBackground(QtGui.QColor('white'))
+							item.setText('')
+
+				if self.tableWidget_5.isVisible()==True:
+					for item in self.tableWidget_5.selectedItems():
+						if item.text()!='':
+							self.flagLabel = False
+							self.i = self.i + 1
+							txt = item.text()
+							coord2 = u"X=%i Y=%i/" % (item.row(), item.column())
+
+							for i in range(len(self.mylabel)):
+								x = coord2.replace('/','')
+								if self.mylabel[i] == x:
+									self.flagLabel = True
+									self.tempCut.append(coord2+self.mylabel[i+1])
+
+							if self.flagLabel != True:
+								self.tempCut.append(coord2+txt)
+
+							item.setBackground(QtGui.QColor('white'))
+							item.setText('')
+
+				if self.tableWidget_6.isVisible()==True:
+					for item in self.tableWidget_6.selectedItems():
+						if item.text()!='':
+							self.flagLabel = False
+							self.i = self.i + 1
+							txt = item.text()
+							coord2 = u"X=%i Y=%i/" % (item.row(), item.column())
+
+							for i in range(len(self.mylabel)):
+								x = coord2.replace('/','')
+								if self.mylabel[i] == x:
+									self.flagLabel = True
+									self.tempCut.append(coord2+self.mylabel[i+1])
+
+							if self.flagLabel != True:
+								self.tempCut.append(coord2+txt)
+
+							item.setBackground(QtGui.QColor('white'))
+							item.setText('')
+
+				if self.tableWidget_7.isVisible()==True:
+					for item in self.tableWidget_7.selectedItems():
+						if item.text()!='':
+							self.flagLabel = False
+							self.i = self.i + 1
+							txt = item.text()
+							coord2 = u"X=%i Y=%i/" % (item.row(), item.column())
+
+							for i in range(len(self.mylabel)):
+								x = coord2.replace('/','')
+								if self.mylabel[i] == x:
+									self.flagLabel = True
+									self.tempCut.append(coord2+self.mylabel[i+1])
+
+							if self.flagLabel != True:
+								self.tempCut.append(coord2+txt)
+
+							item.setBackground(QtGui.QColor('white'))
+							item.setText('')
+
+				if self.tableWidget_8.isVisible()==True:
+					for item in self.tableWidget_8.selectedItems():
+						if item.text()!='':
+							self.flagLabel = False
+							self.i = self.i + 1
+							txt = item.text()
+							coord2 = u"X=%i Y=%i/" % (item.row(), item.column())
+
+							for i in range(len(self.mylabel)):
+								x = coord2.replace('/','')
+								if self.mylabel[i] == x:
+									self.flagLabel = True
+									self.tempCut.append(coord2+self.mylabel[i+1])
+
+							if self.flagLabel != True:
+								self.tempCut.append(coord2+txt)
+
+							item.setBackground(QtGui.QColor('white'))
+							item.setText('')
+
+				if self.tableWidget_9.isVisible()==True:
+					for item in self.tableWidget_9.selectedItems():
+						if item.text()!='':
+							self.flagLabel = False
+							self.i = self.i + 1
+							txt = item.text()
+							coord2 = u"X=%i Y=%i/" % (item.row(), item.column())
+
+							for i in range(len(self.mylabel)):
+								x = coord2.replace('/','')
+								if self.mylabel[i] == x:
+									self.flagLabel = True
+									self.tempCut.append(coord2+self.mylabel[i+1])
+
+							if self.flagLabel != True:
+								self.tempCut.append(coord2+txt)
+
+							item.setBackground(QtGui.QColor('white'))
+							item.setText('')
+
+				if self.tableWidget_10.isVisible()==True:
+					for item in self.tableWidget_10.selectedItems():
+						if item.text()!='':
+							self.flagLabel = False
+							self.i = self.i + 1
+							txt = item.text()
+							coord2 = u"X=%i Y=%i/" % (item.row(), item.column())
+
+							for i in range(len(self.mylabel)):
+								x = coord2.replace('/','')
+								if self.mylabel[i] == x:
+									self.flagLabel = True
+									self.tempCut.append(coord2+self.mylabel[i+1])
+
+							if self.flagLabel != True:
+								self.tempCut.append(coord2+txt)
+
+							item.setBackground(QtGui.QColor('white'))
+							item.setText('')
+
 	flagEmpty = False
 	def items_paste(self):
-		print("paste")
+		print("paste") #verificar variable de cortar
 		self.flagEmpty = False
 		self.tmplist.clear()
 		for i in range(len(self.tempCut)):
 			tmp = self.tempCut[i].split("/")
 			print("tmp:",tmp[0])
 			self.tmplist.append(tmp[0]) 
-			'''
-			for i in range(2,7,4): 
-				if comp1[i] != comp2[i]:
-					if i == 6: #Column
-						if comp2[6] < comp1[6]:
-							if comp1[2] < comp2[2]:
-								self.tempCut.insert(0,"X="+comp1[2]+" Y="+comp2[6]+"/empty")
-			'''
+
 		for i in range(len(self.tmplist)):
 			new = self.tmplist[i]
 			for j in range(2,7,4):
@@ -347,11 +920,8 @@ class Ui_MainWindow(object):
 					
 				if j == 6:
 					self.comp2.append(new[j])
-		
-		#print("C1:",self.comp1)
-		#print("C2:",self.comp2)
+
 		compT = "X="+min(self.comp1)+" Y="+min(self.comp2)
-		#print("compT:",compT)
 
 		for i in range(len(self.tmplist)):
 			if compT == self.tmplist[i]:
@@ -359,19 +929,56 @@ class Ui_MainWindow(object):
 				self.flagEmpty = True
 				#self.tempCut.insert(0,"X="+comp1[2]+" Y="+comp2[6]+"/empty")
 
-		#print("minX:",min(self.comp1))
-		#print("minY:",min(self.comp2))
 		if self.flagEmpty != True:
 			self.tempCut.insert(0,"X="+min(self.comp1)+" Y="+min(self.comp2)+"/empty")
 			self.comp1.clear()
 			self.comp2.clear()
 
-		print("tempC:",self.tempCut)
-		print("tempC:",self.tempCut[0])
+		#print("tempC:",self.tempCut)
+		#print("tempC:",self.tempCut[0])
 		copy = self.tempCut[0] #1
 		x = copy.split("/")
-		vx = self.tableWidget.currentRow()
-		vy = self.tableWidget.currentColumn()
+
+		#///////////////////////////////////////////////////////////////////////////
+		if self.tableWidget.isVisible()==True:
+			vx = self.tableWidget.currentRow()
+			vy = self.tableWidget.currentColumn()
+
+		if self.tableWidget_2.isVisible()==True:
+			vx = self.tableWidget_2.currentRow()
+			vy = self.tableWidget_2.currentColumn()
+
+		if self.tableWidget_3.isVisible()==True:
+			vx = self.tableWidget_3.currentRow()
+			vy = self.tableWidget_3.currentColumn()
+
+		if self.tableWidget_4.isVisible()==True:
+			vx = self.tableWidget_4.currentRow()
+			vy = self.tableWidget_4.currentColumn()
+
+		if self.tableWidget_5.isVisible()==True:
+			vx = self.tableWidget_5.currentRow()
+			vy = self.tableWidget_5.currentColumn()
+
+		if self.tableWidget_6.isVisible()==True:
+			vx = self.tableWidget_6.currentRow()
+			vy = self.tableWidget_6.currentColumn()
+
+		if self.tableWidget_7.isVisible()==True:
+			vx = self.tableWidget_7.currentRow()
+			vy = self.tableWidget_7.currentColumn()
+
+		if self.tableWidget_8.isVisible()==True:
+			vx = self.tableWidget_8.currentRow()
+			vy = self.tableWidget_8.currentColumn()
+
+		if self.tableWidget_9.isVisible()==True:
+			vx = self.tableWidget_9.currentRow()
+			vy = self.tableWidget_9.currentColumn()
+
+		if self.tableWidget_10.isVisible()==True:
+			vx = self.tableWidget_10.currentRow()
+			vy = self.tableWidget_10.currentColumn()
 
 		self.newCut.append("X="+str(vx)+" Y="+str(vy))
 		self.newCut.append(x[1])
@@ -474,13 +1081,95 @@ class Ui_MainWindow(object):
 		for j in range(len(self.newCut)):
 			x = self.newCut[j].split("\n")
 			if len(x) == 2:
-				t = self.newCut[j-1]
-				lblt = QtGui.QFont("Arial",10, QtGui.QFont.Normal)
-				item = QtWidgets.QTableWidgetItem(self.newCut[j])
-				item.setFont(lblt)
-				item.setBackground(QtGui.QColor('lightblue'))
-				item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
-				self.tableWidget.setItem(int(t[2]),int(t[6]),item)
+				if self.tableWidget.isVisible()==True:
+					t = self.newCut[j-1]
+					lblt = QtGui.QFont("Arial",10, QtGui.QFont.Normal)
+					item = QtWidgets.QTableWidgetItem(self.newCut[j])
+					item.setFont(lblt)
+					item.setBackground(QtGui.QColor('lightblue'))
+					item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+					self.tableWidget.setItem(int(t[2]),int(t[6]),item)
+
+				if self.tableWidget_2.isVisible()==True:
+					t = self.newCut[j-1]
+					lblt = QtGui.QFont("Arial",10, QtGui.QFont.Normal)
+					item = QtWidgets.QTableWidgetItem(self.newCut[j])
+					item.setFont(lblt)
+					item.setBackground(QtGui.QColor('lightblue'))
+					item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+					self.tableWidget_2.setItem(int(t[2]),int(t[6]),item)
+
+				if self.tableWidget_3.isVisible()==True:
+					t = self.newCut[j-1]
+					lblt = QtGui.QFont("Arial",10, QtGui.QFont.Normal)
+					item = QtWidgets.QTableWidgetItem(self.newCut[j])
+					item.setFont(lblt)
+					item.setBackground(QtGui.QColor('lightblue'))
+					item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+					self.tableWidget_3.setItem(int(t[2]),int(t[6]),item)
+
+				if self.tableWidget_4.isVisible()==True:
+					t = self.newCut[j-1]
+					lblt = QtGui.QFont("Arial",10, QtGui.QFont.Normal)
+					item = QtWidgets.QTableWidgetItem(self.newCut[j])
+					item.setFont(lblt)
+					item.setBackground(QtGui.QColor('lightblue'))
+					item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+					self.tableWidget_4.setItem(int(t[2]),int(t[6]),item)
+
+				if self.tableWidget_5.isVisible()==True:
+					t = self.newCut[j-1]
+					lblt = QtGui.QFont("Arial",10, QtGui.QFont.Normal)
+					item = QtWidgets.QTableWidgetItem(self.newCut[j])
+					item.setFont(lblt)
+					item.setBackground(QtGui.QColor('lightblue'))
+					item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+					self.tableWidget_5.setItem(int(t[2]),int(t[6]),item)
+
+				if self.tableWidget_6.isVisible()==True:
+					t = self.newCut[j-1]
+					lblt = QtGui.QFont("Arial",10, QtGui.QFont.Normal)
+					item = QtWidgets.QTableWidgetItem(self.newCut[j])
+					item.setFont(lblt)
+					item.setBackground(QtGui.QColor('lightblue'))
+					item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+					self.tableWidget_6.setItem(int(t[2]),int(t[6]),item)
+
+				if self.tableWidget_7.isVisible()==True:
+					t = self.newCut[j-1]
+					lblt = QtGui.QFont("Arial",10, QtGui.QFont.Normal)
+					item = QtWidgets.QTableWidgetItem(self.newCut[j])
+					item.setFont(lblt)
+					item.setBackground(QtGui.QColor('lightblue'))
+					item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+					self.tableWidget_7.setItem(int(t[2]),int(t[6]),item)
+
+				if self.tableWidget_8.isVisible()==True:
+					t = self.newCut[j-1]
+					lblt = QtGui.QFont("Arial",10, QtGui.QFont.Normal)
+					item = QtWidgets.QTableWidgetItem(self.newCut[j])
+					item.setFont(lblt)
+					item.setBackground(QtGui.QColor('lightblue'))
+					item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+					self.tableWidget_8.setItem(int(t[2]),int(t[6]),item)
+
+				if self.tableWidget_9.isVisible()==True:
+					t = self.newCut[j-1]
+					lblt = QtGui.QFont("Arial",10, QtGui.QFont.Normal)
+					item = QtWidgets.QTableWidgetItem(self.newCut[j])
+					item.setFont(lblt)
+					item.setBackground(QtGui.QColor('lightblue'))
+					item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+					self.tableWidget_9.setItem(int(t[2]),int(t[6]),item)
+
+				if self.tableWidget_10.isVisible()==True:
+					t = self.newCut[j-1]
+					lblt = QtGui.QFont("Arial",10, QtGui.QFont.Normal)
+					item = QtWidgets.QTableWidgetItem(self.newCut[j])
+					item.setFont(lblt)
+					item.setBackground(QtGui.QColor('lightblue'))
+					item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+					self.tableWidget_10.setItem(int(t[2]),int(t[6]),item)
 
 				self.mylist.append(self.newCut[j-1])
 				for i in range(2):
@@ -511,81 +1200,604 @@ class Ui_MainWindow(object):
 
 						self.mylabel.append(self.newCut[j-1])
 						self.mylabel.append(nw)
-					
-					item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
-					self.tableWidget.setItem(int(t[2]),int(t[6]),item)
-
 						
-					#print("M:",self.mylabel)
+					if self.tableWidget.isVisible()==True:
+						item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+						self.tableWidget.setItem(int(t[2]),int(t[6]),item)
 
-				#w  = nw[0].split('')
-				
-				#item = QtWidgets.QTableWidgetItem(self.newCut[j])
-				#lblt = QtGui.QFont("Arial",int(sizeW), QtGui.QFont.Black)
-				#item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+					if self.tableWidget_2.isVisible()==True:
+						item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+						self.tableWidget_2.setItem(int(t[2]),int(t[6]),item)
 
-				#nw = x[0].replace('[]','')
-				#print("nw:",nw)
-				#self.mylabel.append(nw)
+					if self.tableWidget_3.isVisible()==True:
+						item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+						self.tableWidget_3.setItem(int(t[2]),int(t[6]),item)
+
+					if self.tableWidget_4.isVisible()==True:
+						item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+						self.tableWidget_4.setItem(int(t[2]),int(t[6]),item)
+
+					if self.tableWidget_5.isVisible()==True:
+						item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+						self.tableWidget_5.setItem(int(t[2]),int(t[6]),item)
+
+					if self.tableWidget_6.isVisible()==True:
+						item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+						self.tableWidget_6.setItem(int(t[2]),int(t[6]),item)
+
+					if self.tableWidget_7.isVisible()==True:
+						item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+						self.tableWidget_7.setItem(int(t[2]),int(t[6]),item)
+
+					if self.tableWidget_8.isVisible()==True:
+						item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+						self.tableWidget_8.setItem(int(t[2]),int(t[6]),item)
+
+					if self.tableWidget_9.isVisible()==True:
+						item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+						self.tableWidget_9.setItem(int(t[2]),int(t[6]),item)
+
+					if self.tableWidget_10.isVisible()==True:
+						item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+						self.tableWidget_10.setItem(int(t[2]),int(t[6]),item)
+		
 
 	editDelete = False
 	secondEdit = False
 	flagEdit = False
+	editDelete2 = False
+	secondEdit2 = False
+	flagEdit2 = False
+	editDelete3 = False
+	secondEdit3 = False
+	flagEdit3 = False
+	editDelete4 = False
+	secondEdit4 = False
+	flagEdit4 = False
+	editDelete5 = False
+	secondEdit5 = False
+	flagEdit5 = False
+	editDelete6 = False
+	secondEdit6 = False
+	flagEdit6 = False
+	editDelete7 = False
+	secondEdit7 = False
+	flagEdit7 = False
+	editDelete8 = False
+	secondEdit8 = False
+	flagEdit8 = False
+	editDelete9 = False
+	secondEdit9 = False
+	flagEdit9 = False
+	editDelete10 = False
+	secondEdit10 = False
+	flagEdit10 = False
 	def items_clear(self):
-		msgClear = QtWidgets.QMessageBox()
-		for item in self.tableWidget.selectedItems():
-			if item.text()!='':
-				self.editDelete = True 
+		if self.tableWidget.isVisible()==True:
+			print("clearTable1")
+			msgClear = QtWidgets.QMessageBox()
+			for item in self.tableWidget.selectedItems():
+				if item.text()!='':
+					self.editDelete = True 
 
-		if self.editDelete == True:
-			returnValue = msgClear.warning(self.MainWindow,'Warning','Are you sure you want to delete?',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
-			self.editDelete = False
+			if self.editDelete == True:
+				returnValue = msgClear.warning(self.MainWindow,'Warning','Are you sure you want to delete?',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
+				self.editDelete = False
 
-			if returnValue == msgClear.Yes:
-				for item in self.tableWidget.selectedItems(): 
-					vy = item.column()
-					vx = item.row()
-					value = "X="+str(vx)+" Y="+str(vy)
+				if returnValue == msgClear.Yes:
+					for item in self.tableWidget.selectedItems(): 
+						vy = item.column()
+						vx = item.row()
+						value = "X="+str(vx)+" Y="+str(vy)
 
-					item.setBackground(QtGui.QColor('white'))
-					item.setText('')
+						item.setBackground(QtGui.QColor('white'))
+						item.setText('')
 
-					for i in range(len(self.mylist)): 
-						if self.mylist[i] == value:
-							self.x = i
-							self.secondEdit = True
+						for i in range(len(self.mylist)): 
+							if self.mylist[i] == value:
+								self.x = i
+								self.secondEdit = True
 
-					for i in range(len(self.mylabel)):
-						if self.mylabel[i] == value:
-							self.y = i
-							self.flagEdit = True
+						for i in range(len(self.mylabel)):
+							if self.mylabel[i] == value:
+								self.y = i
+								self.flagEdit = True
 
-					if self.flagEdit == True:
-						self.mylabel.pop(self.y+1)
-						self.mylabel.pop(self.y)
-						self.flagEdit = False
+						if self.flagEdit == True:
+							self.mylabel.pop(self.y+1)
+							self.mylabel.pop(self.y)
+							self.flagEdit = False
 
-					if self.secondEdit == True: 
-						self.mylist.pop(self.x+2)
-						self.mylist.pop(self.x+1)
-						self.mylist.pop(self.x) #se recorre un lugar a la izquierda
-						self.secondEdit = False
+						if self.secondEdit == True: 
+							self.mylist.pop(self.x+2)
+							self.mylist.pop(self.x+1)
+							self.mylist.pop(self.x) #se recorre un lugar a la izquierda
+							self.secondEdit = False
+
+		if self.tableWidget_2.isVisible()==True:
+			print("clearTable2")
+			msgClear = QtWidgets.QMessageBox()
+			for item in self.tableWidget_2.selectedItems():
+				if item.text()!='':
+					self.editDelete2 = True 
+
+			if self.editDelete2 == True:
+				returnValue = msgClear.warning(self.MainWindow,'Warning','Are you sure you want to delete?',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
+				self.editDelete2 = False
+
+				if returnValue == msgClear.Yes:
+					for item in self.tableWidget_2.selectedItems(): 
+						vy = item.column()
+						vx = item.row()
+						value = "X="+str(vx)+" Y="+str(vy)
+
+						item.setBackground(QtGui.QColor('white'))
+						item.setText('')
+
+						for i in range(len(self.mylist)): 
+							if self.mylist[i] == value:
+								self.x = i
+								self.secondEdit2 = True
+
+						for i in range(len(self.mylabel)):
+							if self.mylabel[i] == value:
+								self.y = i
+								self.flagEdit2 = True
+
+						if self.flagEdit2 == True:
+							self.mylabel.pop(self.y+1)
+							self.mylabel.pop(self.y)
+							self.flagEdit2 = False
+
+						if self.secondEdit2 == True: 
+							self.mylist.pop(self.x+2)
+							self.mylist.pop(self.x+1)
+							self.mylist.pop(self.x) #se recorre un lugar a la izquierda
+							self.secondEdit2 = False
+
+		if self.tableWidget_3.isVisible()==True:
+			print("clearTable3")
+			msgClear = QtWidgets.QMessageBox()
+			for item in self.tableWidget_3.selectedItems():
+				if item.text()!='':
+					self.editDelete3 = True 
+
+			if self.editDelete3 == True:
+				returnValue = msgClear.warning(self.MainWindow,'Warning','Are you sure you want to delete?',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
+				self.editDelete3 = False
+
+				if returnValue == msgClear.Yes:
+					for item in self.tableWidget_3.selectedItems(): 
+						vy = item.column()
+						vx = item.row()
+						value = "X="+str(vx)+" Y="+str(vy)
+
+						item.setBackground(QtGui.QColor('white'))
+						item.setText('')
+
+						for i in range(len(self.mylist)): 
+							if self.mylist[i] == value:
+								self.x = i
+								self.secondEdit3 = True
+
+						for i in range(len(self.mylabel)):
+							if self.mylabel[i] == value:
+								self.y = i
+								self.flagEdit3 = True
+
+						if self.flagEdit3 == True:
+							self.mylabel.pop(self.y+1)
+							self.mylabel.pop(self.y)
+							self.flagEdit3 = False
+
+						if self.secondEdit3 == True: 
+							self.mylist.pop(self.x+2)
+							self.mylist.pop(self.x+1)
+							self.mylist.pop(self.x) #se recorre un lugar a la izquierda
+							self.secondEdit3 = False
+
+		if self.tableWidget_4.isVisible()==True:
+			print("clearTable4")
+			msgClear = QtWidgets.QMessageBox()
+			for item in self.tableWidget_4.selectedItems():
+				if item.text()!='':
+					self.editDelete4 = True 
+
+			if self.editDelete4 == True:
+				returnValue = msgClear.warning(self.MainWindow,'Warning','Are you sure you want to delete?',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
+				self.editDelete4 = False
+
+				if returnValue == msgClear.Yes:
+					for item in self.tableWidget_4.selectedItems(): 
+						vy = item.column()
+						vx = item.row()
+						value = "X="+str(vx)+" Y="+str(vy)
+
+						item.setBackground(QtGui.QColor('white'))
+						item.setText('')
+
+						for i in range(len(self.mylist)): 
+							if self.mylist[i] == value:
+								self.x = i
+								self.secondEdit4 = True
+
+						for i in range(len(self.mylabel)):
+							if self.mylabel[i] == value:
+								self.y = i
+								self.flagEdit4 = True
+
+						if self.flagEdit4 == True:
+							self.mylabel.pop(self.y+1)
+							self.mylabel.pop(self.y)
+							self.flagEdit4 = False
+
+						if self.secondEdit4 == True: 
+							self.mylist.pop(self.x+2)
+							self.mylist.pop(self.x+1)
+							self.mylist.pop(self.x) #se recorre un lugar a la izquierda
+							self.secondEdit4 = False
+		
+		if self.tableWidget_5.isVisible()==True:
+			print("clearTable5")
+			msgClear = QtWidgets.QMessageBox()
+			for item in self.tableWidget_5.selectedItems():
+				if item.text()!='':
+					self.editDelete5 = True 
+
+			if self.editDelete5 == True:
+				returnValue = msgClear.warning(self.MainWindow,'Warning','Are you sure you want to delete?',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
+				self.editDelete5 = False
+
+				if returnValue == msgClear.Yes:
+					for item in self.tableWidget_5.selectedItems(): 
+						vy = item.column()
+						vx = item.row()
+						value = "X="+str(vx)+" Y="+str(vy)
+
+						item.setBackground(QtGui.QColor('white'))
+						item.setText('')
+
+						for i in range(len(self.mylist)): 
+							if self.mylist[i] == value:
+								self.x = i
+								self.secondEdit5 = True
+
+						for i in range(len(self.mylabel)):
+							if self.mylabel[i] == value:
+								self.y = i
+								self.flagEdit5 = True
+
+						if self.flagEdit5 == True:
+							self.mylabel.pop(self.y+1)
+							self.mylabel.pop(self.y)
+							self.flagEdit5 = False
+
+						if self.secondEdit5 == True: 
+							self.mylist.pop(self.x+2)
+							self.mylist.pop(self.x+1)
+							self.mylist.pop(self.x) #se recorre un lugar a la izquierda
+							self.secondEdit5 = False
+
+		if self.tableWidget_6.isVisible()==True:
+			print("clearTable6")
+			msgClear = QtWidgets.QMessageBox()
+			for item in self.tableWidget_6.selectedItems():
+				if item.text()!='':
+					self.editDelete6 = True 
+
+			if self.editDelete6 == True:
+				returnValue = msgClear.warning(self.MainWindow,'Warning','Are you sure you want to delete?',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
+				self.editDelete6 = False
+
+				if returnValue == msgClear.Yes:
+					for item in self.tableWidget_6.selectedItems(): 
+						vy = item.column()
+						vx = item.row()
+						value = "X="+str(vx)+" Y="+str(vy)
+
+						item.setBackground(QtGui.QColor('white'))
+						item.setText('')
+
+						for i in range(len(self.mylist)): 
+							if self.mylist[i] == value:
+								self.x = i
+								self.secondEdit6 = True
+
+						for i in range(len(self.mylabel)):
+							if self.mylabel[i] == value:
+								self.y = i
+								self.flagEdit6 = True
+
+						if self.flagEdit6 == True:
+							self.mylabel.pop(self.y+1)
+							self.mylabel.pop(self.y)
+							self.flagEdit6 = False
+
+						if self.secondEdit6 == True: 
+							self.mylist.pop(self.x+2)
+							self.mylist.pop(self.x+1)
+							self.mylist.pop(self.x) #se recorre un lugar a la izquierda
+							self.secondEdit6 = False
+
+		if self.tableWidget_7.isVisible()==True:
+			print("clearTable7")
+			msgClear = QtWidgets.QMessageBox()
+			for item in self.tableWidget_7.selectedItems():
+				if item.text()!='':
+					self.editDelete7 = True 
+
+			if self.editDelete7 == True:
+				returnValue = msgClear.warning(self.MainWindow,'Warning','Are you sure you want to delete?',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
+				self.editDelete7 = False
+
+				if returnValue == msgClear.Yes:
+					for item in self.tableWidget_7.selectedItems(): 
+						vy = item.column()
+						vx = item.row()
+						value = "X="+str(vx)+" Y="+str(vy)
+
+						item.setBackground(QtGui.QColor('white'))
+						item.setText('')
+
+						for i in range(len(self.mylist)): 
+							if self.mylist[i] == value:
+								self.x = i
+								self.secondEdit7 = True
+
+						for i in range(len(self.mylabel)):
+							if self.mylabel[i] == value:
+								self.y = i
+								self.flagEdit7 = True
+
+						if self.flagEdit7 == True:
+							self.mylabel.pop(self.y+1)
+							self.mylabel.pop(self.y)
+							self.flagEdit7 = False
+
+						if self.secondEdit7 == True: 
+							self.mylist.pop(self.x+2)
+							self.mylist.pop(self.x+1)
+							self.mylist.pop(self.x) #se recorre un lugar a la izquierda
+							self.secondEdit7 = False
+
+		if self.tableWidget_8.isVisible()==True:
+			print("clearTable8")
+			msgClear = QtWidgets.QMessageBox()
+			for item in self.tableWidget_8.selectedItems():
+				if item.text()!='':
+					self.editDelete8 = True 
+
+			if self.editDelete8 == True:
+				returnValue = msgClear.warning(self.MainWindow,'Warning','Are you sure you want to delete?',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
+				self.editDelete8 = False
+
+				if returnValue == msgClear.Yes:
+					for item in self.tableWidget_8.selectedItems(): 
+						vy = item.column()
+						vx = item.row()
+						value = "X="+str(vx)+" Y="+str(vy)
+
+						item.setBackground(QtGui.QColor('white'))
+						item.setText('')
+
+						for i in range(len(self.mylist)): 
+							if self.mylist[i] == value:
+								self.x = i
+								self.secondEdit8 = True
+
+						for i in range(len(self.mylabel)):
+							if self.mylabel[i] == value:
+								self.y = i
+								self.flagEdit8 = True
+
+						if self.flagEdit8 == True:
+							self.mylabel.pop(self.y+1)
+							self.mylabel.pop(self.y)
+							self.flagEdit8 = False
+
+						if self.secondEdit8 == True: 
+							self.mylist.pop(self.x+2)
+							self.mylist.pop(self.x+1)
+							self.mylist.pop(self.x) #se recorre un lugar a la izquierda
+							self.secondEdit8 = False
+
+		if self.tableWidget_9.isVisible()==True:
+			print("clearTable9")
+			msgClear = QtWidgets.QMessageBox()
+			for item in self.tableWidget_9.selectedItems():
+				if item.text()!='':
+					self.editDelete9 = True 
+
+			if self.editDelete9 == True:
+				returnValue = msgClear.warning(self.MainWindow,'Warning','Are you sure you want to delete?',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
+				self.editDelete9 = False
+
+				if returnValue == msgClear.Yes:
+					for item in self.tableWidget_9.selectedItems(): 
+						vy = item.column()
+						vx = item.row()
+						value = "X="+str(vx)+" Y="+str(vy)
+
+						item.setBackground(QtGui.QColor('white'))
+						item.setText('')
+
+						for i in range(len(self.mylist)): 
+							if self.mylist[i] == value:
+								self.x = i
+								self.secondEdit9 = True
+
+						for i in range(len(self.mylabel)):
+							if self.mylabel[i] == value:
+								self.y = i
+								self.flagEdit9 = True
+
+						if self.flagEdit9 == True:
+							self.mylabel.pop(self.y+1)
+							self.mylabel.pop(self.y)
+							self.flagEdit9 = False
+
+						if self.secondEdit9 == True: 
+							self.mylist.pop(self.x+2)
+							self.mylist.pop(self.x+1)
+							self.mylist.pop(self.x) #se recorre un lugar a la izquierda
+							self.secondEdit9 = False
+
+		if self.tableWidget_10.isVisible()==True:
+			print("clearTable10")
+			msgClear = QtWidgets.QMessageBox()
+			for item in self.tableWidget_10.selectedItems():
+				if item.text()!='':
+					self.editDelete10 = True 
+
+			if self.editDelete10 == True:
+				returnValue = msgClear.warning(self.MainWindow,'Warning','Are you sure you want to delete?',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
+				self.editDelete10 = False
+
+				if returnValue == msgClear.Yes:
+					for item in self.tableWidget_10.selectedItems(): 
+						vy = item.column()
+						vx = item.row()
+						value = "X="+str(vx)+" Y="+str(vy)
+
+						item.setBackground(QtGui.QColor('white'))
+						item.setText('')
+
+						for i in range(len(self.mylist)): 
+							if self.mylist[i] == value:
+								self.x = i
+								self.secondEdit10 = True
+
+						for i in range(len(self.mylabel)):
+							if self.mylabel[i] == value:
+								self.y = i
+								self.flagEdit10 = True
+
+						if self.flagEdit10 == True:
+							self.mylabel.pop(self.y+1)
+							self.mylabel.pop(self.y)
+							self.flagEdit10 = False
+
+						if self.secondEdit10 == True: 
+							self.mylist.pop(self.x+2)
+							self.mylist.pop(self.x+1)
+							self.mylist.pop(self.x) #se recorre un lugar a la izquierda
+							self.secondEdit10 = False
 
 	def tabSelected(self):
 		print("tabSelect")
 
 	flagCancel = False
 	def bttnCancel(self):
-		print("Cancel")  ##verificar 
 		self.flagCancel = False
-		for item in self.tableWidget.selectedItems():
-			self.flagCancel = True
-			c = item.text()
-			print("c:",c)
-			if item.text():
-				print("Con text-Cancel")
-			else:
-				self.continuesCancel()
+		if self.tableWidget.isVisible()==True:
+			print("CancelT1")  
+			for item in self.tableWidget.selectedItems():
+				self.flagCancel = True
+				c = item.text()
+				#print("c:",c)
+				if item.text():
+					print("Con text-Cancel")
+				else:
+					self.continuesCancel()
+
+		if self.tableWidget_2.isVisible()==True:
+			print("CancelT2")  
+			for item in self.tableWidget_2.selectedItems():
+				self.flagCancel = True
+				c = item.text()
+				#print("c:",c)
+				if item.text():
+					print("Con text-Cancel")
+				else:
+					self.continuesCancel()
+
+		if self.tableWidget_3.isVisible()==True:
+			print("CancelT3")  
+			for item in self.tableWidget_3.selectedItems():
+				self.flagCancel = True
+				c = item.text()
+				#print("c:",c)
+				if item.text():
+					print("Con text-Cancel")
+				else:
+					self.continuesCancel()
+
+		if self.tableWidget_4.isVisible()==True:
+			print("CancelT4")  
+			for item in self.tableWidget_4.selectedItems():
+				self.flagCancel = True
+				c = item.text()
+				#print("c:",c)
+				if item.text():
+					print("Con text-Cancel")
+				else:
+					self.continuesCancel()
+
+		if self.tableWidget_5.isVisible()==True:
+			print("CancelT5")  
+			for item in self.tableWidget_5.selectedItems():
+				self.flagCancel = True
+				c = item.text()
+				#print("c:",c)
+				if item.text():
+					print("Con text-Cancel")
+				else:
+					self.continuesCancel()
+
+		if self.tableWidget_6.isVisible()==True:
+			print("CancelT6")  
+			for item in self.tableWidget_6.selectedItems():
+				self.flagCancel = True
+				c = item.text()
+				#print("c:",c)
+				if item.text():
+					print("Con text-Cancel")
+				else:
+					self.continuesCancel()
+		
+		if self.tableWidget_7.isVisible()==True:
+			print("CancelT7")  
+			for item in self.tableWidget_7.selectedItems():
+				self.flagCancel = True
+				c = item.text()
+				#print("c:",c)
+				if item.text():
+					print("Con text-Cancel")
+				else:
+					self.continuesCancel()
+
+		if self.tableWidget_8.isVisible()==True:
+			print("CancelT8")  
+			for item in self.tableWidget_8.selectedItems():
+				self.flagCancel = True
+				c = item.text()
+				#print("c:",c)
+				if item.text():
+					print("Con text-Cancel")
+				else:
+					self.continuesCancel()
+
+		if self.tableWidget_9.isVisible()==True:
+			print("CancelT9")  
+			for item in self.tableWidget_9.selectedItems():
+				self.flagCancel = True
+				c = item.text()
+				#print("c:",c)
+				if item.text():
+					print("Con text-Cancel")
+				else:
+					self.continuesCancel()
+
+		if self.tableWidget_10.isVisible()==True:
+			print("CancelT10")  
+			for item in self.tableWidget_10.selectedItems():
+				self.flagCancel = True
+				c = item.text()
+				#print("c:",c)
+				if item.text():
+					print("Con text-Cancel")
+				else:
+					self.continuesCancel()
 
 		if self.flagCancel != True:
 			self.continuesCancel()
@@ -643,8 +1855,6 @@ class Ui_MainWindow(object):
 			vx = self.tableWidget_10.currentRow()
 			vy = self.tableWidget_10.currentColumn()
 			self.tableWidget_10.setItem(vx,vy,item)
-
-		
 
 	def tableLabel(self,sizeW,text,textAlign):
 		item = QtWidgets.QTableWidgetItem(text)
