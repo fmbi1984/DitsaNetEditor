@@ -348,14 +348,14 @@ class Ui_MainWindow(object):
 				if j == 6:
 					self.comp2.append(new[j])
 		
-		print("C1:",self.comp1)
-		print("C2:",self.comp2)
+		#print("C1:",self.comp1)
+		#print("C2:",self.comp2)
 		compT = "X="+min(self.comp1)+" Y="+min(self.comp2)
-		print("compT:",compT)
+		#print("compT:",compT)
 
 		for i in range(len(self.tmplist)):
 			if compT == self.tmplist[i]:
-				print("No hay espacio Vacio")
+				#print("No hay espacio Vacio")
 				self.flagEmpty = True
 				#self.tempCut.insert(0,"X="+comp1[2]+" Y="+comp2[6]+"/empty")
 
