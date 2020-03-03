@@ -74,54 +74,64 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 			vx = self.parent.tableWidget.currentRow()
 			vy = self.parent.tableWidget.currentColumn()
 			value = "X="+str(vx)+" Y="+str(vy)
+			tble = "01%"
 
 		if self.parent.tableWidget_2.isVisible()==True:
 			vx = self.parent.tableWidget_2.currentRow()
 			vy = self.parent.tableWidget_2.currentColumn()
 			value = "X="+str(vx)+" Y="+str(vy)
+			tble = "02%"
 
 		if self.parent.tableWidget_3.isVisible()==True:
 			vx = self.parent.tableWidget_3.currentRow()
 			vy = self.parent.tableWidget_3.currentColumn()
 			value = "X="+str(vx)+" Y="+str(vy)
+			tble = "03%"
 
 		if self.parent.tableWidget_4.isVisible()==True:
 			vx = self.parent.tableWidget_4.currentRow()
 			vy = self.parent.tableWidget_4.currentColumn()
 			value = "X="+str(vx)+" Y="+str(vy)
+			tble = "04%"
 
 		if self.parent.tableWidget_5.isVisible()==True:
 			vx = self.parent.tableWidget_5.currentRow()
 			vy = self.parent.tableWidget_5.currentColumn()
 			value = "X="+str(vx)+" Y="+str(vy)
+			tble = "05%"
 
 		if self.parent.tableWidget_6.isVisible()==True:
 			vx = self.parent.tableWidget_6.currentRow()
 			vy = self.parent.tableWidget_6.currentColumn()
 			value = "X="+str(vx)+" Y="+str(vy)
+			tble = "06%"
 
 		if self.parent.tableWidget_7.isVisible()==True:
 			vx = self.parent.tableWidget_7.currentRow()
 			vy = self.parent.tableWidget_7.currentColumn()
 			value = "X="+str(vx)+" Y="+str(vy)
+			tble = "07%"
 
 		if self.parent.tableWidget_8.isVisible()==True:
 			vx = self.parent.tableWidget_8.currentRow()
 			vy = self.parent.tableWidget_8.currentColumn()
 			value = "X="+str(vx)+" Y="+str(vy)
+			tble = "08%"
 
 		if self.parent.tableWidget_9.isVisible()==True:
 			vx = self.parent.tableWidget_9.currentRow()
 			vy = self.parent.tableWidget_9.currentColumn()
 			value = "X="+str(vx)+" Y="+str(vy)
+			tble = "09%"
 
 		if self.parent.tableWidget_10.isVisible()==True:
 			vx = self.parent.tableWidget_10.currentRow()
 			vy = self.parent.tableWidget_10.currentColumn()
 			value = "X="+str(vx)+" Y="+str(vy)
+			tble = "10%"
 
 		for i in range(len(self.parent.mylist)): 
-			if self.parent.mylist[i] == value:
+			if self.parent.mylist[i] == value and self.parent.mylist[i-1] == tble:
 				valueName = self.parent.mylist[i+1]
 				valueAddr = self.parent.mylist[i+2]
 				valueName = valueName.replace('N=','')
@@ -137,7 +147,7 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 			self.parent.mylist.pop(self.x+2)
 			self.parent.mylist.pop(self.x+1)
 			self.parent.mylist.pop(self.x) #se recorre un lugar a la izquierda
-			#print(self.parent.mylist)
+			self.parent.mylist.pop(self.x-1)
 			self.lineName.setText(valueName)
 			self.lineAddrs.setText(valueAddr)
 
@@ -177,60 +187,70 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 						vx = self.parent.tableWidget.currentRow()
 						vy = self.parent.tableWidget.currentColumn()
 						self.parent.tableWidget.setItem(vx,vy,item)
+						self.parent.mylist.append("01%")
 						self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
 
 					if self.parent.tableWidget_2.isVisible()==True:
 						vx = self.parent.tableWidget_2.currentRow()
 						vy = self.parent.tableWidget_2.currentColumn()
 						self.parent.tableWidget_2.setItem(vx,vy,item)
+						self.parent.mylist.append("02%")
 						self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
 
 					if self.parent.tableWidget_3.isVisible()==True:
 						vx = self.parent.tableWidget_3.currentRow()
 						vy = self.parent.tableWidget_3.currentColumn()
 						self.parent.tableWidget_3.setItem(vx,vy,item)
+						self.parent.mylist.append("03%")
 						self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
 					
 					if self.parent.tableWidget_4.isVisible()==True:
 						vx = self.parent.tableWidget_4.currentRow()
 						vy = self.parent.tableWidget_4.currentColumn()
 						self.parent.tableWidget_4.setItem(vx,vy,item)
+						self.parent.mylist.append("04%")
 						self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
 					
 					if self.parent.tableWidget_5.isVisible()==True:
 						vx = self.parent.tableWidget_5.currentRow()
 						vy = self.parent.tableWidget_5.currentColumn()
 						self.parent.tableWidget_5.setItem(vx,vy,item)
+						self.parent.mylist.append("05%")
 						self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
 
 					if self.parent.tableWidget_6.isVisible()==True:
 						vx = self.parent.tableWidget_6.currentRow()
 						vy = self.parent.tableWidget_6.currentColumn()
 						self.parent.tableWidget_6.setItem(vx,vy,item)
+						self.parent.mylist.append("06%")
 						self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
 
 					if self.parent.tableWidget_7.isVisible()==True:
 						vx = self.parent.tableWidget_7.currentRow()
 						vy = self.parent.tableWidget_7.currentColumn()
 						self.parent.tableWidget_7.setItem(vx,vy,item)
+						self.parent.mylist.append("07%")
 						self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
 
 					if self.parent.tableWidget_8.isVisible()==True:
 						vx = self.parent.tableWidget_8.currentRow()
 						vy = self.parent.tableWidget_8.currentColumn()
 						self.parent.tableWidget_8.setItem(vx,vy,item)
+						self.parent.mylist.append("08%")
 						self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
 
 					if self.parent.tableWidget_9.isVisible()==True:
 						vx = self.parent.tableWidget_9.currentRow()
 						vy = self.parent.tableWidget_9.currentColumn()
 						self.parent.tableWidget_9.setItem(vx,vy,item)
+						self.parent.mylist.append("09%")
 						self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
 
 					if self.parent.tableWidget_10.isVisible()==True:
 						vx = self.parent.tableWidget_10.currentRow()
 						vy = self.parent.tableWidget_10.currentColumn()
 						self.parent.tableWidget_10.setItem(vx,vy,item)
+						self.parent.mylist.append("10%")
 						self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
 
 					self.parent.mylist.append("N="+name)
@@ -266,60 +286,70 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 								vx = self.parent.tableWidget.currentRow()
 								vy = self.parent.tableWidget.currentColumn()
 								self.parent.tableWidget.setItem(vx,vy,item)
+								self.parent.mylist.append("01%")
 								self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
 
 							if self.parent.tableWidget_2.isVisible()==True:
 								vx = self.parent.tableWidget_2.currentRow()
 								vy = self.parent.tableWidget_2.currentColumn()
 								self.parent.tableWidget_2.setItem(vx,vy,item)
+								self.parent.mylist.append("02%")
 								self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
 
 							if self.parent.tableWidget_3.isVisible()==True:
 								vx = self.parent.tableWidget_3.currentRow()
 								vy = self.parent.tableWidget_3.currentColumn()
 								self.parent.tableWidget_3.setItem(vx,vy,item)
+								self.parent.mylist.append("03%")
 								self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
 							
 							if self.parent.tableWidget_4.isVisible()==True:
 								vx = self.parent.tableWidget_4.currentRow()
 								vy = self.parent.tableWidget_4.currentColumn()
 								self.parent.tableWidget_4.setItem(vx,vy,item)
+								self.parent.mylist.append("04%")
 								self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
 							
 							if self.parent.tableWidget_5.isVisible()==True:
 								vx = self.parent.tableWidget_5.currentRow()
 								vy = self.parent.tableWidget_5.currentColumn()
 								self.parent.tableWidget_5.setItem(vx,vy,item)
+								self.parent.mylist.append("05%")
 								self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
 
 							if self.parent.tableWidget_6.isVisible()==True:
 								vx = self.parent.tableWidget_6.currentRow()
 								vy = self.parent.tableWidget_6.currentColumn()
 								self.parent.tableWidget_6.setItem(vx,vy,item)
+								self.parent.mylist.append("06%")
 								self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
 
 							if self.parent.tableWidget_7.isVisible()==True:
 								vx = self.parent.tableWidget_7.currentRow()
 								vy = self.parent.tableWidget_7.currentColumn()
 								self.parent.tableWidget_7.setItem(vx,vy,item)
+								self.parent.mylist.append("07%")
 								self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
 
 							if self.parent.tableWidget_8.isVisible()==True:
 								vx = self.parent.tableWidget_8.currentRow()
 								vy = self.parent.tableWidget_8.currentColumn()
 								self.parent.tableWidget_8.setItem(vx,vy,item)
+								self.parent.mylist.append("08%")
 								self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
 
 							if self.parent.tableWidget_9.isVisible()==True:
 								vx = self.parent.tableWidget_9.currentRow()
 								vy = self.parent.tableWidget_9.currentColumn()
 								self.parent.tableWidget_9.setItem(vx,vy,item)
+								self.parent.mylist.append("09%")
 								self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
 
 							if self.parent.tableWidget_10.isVisible()==True:
 								vx = self.parent.tableWidget_10.currentRow()
 								vy = self.parent.tableWidget_10.currentColumn()
 								self.parent.tableWidget_10.setItem(vx,vy,item)
+								self.parent.mylist.append("10%")
 								self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
 
 							self.parent.mylist.append("N="+name)

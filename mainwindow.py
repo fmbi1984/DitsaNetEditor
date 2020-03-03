@@ -482,6 +482,7 @@ class Ui_MainWindow(object):
 		print("cut")
 		if self.i == 0:
 			if self.tableWidget.isVisible()==True:
+				print("Cut-1")
 				for item in self.tableWidget.selectedItems():
 					if item.text()!='':
 						self.flagLabel = False
@@ -494,15 +495,16 @@ class Ui_MainWindow(object):
 							x = coord2.replace('/','')
 							if self.mylabel[i] == x:
 								self.flagLabel = True
-								self.tempCut.append(coord2+self.mylabel[i+1])
+								self.tempCut.append("01%"+coord2+self.mylabel[i+1])
 
 						if self.flagLabel != True:
-							self.tempCut.append(coord2+txt)
+							self.tempCut.append("01%"+coord2+txt)
 							
 						item.setBackground(QtGui.QColor('white'))
 						item.setText('')
 
 			if self.tableWidget_2.isVisible()==True:
+				print("Cut-2")
 				for item in self.tableWidget_2.selectedItems():
 					if item.text()!='':
 						self.flagLabel = False
@@ -515,15 +517,16 @@ class Ui_MainWindow(object):
 							x = coord2.replace('/','')
 							if self.mylabel[i] == x:
 								self.flagLabel = True
-								self.tempCut.append(coord2+self.mylabel[i+1])
+								self.tempCut.append("02%"+coord2+self.mylabel[i+1])
 
 						if self.flagLabel != True:
-							self.tempCut.append(coord2+txt)
+							self.tempCut.append("02%"+coord2+txt)
 							
 						item.setBackground(QtGui.QColor('white'))
 						item.setText('')
 
 			if self.tableWidget_3.isVisible()==True:
+				print("Cut-3")
 				for item in self.tableWidget_3.selectedItems():
 					if item.text()!='':
 						self.flagLabel = False
@@ -536,15 +539,16 @@ class Ui_MainWindow(object):
 							x = coord2.replace('/','')
 							if self.mylabel[i] == x:
 								self.flagLabel = True
-								self.tempCut.append(coord2+self.mylabel[i+1])
+								self.tempCut.append("03%"+coord2+self.mylabel[i+1])
 
 						if self.flagLabel != True:
-							self.tempCut.append(coord2+txt)
+							self.tempCut.append("03%"+coord2+txt)
 							
 						item.setBackground(QtGui.QColor('white'))
 						item.setText('')
 
 			if self.tableWidget_4.isVisible()==True:
+				print("Cut-4")
 				for item in self.tableWidget_4.selectedItems():
 					if item.text()!='':
 						self.flagLabel = False
@@ -557,15 +561,16 @@ class Ui_MainWindow(object):
 							x = coord2.replace('/','')
 							if self.mylabel[i] == x:
 								self.flagLabel = True
-								self.tempCut.append(coord2+self.mylabel[i+1])
+								self.tempCut.append("04%"+coord2+self.mylabel[i+1])
 
 						if self.flagLabel != True:
-							self.tempCut.append(coord2+txt)
+							self.tempCut.append("04%"+coord2+txt)
 							
 						item.setBackground(QtGui.QColor('white'))
 						item.setText('')
 
 			if self.tableWidget_5.isVisible()==True:
+				print("Cut-5")
 				for item in self.tableWidget_5.selectedItems():
 					if item.text()!='':
 						self.flagLabel = False
@@ -578,15 +583,16 @@ class Ui_MainWindow(object):
 							x = coord2.replace('/','')
 							if self.mylabel[i] == x:
 								self.flagLabel = True
-								self.tempCut.append(coord2+self.mylabel[i+1])
+								self.tempCut.append("05%"+coord2+self.mylabel[i+1])
 
 						if self.flagLabel != True:
-							self.tempCut.append(coord2+txt)
+							self.tempCut.append("05%"+coord2+txt)
 							
 						item.setBackground(QtGui.QColor('white'))
 						item.setText('')
 
 			if self.tableWidget_6.isVisible()==True:
+				print("Cut-6")
 				for item in self.tableWidget_6.selectedItems():
 					if item.text()!='':
 						self.flagLabel = False
@@ -599,15 +605,16 @@ class Ui_MainWindow(object):
 							x = coord2.replace('/','')
 							if self.mylabel[i] == x:
 								self.flagLabel = True
-								self.tempCut.append(coord2+self.mylabel[i+1])
+								self.tempCut.append("06%"+coord2+self.mylabel[i+1])
 
 						if self.flagLabel != True:
-							self.tempCut.append(coord2+txt)
+							self.tempCut.append("06%"+coord2+txt)
 							
 						item.setBackground(QtGui.QColor('white'))
 						item.setText('')
 
 			if self.tableWidget_7.isVisible()==True:
+				print("Cut-7")
 				for item in self.tableWidget_7.selectedItems():
 					if item.text()!='':
 						self.flagLabel = False
@@ -620,15 +627,16 @@ class Ui_MainWindow(object):
 							x = coord2.replace('/','')
 							if self.mylabel[i] == x:
 								self.flagLabel = True
-								self.tempCut.append(coord2+self.mylabel[i+1])
+								self.tempCut.append("07%"+coord2+self.mylabel[i+1])
 
 						if self.flagLabel != True:
-							self.tempCut.append(coord2+txt)
+							self.tempCut.append("07%"+coord2+txt)
 							
 						item.setBackground(QtGui.QColor('white'))
 						item.setText('')
 
 			if self.tableWidget_8.isVisible()==True:
+				print("Cut-8")
 				for item in self.tableWidget_8.selectedItems():
 					if item.text()!='':
 						self.flagLabel = False
@@ -641,15 +649,16 @@ class Ui_MainWindow(object):
 							x = coord2.replace('/','')
 							if self.mylabel[i] == x:
 								self.flagLabel = True
-								self.tempCut.append(coord2+self.mylabel[i+1])
+								self.tempCut.append("08%"+coord2+self.mylabel[i+1])
 
 						if self.flagLabel != True:
-							self.tempCut.append(coord2+txt)
+							self.tempCut.append("08%"+coord2+txt)
 							
 						item.setBackground(QtGui.QColor('white'))
 						item.setText('')
 
 			if self.tableWidget_9.isVisible()==True:
+				print("Cut-9")
 				for item in self.tableWidget_9.selectedItems():
 					if item.text()!='':
 						self.flagLabel = False
@@ -662,15 +671,16 @@ class Ui_MainWindow(object):
 							x = coord2.replace('/','')
 							if self.mylabel[i] == x:
 								self.flagLabel = True
-								self.tempCut.append(coord2+self.mylabel[i+1])
+								self.tempCut.append("09%"+coord2+self.mylabel[i+1])
 
 						if self.flagLabel != True:
-							self.tempCut.append(coord2+txt)
+							self.tempCut.append("09%"+coord2+txt)
 							
 						item.setBackground(QtGui.QColor('white'))
 						item.setText('')
 
 			if self.tableWidget_10.isVisible()==True:
+				print("Cut-10")
 				for item in self.tableWidget_10.selectedItems():
 					if item.text()!='':
 						self.flagLabel = False
@@ -683,10 +693,10 @@ class Ui_MainWindow(object):
 							x = coord2.replace('/','')
 							if self.mylabel[i] == x:
 								self.flagLabel = True
-								self.tempCut.append(coord2+self.mylabel[i+1])
+								self.tempCut.append("10%"+coord2+self.mylabel[i+1])
 
 						if self.flagLabel != True:
-							self.tempCut.append(coord2+txt)
+							self.tempCut.append("10%"+coord2+txt)
 							
 						item.setBackground(QtGui.QColor('white'))
 						item.setText('')
@@ -714,10 +724,10 @@ class Ui_MainWindow(object):
 								x = coord2.replace('/','')
 								if self.mylabel[i] == x:
 									self.flagLabel = True
-									self.tempCut.append(coord2+self.mylabel[i+1])
+									self.tempCut.append("01%"+coord2+self.mylabel[i+1])
 
 							if self.flagLabel != True:
-								self.tempCut.append(coord2+txt)
+								self.tempCut.append("01%"+coord2+txt)
 
 							item.setBackground(QtGui.QColor('white'))
 							item.setText('')
@@ -734,10 +744,10 @@ class Ui_MainWindow(object):
 								x = coord2.replace('/','')
 								if self.mylabel[i] == x:
 									self.flagLabel = True
-									self.tempCut.append(coord2+self.mylabel[i+1])
+									self.tempCut.append("02%"+coord2+self.mylabel[i+1])
 
 							if self.flagLabel != True:
-								self.tempCut.append(coord2+txt)
+								self.tempCut.append("02%"+coord2+txt)
 
 							item.setBackground(QtGui.QColor('white'))
 							item.setText('')
@@ -754,10 +764,10 @@ class Ui_MainWindow(object):
 								x = coord2.replace('/','')
 								if self.mylabel[i] == x:
 									self.flagLabel = True
-									self.tempCut.append(coord2+self.mylabel[i+1])
+									self.tempCut.append("03%"+coord2+self.mylabel[i+1])
 
 							if self.flagLabel != True:
-								self.tempCut.append(coord2+txt)
+								self.tempCut.append("03%"+coord2+txt)
 
 							item.setBackground(QtGui.QColor('white'))
 							item.setText('')
@@ -774,10 +784,10 @@ class Ui_MainWindow(object):
 								x = coord2.replace('/','')
 								if self.mylabel[i] == x:
 									self.flagLabel = True
-									self.tempCut.append(coord2+self.mylabel[i+1])
+									self.tempCut.append("04%"+coord2+self.mylabel[i+1])
 
 							if self.flagLabel != True:
-								self.tempCut.append(coord2+txt)
+								self.tempCut.append("04%"+coord2+txt)
 
 							item.setBackground(QtGui.QColor('white'))
 							item.setText('')
@@ -794,10 +804,10 @@ class Ui_MainWindow(object):
 								x = coord2.replace('/','')
 								if self.mylabel[i] == x:
 									self.flagLabel = True
-									self.tempCut.append(coord2+self.mylabel[i+1])
+									self.tempCut.append("05%"+coord2+self.mylabel[i+1])
 
 							if self.flagLabel != True:
-								self.tempCut.append(coord2+txt)
+								self.tempCut.append("05%"+coord2+txt)
 
 							item.setBackground(QtGui.QColor('white'))
 							item.setText('')
@@ -814,10 +824,10 @@ class Ui_MainWindow(object):
 								x = coord2.replace('/','')
 								if self.mylabel[i] == x:
 									self.flagLabel = True
-									self.tempCut.append(coord2+self.mylabel[i+1])
+									self.tempCut.append("06%"+coord2+self.mylabel[i+1])
 
 							if self.flagLabel != True:
-								self.tempCut.append(coord2+txt)
+								self.tempCut.append("06%"+coord2+txt)
 
 							item.setBackground(QtGui.QColor('white'))
 							item.setText('')
@@ -834,10 +844,10 @@ class Ui_MainWindow(object):
 								x = coord2.replace('/','')
 								if self.mylabel[i] == x:
 									self.flagLabel = True
-									self.tempCut.append(coord2+self.mylabel[i+1])
+									self.tempCut.append("07%"+coord2+self.mylabel[i+1])
 
 							if self.flagLabel != True:
-								self.tempCut.append(coord2+txt)
+								self.tempCut.append("07%"+coord2+txt)
 
 							item.setBackground(QtGui.QColor('white'))
 							item.setText('')
@@ -854,10 +864,10 @@ class Ui_MainWindow(object):
 								x = coord2.replace('/','')
 								if self.mylabel[i] == x:
 									self.flagLabel = True
-									self.tempCut.append(coord2+self.mylabel[i+1])
+									self.tempCut.append("08%"+coord2+self.mylabel[i+1])
 
 							if self.flagLabel != True:
-								self.tempCut.append(coord2+txt)
+								self.tempCut.append("08%"+coord2+txt)
 
 							item.setBackground(QtGui.QColor('white'))
 							item.setText('')
@@ -874,10 +884,10 @@ class Ui_MainWindow(object):
 								x = coord2.replace('/','')
 								if self.mylabel[i] == x:
 									self.flagLabel = True
-									self.tempCut.append(coord2+self.mylabel[i+1])
+									self.tempCut.append("09%"+coord2+self.mylabel[i+1])
 
 							if self.flagLabel != True:
-								self.tempCut.append(coord2+txt)
+								self.tempCut.append("09%"+coord2+txt)
 
 							item.setBackground(QtGui.QColor('white'))
 							item.setText('')
@@ -894,26 +904,30 @@ class Ui_MainWindow(object):
 								x = coord2.replace('/','')
 								if self.mylabel[i] == x:
 									self.flagLabel = True
-									self.tempCut.append(coord2+self.mylabel[i+1])
+									self.tempCut.append("10%"+coord2+self.mylabel[i+1])
 
 							if self.flagLabel != True:
-								self.tempCut.append(coord2+txt)
+								self.tempCut.append("10%"+coord2+txt)
 
 							item.setBackground(QtGui.QColor('white'))
 							item.setText('')
 
 	flagEmpty = False
 	def items_paste(self):
-		print("paste") #verificar variable de cortar
+		print("paste") 
 		self.flagEmpty = False
 		self.tmplist.clear()
 		for i in range(len(self.tempCut)):
 			tmp = self.tempCut[i].split("/")
-			print("tmp:",tmp[0])
-			self.tmplist.append(tmp[0]) 
+			tmp2 = tmp[0].split("%")
+			#print("tmp:",tmp[0])
+			#print("tmp2:",tmp2)
+			self.tmplist.append(tmp2[0])
+			self.tmplist.append(tmp2[1]) 
 
-		for i in range(len(self.tmplist)):
+		for i in range(1,len(self.tmplist),2):
 			new = self.tmplist[i]
+			#print("NEW:",new)
 			for j in range(2,7,4):
 				if j == 2:
 					self.comp1.append(new[j])
@@ -923,14 +937,20 @@ class Ui_MainWindow(object):
 
 		compT = "X="+min(self.comp1)+" Y="+min(self.comp2)
 
+		#print("Comp1:",self.comp1)
+		#print("Comp2:",self.comp2)
+		#print("compT1:",compT)
+		#print("tmplist1:",self.tmplist)
 		for i in range(len(self.tmplist)):
 			if compT == self.tmplist[i]:
 				#print("No hay espacio Vacio")
+				
 				self.flagEmpty = True
-				#self.tempCut.insert(0,"X="+comp1[2]+" Y="+comp2[6]+"/empty")
+				self.comp1.clear()
+				self.comp2.clear()
 
 		if self.flagEmpty != True:
-			self.tempCut.insert(0,"X="+min(self.comp1)+" Y="+min(self.comp2)+"/empty")
+			self.tempCut.insert(0,tmp2[0]+"%"+"X="+min(self.comp1)+" Y="+min(self.comp2)+"/empty")
 			self.comp1.clear()
 			self.comp2.clear()
 
@@ -938,51 +958,62 @@ class Ui_MainWindow(object):
 		#print("tempC:",self.tempCut[0])
 		copy = self.tempCut[0] #1
 		x = copy.split("/")
-
 		#///////////////////////////////////////////////////////////////////////////
 		if self.tableWidget.isVisible()==True:
+			table = "01%"
 			vx = self.tableWidget.currentRow()
 			vy = self.tableWidget.currentColumn()
 
 		if self.tableWidget_2.isVisible()==True:
+			table = "02%"
 			vx = self.tableWidget_2.currentRow()
 			vy = self.tableWidget_2.currentColumn()
 
 		if self.tableWidget_3.isVisible()==True:
+			table = "03%"
 			vx = self.tableWidget_3.currentRow()
 			vy = self.tableWidget_3.currentColumn()
 
 		if self.tableWidget_4.isVisible()==True:
+			table = "04%"
 			vx = self.tableWidget_4.currentRow()
 			vy = self.tableWidget_4.currentColumn()
 
 		if self.tableWidget_5.isVisible()==True:
+			table = "05%"
 			vx = self.tableWidget_5.currentRow()
 			vy = self.tableWidget_5.currentColumn()
 
 		if self.tableWidget_6.isVisible()==True:
+			table = "06%"
 			vx = self.tableWidget_6.currentRow()
 			vy = self.tableWidget_6.currentColumn()
 
 		if self.tableWidget_7.isVisible()==True:
+			table = "07%"
 			vx = self.tableWidget_7.currentRow()
 			vy = self.tableWidget_7.currentColumn()
 
 		if self.tableWidget_8.isVisible()==True:
+			table = "08%"
 			vx = self.tableWidget_8.currentRow()
 			vy = self.tableWidget_8.currentColumn()
 
 		if self.tableWidget_9.isVisible()==True:
+			table = "09%"
 			vx = self.tableWidget_9.currentRow()
 			vy = self.tableWidget_9.currentColumn()
 
 		if self.tableWidget_10.isVisible()==True:
+			table = "10%"
 			vx = self.tableWidget_10.currentRow()
 			vy = self.tableWidget_10.currentColumn()
 
+		self.newCut.append(table)
 		self.newCut.append("X="+str(vx)+" Y="+str(vy))
 		self.newCut.append(x[1])
-		#print("Nuevo:",self.newCut)
+		print("Nuevo:",self.newCut)
+		print("TE:",self.tempCut)
 
 		for i in range(len(self.tempCut)-1):
 			copy2 = self.tempCut[i+1]  #i+2
@@ -991,53 +1022,63 @@ class Ui_MainWindow(object):
 			#print("copy:",copy)
 			y = copy2.split("/") 
 			#print("y:",y)
-			for i in range(2,7,4): 	#(1,4,2):  
+			for i in range(5,10,4): #2,7,4	#(1,4,2):  
+				#print("CoPY:",copy)
+				#print("COPY2:",copy2)
+				#print("C2:",copy2[i])
+				#print("C1:",copy[i])
 				if copy[i] == copy2[i]:	#1,3
 					#print("same")
-					if i == 2:
+					if i == 5:
 						row = int(new[2]) #1
 					else:
 						column = int(new[6]) #3
 				else:
-					if i == 2:
-						if copy[2] > copy2[2]: #1
+					if i == 5:
+						if copy[5] > copy2[5]: #1
 							#print("primerDigitoM")
-							row = int(copy[2]) - int(copy2[2])
+							row = int(copy[5]) - int(copy2[5])
 							row = int(new[2]) - row 
 						else:
 							#print("primerDigitom")
-							row = int(copy2[2]) - int(copy[2])
+							row = int(copy2[5]) - int(copy[5])
 							row = int(new[2]) + row
 						#print("row:",row)
 					else:
-						if copy[6] > copy2[6]:  #3
+						if copy[9] > copy2[9]:  #3
 							#print("SegundoDigitoM")
-							column = int(copy[6]) - int(copy2[6])
+							column = int(copy[9]) - int(copy2[9])
 							column = int(new[6]) - column
 						else:
 							#print("SegundoDigitom")
-							column = int(copy2[6]) - int(copy[6])
+							column = int(copy2[9]) - int(copy[9])
 							column = int(new[6]) + column
 						#print("column:",column)
-
+			
+			self.newCut.append(table)
 			self.newCut.append("X="+str(row)+" Y="+str(column))
 			self.newCut.append(y[1])
 			#print("Nuevo2:",self.newCut)
+			#print("my:",self.mylist)
 
 			for i in range(len(self.mylist)):  #Mylist
-				for j in range(0,len(self.newCut),2):
-					if self.newCut[j] == self.mylist[i]:
-						#print("Entro list")
-						#print("mylist:",self.mylist[i])
-						#print("newCut:",self.newCut[j])
+				for j in range(1,len(self.newCut),3):
+					if self.newCut[j] == self.mylist[i] and self.mylist[i-1] == table:
+						print("Entro list")
+						print("mylist:",self.mylist[i])
+						print(self.mylist[i-1])
+						print("table:",table)
+						print("newCut:",self.newCut[j])
 						self.flagOverList = True
 
 			for i in range(len(self.mylabel)): 
 				for j in range(0,len(self.newCut),2):
-					if self.newCut[j] == self.mylabel[i]:
-						#print("Entro label")
-						#print("mylabel:",self.mylabel[i])
-						#print("newCut:",self.newCut[j])
+					if self.newCut[j] == self.mylabel[i] and self.mylabel[i-1] == table:
+						print("Entro label")
+						print("mylabel:",self.mylabel[i])
+						print(self.mylabel[i-1])
+						print("table:",table)
+						print("newCut:",self.newCut[j])
 						self.flagOverLabel = True
 
 		if self.flagOverLabel != False or self.flagOverList != False:
@@ -1060,23 +1101,42 @@ class Ui_MainWindow(object):
 
 	def cleanMylist(self): #clean mylist and mylabel
 		print("CleanMylist")
+		print(self.tempCut)
 		for i in range(len(self.tempCut)):
 			value = self.tempCut[i].split("/")
-			#print("VALUE:",value)
-			for i in range(len(value)):
-				for j in range(len(self.mylist)):
-					if value[i] == self.mylist[j]:
-						self.mylist.pop(j+2)
-						self.mylist.pop(j+1)
-						self.mylist.pop(j) #se recorre un lugar a la izquierda
-						break
+			cmpValue = value[0].split("%")
+			print("VALUE:",value)
+			print("cmpValue:",cmpValue)
+			#for i in range(len(value)):
+			for j in range(len(self.mylist)-1):
+				if cmpValue[0]+'%' == self.mylist[j] and cmpValue[1] == self.mylist[j+1]:
+					#print("j:",j)
+					#print("cmpValue2:",cmpValue[0])
+					print("MYLIST:",self.mylist)
+					print(self.mylist[j+3])
+					print(self.mylist[j+2])
+					print(self.mylist[j+1])
+					print(self.mylist[j])
+					#print(self.mylist[j-1])
+					self.mylist.pop(j+3)
+					self.mylist.pop(j+2)
+					self.mylist.pop(j+1)
+					self.mylist.pop(j) #se recorre un lugar a la izquierda
+					#self.mylist.pop(j-1)
+					break
 
-				for k in range(len(self.mylabel)):
-					if value[i] == self.mylabel[k]:
-						self.mylabel.pop(k+1)
-						self.mylabel.pop(k) #se recorre un lugar a la izquierda
-						break
-				
+			for k in range(len(self.mylabel)-1):
+				if cmpValue[0]+'%' == self.mylabel[k] and cmpValue[1] == self.mylabel[k+1]:
+					self.mylabel.pop(k+3)
+					self.mylabel.pop(k+2)
+					self.mylabel.pop(k+1)
+					self.mylabel.pop(k) #se recorre un lugar a la izquierda
+					#self.mylabel.pop(k-1)
+					break
+		
+		print("List:",self.mylist)
+		print("Label:",self.mylabel)
+
 	def newMylist(self):
 		for j in range(len(self.newCut)):
 			x = self.newCut[j].split("\n")
@@ -1171,6 +1231,7 @@ class Ui_MainWindow(object):
 					item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
 					self.tableWidget_10.setItem(int(t[2]),int(t[6]),item)
 
+				self.mylist.append(self.newCut[j-2])
 				self.mylist.append(self.newCut[j-1])
 				for i in range(2):
 					nw = x[i].replace('[]','')
@@ -1179,7 +1240,7 @@ class Ui_MainWindow(object):
 				nw = x[0].replace('[]','')
 				w = str(nw)
 
-				if w[0] != 'X':
+				if w[0] != 'X' and w[2] != '%':
 					t = self.newCut[j-1]
 					if self.newCut[j] == 'empty':
 						item = QtWidgets.QTableWidgetItem()
@@ -1198,6 +1259,7 @@ class Ui_MainWindow(object):
 						item.setFont(lblt)
 						item.setBackground(QtGui.QColor('lightyellow'))
 
+						self.mylabel.append(self.newCut[j-2])
 						self.mylabel.append(self.newCut[j-1])
 						self.mylabel.append(nw)
 						
@@ -1306,12 +1368,14 @@ class Ui_MainWindow(object):
 						if self.flagEdit == True:
 							self.mylabel.pop(self.y+1)
 							self.mylabel.pop(self.y)
+							self.mylabel.pop(self.y-1)
 							self.flagEdit = False
 
 						if self.secondEdit == True: 
 							self.mylist.pop(self.x+2)
 							self.mylist.pop(self.x+1)
 							self.mylist.pop(self.x) #se recorre un lugar a la izquierda
+							self.mylist.pop(self.x-1)
 							self.secondEdit = False
 
 		if self.tableWidget_2.isVisible()==True:
@@ -1347,12 +1411,14 @@ class Ui_MainWindow(object):
 						if self.flagEdit2 == True:
 							self.mylabel.pop(self.y+1)
 							self.mylabel.pop(self.y)
+							self.mylabel.pop(self.y-1)
 							self.flagEdit2 = False
 
 						if self.secondEdit2 == True: 
 							self.mylist.pop(self.x+2)
 							self.mylist.pop(self.x+1)
 							self.mylist.pop(self.x) #se recorre un lugar a la izquierda
+							self.mylist.pop(self.x-1)
 							self.secondEdit2 = False
 
 		if self.tableWidget_3.isVisible()==True:
@@ -1388,12 +1454,14 @@ class Ui_MainWindow(object):
 						if self.flagEdit3 == True:
 							self.mylabel.pop(self.y+1)
 							self.mylabel.pop(self.y)
+							self.mylabel.pop(self.y-1)
 							self.flagEdit3 = False
 
 						if self.secondEdit3 == True: 
 							self.mylist.pop(self.x+2)
 							self.mylist.pop(self.x+1)
 							self.mylist.pop(self.x) #se recorre un lugar a la izquierda
+							self.mylist.pop(self.x-1)
 							self.secondEdit3 = False
 
 		if self.tableWidget_4.isVisible()==True:
@@ -1429,12 +1497,14 @@ class Ui_MainWindow(object):
 						if self.flagEdit4 == True:
 							self.mylabel.pop(self.y+1)
 							self.mylabel.pop(self.y)
+							self.mylabel.pop(self.y-1)
 							self.flagEdit4 = False
 
 						if self.secondEdit4 == True: 
 							self.mylist.pop(self.x+2)
 							self.mylist.pop(self.x+1)
 							self.mylist.pop(self.x) #se recorre un lugar a la izquierda
+							self.mylist.pop(self.x-1) 
 							self.secondEdit4 = False
 		
 		if self.tableWidget_5.isVisible()==True:
@@ -1470,12 +1540,14 @@ class Ui_MainWindow(object):
 						if self.flagEdit5 == True:
 							self.mylabel.pop(self.y+1)
 							self.mylabel.pop(self.y)
+							self.mylabel.pop(self.y-1)
 							self.flagEdit5 = False
 
 						if self.secondEdit5 == True: 
 							self.mylist.pop(self.x+2)
 							self.mylist.pop(self.x+1)
 							self.mylist.pop(self.x) #se recorre un lugar a la izquierda
+							self.mylist.pop(self.x-1)
 							self.secondEdit5 = False
 
 		if self.tableWidget_6.isVisible()==True:
@@ -1511,12 +1583,14 @@ class Ui_MainWindow(object):
 						if self.flagEdit6 == True:
 							self.mylabel.pop(self.y+1)
 							self.mylabel.pop(self.y)
+							self.mylabel.pop(self.y-1)
 							self.flagEdit6 = False
 
 						if self.secondEdit6 == True: 
 							self.mylist.pop(self.x+2)
 							self.mylist.pop(self.x+1)
 							self.mylist.pop(self.x) #se recorre un lugar a la izquierda
+							self.mylist.pop(self.x-1) 
 							self.secondEdit6 = False
 
 		if self.tableWidget_7.isVisible()==True:
@@ -1552,12 +1626,14 @@ class Ui_MainWindow(object):
 						if self.flagEdit7 == True:
 							self.mylabel.pop(self.y+1)
 							self.mylabel.pop(self.y)
+							self.mylabel.pop(self.y-1)
 							self.flagEdit7 = False
 
 						if self.secondEdit7 == True: 
 							self.mylist.pop(self.x+2)
 							self.mylist.pop(self.x+1)
 							self.mylist.pop(self.x) #se recorre un lugar a la izquierda
+							self.mylist.pop(self.x-1)
 							self.secondEdit7 = False
 
 		if self.tableWidget_8.isVisible()==True:
@@ -1593,12 +1669,14 @@ class Ui_MainWindow(object):
 						if self.flagEdit8 == True:
 							self.mylabel.pop(self.y+1)
 							self.mylabel.pop(self.y)
+							self.mylabel.pop(self.y-1)
 							self.flagEdit8 = False
 
 						if self.secondEdit8 == True: 
 							self.mylist.pop(self.x+2)
 							self.mylist.pop(self.x+1)
 							self.mylist.pop(self.x) #se recorre un lugar a la izquierda
+							self.mylist.pop(self.x-1)
 							self.secondEdit8 = False
 
 		if self.tableWidget_9.isVisible()==True:
@@ -1634,12 +1712,14 @@ class Ui_MainWindow(object):
 						if self.flagEdit9 == True:
 							self.mylabel.pop(self.y+1)
 							self.mylabel.pop(self.y)
+							self.mylabel.pop(self.y-1)
 							self.flagEdit9 = False
 
 						if self.secondEdit9 == True: 
 							self.mylist.pop(self.x+2)
 							self.mylist.pop(self.x+1)
 							self.mylist.pop(self.x) #se recorre un lugar a la izquierda
+							self.mylist.pop(self.x-1)
 							self.secondEdit9 = False
 
 		if self.tableWidget_10.isVisible()==True:
@@ -1675,12 +1755,14 @@ class Ui_MainWindow(object):
 						if self.flagEdit10 == True:
 							self.mylabel.pop(self.y+1)
 							self.mylabel.pop(self.y)
+							self.mylabel.pop(self.y-1)
 							self.flagEdit10 = False
 
 						if self.secondEdit10 == True: 
 							self.mylist.pop(self.x+2)
 							self.mylist.pop(self.x+1)
 							self.mylist.pop(self.x) #se recorre un lugar a la izquierda
+							self.mylist.pop(self.x-1)
 							self.secondEdit10 = False
 
 	def tabSelected(self):
