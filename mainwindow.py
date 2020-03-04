@@ -493,7 +493,7 @@ class Ui_MainWindow(object):
 
 						for i in range(len(self.mylabel)):
 							x = coord2.replace('/','')
-							if self.mylabel[i] == x:
+							if self.mylabel[i] == x and self.mylabel[i-1]== '01%':
 								self.flagLabel = True
 								self.tempCut.append("01%"+coord2+self.mylabel[i+1])
 
@@ -515,7 +515,7 @@ class Ui_MainWindow(object):
 
 						for i in range(len(self.mylabel)):
 							x = coord2.replace('/','')
-							if self.mylabel[i] == x:
+							if self.mylabel[i] == x and self.mylabel[i-1]== '02%':
 								self.flagLabel = True
 								self.tempCut.append("02%"+coord2+self.mylabel[i+1])
 
@@ -537,7 +537,7 @@ class Ui_MainWindow(object):
 
 						for i in range(len(self.mylabel)):
 							x = coord2.replace('/','')
-							if self.mylabel[i] == x:
+							if self.mylabel[i] == x and self.mylabel[i-1]== '03%':
 								self.flagLabel = True
 								self.tempCut.append("03%"+coord2+self.mylabel[i+1])
 
@@ -559,7 +559,7 @@ class Ui_MainWindow(object):
 
 						for i in range(len(self.mylabel)):
 							x = coord2.replace('/','')
-							if self.mylabel[i] == x:
+							if self.mylabel[i] == x and self.mylabel[i-1]== '04%':
 								self.flagLabel = True
 								self.tempCut.append("04%"+coord2+self.mylabel[i+1])
 
@@ -581,7 +581,7 @@ class Ui_MainWindow(object):
 
 						for i in range(len(self.mylabel)):
 							x = coord2.replace('/','')
-							if self.mylabel[i] == x:
+							if self.mylabel[i] == x and self.mylabel[i-1]== '05%':
 								self.flagLabel = True
 								self.tempCut.append("05%"+coord2+self.mylabel[i+1])
 
@@ -603,7 +603,7 @@ class Ui_MainWindow(object):
 
 						for i in range(len(self.mylabel)):
 							x = coord2.replace('/','')
-							if self.mylabel[i] == x:
+							if self.mylabel[i] == x and self.mylabel[i-1]== '06%':
 								self.flagLabel = True
 								self.tempCut.append("06%"+coord2+self.mylabel[i+1])
 
@@ -625,7 +625,7 @@ class Ui_MainWindow(object):
 
 						for i in range(len(self.mylabel)):
 							x = coord2.replace('/','')
-							if self.mylabel[i] == x:
+							if self.mylabel[i] == x and self.mylabel[i-1]== '07%':
 								self.flagLabel = True
 								self.tempCut.append("07%"+coord2+self.mylabel[i+1])
 
@@ -647,7 +647,7 @@ class Ui_MainWindow(object):
 
 						for i in range(len(self.mylabel)):
 							x = coord2.replace('/','')
-							if self.mylabel[i] == x:
+							if self.mylabel[i] == x and self.mylabel[i-1]== '08%':
 								self.flagLabel = True
 								self.tempCut.append("08%"+coord2+self.mylabel[i+1])
 
@@ -669,7 +669,7 @@ class Ui_MainWindow(object):
 
 						for i in range(len(self.mylabel)):
 							x = coord2.replace('/','')
-							if self.mylabel[i] == x:
+							if self.mylabel[i] == x and self.mylabel[i-1]== '09%':
 								self.flagLabel = True
 								self.tempCut.append("09%"+coord2+self.mylabel[i+1])
 
@@ -691,7 +691,7 @@ class Ui_MainWindow(object):
 
 						for i in range(len(self.mylabel)):
 							x = coord2.replace('/','')
-							if self.mylabel[i] == x:
+							if self.mylabel[i] == x and self.mylabel[i-1]== '10%':
 								self.flagLabel = True
 								self.tempCut.append("10%"+coord2+self.mylabel[i+1])
 
@@ -707,9 +707,10 @@ class Ui_MainWindow(object):
 			msgCut = QtWidgets.QMessageBox()
 			returnCut = msgCut.warning(self.MainWindow,'Warning','You alredy have circuit copied to memory. If you continue those circuit will be deleted. Are you sure you want to continue?',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
 			if returnCut == msgCut.Yes:
-				print("tempCutElse",self.tempCut)
+				#print("YES-MEMORY")
+				#print("tempCutElse",self.tempCut)
 
-				self.cleanMylist()
+				#self.cleanMylist()
 				self.tempCut.clear()
 				
 				if self.tableWidget.isVisible()==True:
@@ -722,7 +723,7 @@ class Ui_MainWindow(object):
 
 							for i in range(len(self.mylabel)):
 								x = coord2.replace('/','')
-								if self.mylabel[i] == x:
+								if self.mylabel[i] == x and self.mylabel[i-1]== '01%':
 									self.flagLabel = True
 									self.tempCut.append("01%"+coord2+self.mylabel[i+1])
 
@@ -742,7 +743,7 @@ class Ui_MainWindow(object):
 
 							for i in range(len(self.mylabel)):
 								x = coord2.replace('/','')
-								if self.mylabel[i] == x:
+								if self.mylabel[i] == x and self.mylabel[i-1]== '02%':
 									self.flagLabel = True
 									self.tempCut.append("02%"+coord2+self.mylabel[i+1])
 
@@ -762,7 +763,7 @@ class Ui_MainWindow(object):
 
 							for i in range(len(self.mylabel)):
 								x = coord2.replace('/','')
-								if self.mylabel[i] == x:
+								if self.mylabel[i] == x and self.mylabel[i-1]== '03%':
 									self.flagLabel = True
 									self.tempCut.append("03%"+coord2+self.mylabel[i+1])
 
@@ -782,7 +783,7 @@ class Ui_MainWindow(object):
 
 							for i in range(len(self.mylabel)):
 								x = coord2.replace('/','')
-								if self.mylabel[i] == x:
+								if self.mylabel[i] == x and self.mylabel[i-1]== '04%':
 									self.flagLabel = True
 									self.tempCut.append("04%"+coord2+self.mylabel[i+1])
 
@@ -802,7 +803,7 @@ class Ui_MainWindow(object):
 
 							for i in range(len(self.mylabel)):
 								x = coord2.replace('/','')
-								if self.mylabel[i] == x:
+								if self.mylabel[i] == x and self.mylabel[i-1]== '05%':
 									self.flagLabel = True
 									self.tempCut.append("05%"+coord2+self.mylabel[i+1])
 
@@ -822,7 +823,7 @@ class Ui_MainWindow(object):
 
 							for i in range(len(self.mylabel)):
 								x = coord2.replace('/','')
-								if self.mylabel[i] == x:
+								if self.mylabel[i] == x and self.mylabel[i-1]== '06%':
 									self.flagLabel = True
 									self.tempCut.append("06%"+coord2+self.mylabel[i+1])
 
@@ -842,7 +843,7 @@ class Ui_MainWindow(object):
 
 							for i in range(len(self.mylabel)):
 								x = coord2.replace('/','')
-								if self.mylabel[i] == x:
+								if self.mylabel[i] == x and self.mylabel[i-1]== '07%':
 									self.flagLabel = True
 									self.tempCut.append("07%"+coord2+self.mylabel[i+1])
 
@@ -862,7 +863,7 @@ class Ui_MainWindow(object):
 
 							for i in range(len(self.mylabel)):
 								x = coord2.replace('/','')
-								if self.mylabel[i] == x:
+								if self.mylabel[i] == x and self.mylabel[i-1]== '08%':
 									self.flagLabel = True
 									self.tempCut.append("08%"+coord2+self.mylabel[i+1])
 
@@ -882,7 +883,7 @@ class Ui_MainWindow(object):
 
 							for i in range(len(self.mylabel)):
 								x = coord2.replace('/','')
-								if self.mylabel[i] == x:
+								if self.mylabel[i] == x and self.mylabel[i-1]== '09%':
 									self.flagLabel = True
 									self.tempCut.append("09%"+coord2+self.mylabel[i+1])
 
@@ -902,7 +903,7 @@ class Ui_MainWindow(object):
 
 							for i in range(len(self.mylabel)):
 								x = coord2.replace('/','')
-								if self.mylabel[i] == x:
+								if self.mylabel[i] == x and self.mylabel[i-1]== '10%':
 									self.flagLabel = True
 									self.tempCut.append("10%"+coord2+self.mylabel[i+1])
 
@@ -911,6 +912,9 @@ class Ui_MainWindow(object):
 
 							item.setBackground(QtGui.QColor('white'))
 							item.setText('')
+
+				self.cleanMylist()
+				print("tempCutElSE",self.tempCut)
 
 	flagEmpty = False
 	def items_paste(self):
@@ -1012,8 +1016,8 @@ class Ui_MainWindow(object):
 		self.newCut.append(table)
 		self.newCut.append("X="+str(vx)+" Y="+str(vy))
 		self.newCut.append(x[1])
-		print("Nuevo:",self.newCut)
-		print("TE:",self.tempCut)
+		#print("Nuevo:",self.newCut)
+		#print("TE:",self.tempCut)
 
 		for i in range(len(self.tempCut)-1):
 			copy2 = self.tempCut[i+1]  #i+2
@@ -1064,21 +1068,21 @@ class Ui_MainWindow(object):
 			for i in range(len(self.mylist)):  #Mylist
 				for j in range(1,len(self.newCut),3):
 					if self.newCut[j] == self.mylist[i] and self.mylist[i-1] == table:
-						print("Entro list")
-						print("mylist:",self.mylist[i])
-						print(self.mylist[i-1])
-						print("table:",table)
-						print("newCut:",self.newCut[j])
+						#print("Entro list")
+						#print("mylist:",self.mylist[i])
+						#print(self.mylist[i-1])
+						#print("table:",table)
+						#print("newCut:",self.newCut[j])
 						self.flagOverList = True
 
 			for i in range(len(self.mylabel)): 
-				for j in range(0,len(self.newCut),2):
+				for j in range(1,len(self.newCut),3):
 					if self.newCut[j] == self.mylabel[i] and self.mylabel[i-1] == table:
-						print("Entro label")
-						print("mylabel:",self.mylabel[i])
-						print(self.mylabel[i-1])
-						print("table:",table)
-						print("newCut:",self.newCut[j])
+						#print("Entro label")
+						#print("mylabel:",self.mylabel[i])
+						#print(self.mylabel[i-1])
+						#print("table:",table)
+						#print("newCut:",self.newCut[j])
 						self.flagOverLabel = True
 
 		if self.flagOverLabel != False or self.flagOverList != False:
@@ -1105,37 +1109,41 @@ class Ui_MainWindow(object):
 		for i in range(len(self.tempCut)):
 			value = self.tempCut[i].split("/")
 			cmpValue = value[0].split("%")
-			print("VALUE:",value)
-			print("cmpValue:",cmpValue)
+			#print("VALUE:",value)
+			#print("cmpValue:",cmpValue)
 			#for i in range(len(value)):
+			#print("MYLIST:",self.mylist)
+			#print("MYLABEL:",self.mylabel)
 			for j in range(len(self.mylist)-1):
 				if cmpValue[0]+'%' == self.mylist[j] and cmpValue[1] == self.mylist[j+1]:
 					#print("j:",j)
 					#print("cmpValue2:",cmpValue[0])
-					print("MYLIST:",self.mylist)
-					print(self.mylist[j+3])
-					print(self.mylist[j+2])
-					print(self.mylist[j+1])
-					print(self.mylist[j])
-					#print(self.mylist[j-1])
+					#print("MYLIST:",self.mylist)
+					#print(self.mylist[j+3])
+					#print(self.mylist[j+2])
+					#print(self.mylist[j+1])
+					#print(self.mylist[j])
 					self.mylist.pop(j+3)
 					self.mylist.pop(j+2)
 					self.mylist.pop(j+1)
 					self.mylist.pop(j) #se recorre un lugar a la izquierda
-					#self.mylist.pop(j-1)
 					break
 
 			for k in range(len(self.mylabel)-1):
 				if cmpValue[0]+'%' == self.mylabel[k] and cmpValue[1] == self.mylabel[k+1]:
-					self.mylabel.pop(k+3)
+					#self.mylabel.pop(k+3)
+					#print("cmpValue[0]:",cmpValue[0])
+					#print("cmpValue[1]:",cmpValue[1])
+					#print("mylabel[k+2]:",self.mylabel[k+2])
+					#print("mylabel[k+1]:",self.mylabel[k+1])
+					#print("mylabel[k]:",self.mylabel[k])
 					self.mylabel.pop(k+2)
 					self.mylabel.pop(k+1)
 					self.mylabel.pop(k) #se recorre un lugar a la izquierda
-					#self.mylabel.pop(k-1)
 					break
 		
-		print("List:",self.mylist)
-		print("Label:",self.mylabel)
+		#print("List:",self.mylist)
+		#print("Label:",self.mylabel)
 
 	def newMylist(self):
 		for j in range(len(self.newCut)):
@@ -1304,36 +1312,9 @@ class Ui_MainWindow(object):
 						self.tableWidget_10.setItem(int(t[2]),int(t[6]),item)
 		
 
-	editDelete = False
+	editDelete = False ##verificar banderas que funcionen correctamente 
 	secondEdit = False
 	flagEdit = False
-	editDelete2 = False
-	secondEdit2 = False
-	flagEdit2 = False
-	editDelete3 = False
-	secondEdit3 = False
-	flagEdit3 = False
-	editDelete4 = False
-	secondEdit4 = False
-	flagEdit4 = False
-	editDelete5 = False
-	secondEdit5 = False
-	flagEdit5 = False
-	editDelete6 = False
-	secondEdit6 = False
-	flagEdit6 = False
-	editDelete7 = False
-	secondEdit7 = False
-	flagEdit7 = False
-	editDelete8 = False
-	secondEdit8 = False
-	flagEdit8 = False
-	editDelete9 = False
-	secondEdit9 = False
-	flagEdit9 = False
-	editDelete10 = False
-	secondEdit10 = False
-	flagEdit10 = False
 	def items_clear(self):
 		if self.tableWidget.isVisible()==True:
 			print("clearTable1")
@@ -1356,12 +1337,12 @@ class Ui_MainWindow(object):
 						item.setText('')
 
 						for i in range(len(self.mylist)): 
-							if self.mylist[i] == value:
+							if self.mylist[i] == value and self.mylist[i-1]== '01%':
 								self.x = i
 								self.secondEdit = True
 
 						for i in range(len(self.mylabel)):
-							if self.mylabel[i] == value:
+							if self.mylabel[i] == value and self.mylabel[i-1]== '01%':
 								self.y = i
 								self.flagEdit = True
 
@@ -1383,11 +1364,11 @@ class Ui_MainWindow(object):
 			msgClear = QtWidgets.QMessageBox()
 			for item in self.tableWidget_2.selectedItems():
 				if item.text()!='':
-					self.editDelete2 = True 
+					self.editDelete = True 
 
-			if self.editDelete2 == True:
+			if self.editDelete == True:
 				returnValue = msgClear.warning(self.MainWindow,'Warning','Are you sure you want to delete?',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
-				self.editDelete2 = False
+				self.editDelete = False
 
 				if returnValue == msgClear.Yes:
 					for item in self.tableWidget_2.selectedItems(): 
@@ -1399,38 +1380,38 @@ class Ui_MainWindow(object):
 						item.setText('')
 
 						for i in range(len(self.mylist)): 
-							if self.mylist[i] == value:
+							if self.mylist[i] == value and self.mylist[i-1]== '02%':
 								self.x = i
-								self.secondEdit2 = True
+								self.secondEdit = True
 
 						for i in range(len(self.mylabel)):
-							if self.mylabel[i] == value:
+							if self.mylabel[i] == value and self.mylabel[i-1]== '02%':
 								self.y = i
-								self.flagEdit2 = True
+								self.flagEdit = True
 
-						if self.flagEdit2 == True:
+						if self.flagEdit == True:
 							self.mylabel.pop(self.y+1)
 							self.mylabel.pop(self.y)
 							self.mylabel.pop(self.y-1)
-							self.flagEdit2 = False
+							self.flagEdit = False
 
-						if self.secondEdit2 == True: 
+						if self.secondEdit == True: 
 							self.mylist.pop(self.x+2)
 							self.mylist.pop(self.x+1)
 							self.mylist.pop(self.x) #se recorre un lugar a la izquierda
 							self.mylist.pop(self.x-1)
-							self.secondEdit2 = False
+							self.secondEdit = False
 
 		if self.tableWidget_3.isVisible()==True:
 			print("clearTable3")
 			msgClear = QtWidgets.QMessageBox()
 			for item in self.tableWidget_3.selectedItems():
 				if item.text()!='':
-					self.editDelete3 = True 
+					self.editDelete = True 
 
-			if self.editDelete3 == True:
+			if self.editDelete == True:
 				returnValue = msgClear.warning(self.MainWindow,'Warning','Are you sure you want to delete?',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
-				self.editDelete3 = False
+				self.editDelete = False
 
 				if returnValue == msgClear.Yes:
 					for item in self.tableWidget_3.selectedItems(): 
@@ -1442,38 +1423,38 @@ class Ui_MainWindow(object):
 						item.setText('')
 
 						for i in range(len(self.mylist)): 
-							if self.mylist[i] == value:
+							if self.mylist[i] == value and self.mylist[i-1]== '03%':
 								self.x = i
-								self.secondEdit3 = True
+								self.secondEdit = True
 
 						for i in range(len(self.mylabel)):
-							if self.mylabel[i] == value:
+							if self.mylabel[i] == value and self.mylabel[i-1]== '03%':
 								self.y = i
-								self.flagEdit3 = True
+								self.flagEdit = True
 
-						if self.flagEdit3 == True:
+						if self.flagEdit == True:
 							self.mylabel.pop(self.y+1)
 							self.mylabel.pop(self.y)
 							self.mylabel.pop(self.y-1)
-							self.flagEdit3 = False
+							self.flagEdit = False
 
-						if self.secondEdit3 == True: 
+						if self.secondEdit == True: 
 							self.mylist.pop(self.x+2)
 							self.mylist.pop(self.x+1)
 							self.mylist.pop(self.x) #se recorre un lugar a la izquierda
 							self.mylist.pop(self.x-1)
-							self.secondEdit3 = False
+							self.secondEdit = False
 
 		if self.tableWidget_4.isVisible()==True:
 			print("clearTable4")
 			msgClear = QtWidgets.QMessageBox()
 			for item in self.tableWidget_4.selectedItems():
 				if item.text()!='':
-					self.editDelete4 = True 
+					self.editDelete = True 
 
-			if self.editDelete4 == True:
+			if self.editDelete == True:
 				returnValue = msgClear.warning(self.MainWindow,'Warning','Are you sure you want to delete?',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
-				self.editDelete4 = False
+				self.editDelete = False
 
 				if returnValue == msgClear.Yes:
 					for item in self.tableWidget_4.selectedItems(): 
@@ -1485,38 +1466,38 @@ class Ui_MainWindow(object):
 						item.setText('')
 
 						for i in range(len(self.mylist)): 
-							if self.mylist[i] == value:
+							if self.mylist[i] == value and self.mylist[i-1]== '04%':
 								self.x = i
-								self.secondEdit4 = True
+								self.secondEdit = True
 
 						for i in range(len(self.mylabel)):
-							if self.mylabel[i] == value:
+							if self.mylabel[i] == value and self.mylabel[i-1]== '04%':
 								self.y = i
-								self.flagEdit4 = True
+								self.flagEdit = True
 
-						if self.flagEdit4 == True:
+						if self.flagEdit == True:
 							self.mylabel.pop(self.y+1)
 							self.mylabel.pop(self.y)
 							self.mylabel.pop(self.y-1)
-							self.flagEdit4 = False
+							self.flagEdit = False
 
-						if self.secondEdit4 == True: 
+						if self.secondEdit == True: 
 							self.mylist.pop(self.x+2)
 							self.mylist.pop(self.x+1)
 							self.mylist.pop(self.x) #se recorre un lugar a la izquierda
 							self.mylist.pop(self.x-1) 
-							self.secondEdit4 = False
+							self.secondEdit = False
 		
 		if self.tableWidget_5.isVisible()==True:
 			print("clearTable5")
 			msgClear = QtWidgets.QMessageBox()
 			for item in self.tableWidget_5.selectedItems():
 				if item.text()!='':
-					self.editDelete5 = True 
+					self.editDelete = True 
 
-			if self.editDelete5 == True:
+			if self.editDelete == True:
 				returnValue = msgClear.warning(self.MainWindow,'Warning','Are you sure you want to delete?',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
-				self.editDelete5 = False
+				self.editDelete = False
 
 				if returnValue == msgClear.Yes:
 					for item in self.tableWidget_5.selectedItems(): 
@@ -1528,38 +1509,38 @@ class Ui_MainWindow(object):
 						item.setText('')
 
 						for i in range(len(self.mylist)): 
-							if self.mylist[i] == value:
+							if self.mylist[i] == value and self.mylist[i-1]== '05%':
 								self.x = i
-								self.secondEdit5 = True
+								self.secondEdit = True
 
 						for i in range(len(self.mylabel)):
-							if self.mylabel[i] == value:
+							if self.mylabel[i] == value and self.mylabel[i-1]== '05%':
 								self.y = i
-								self.flagEdit5 = True
+								self.flagEdit = True
 
-						if self.flagEdit5 == True:
+						if self.flagEdit == True:
 							self.mylabel.pop(self.y+1)
 							self.mylabel.pop(self.y)
 							self.mylabel.pop(self.y-1)
-							self.flagEdit5 = False
+							self.flagEdit = False
 
-						if self.secondEdit5 == True: 
+						if self.secondEdit == True: 
 							self.mylist.pop(self.x+2)
 							self.mylist.pop(self.x+1)
 							self.mylist.pop(self.x) #se recorre un lugar a la izquierda
 							self.mylist.pop(self.x-1)
-							self.secondEdit5 = False
+							self.secondEdit = False
 
 		if self.tableWidget_6.isVisible()==True:
 			print("clearTable6")
 			msgClear = QtWidgets.QMessageBox()
 			for item in self.tableWidget_6.selectedItems():
 				if item.text()!='':
-					self.editDelete6 = True 
+					self.editDelete = True 
 
-			if self.editDelete6 == True:
+			if self.editDelete == True:
 				returnValue = msgClear.warning(self.MainWindow,'Warning','Are you sure you want to delete?',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
-				self.editDelete6 = False
+				self.editDelete = False
 
 				if returnValue == msgClear.Yes:
 					for item in self.tableWidget_6.selectedItems(): 
@@ -1571,38 +1552,38 @@ class Ui_MainWindow(object):
 						item.setText('')
 
 						for i in range(len(self.mylist)): 
-							if self.mylist[i] == value:
+							if self.mylist[i] == value and self.mylist[i-1]== '06%':
 								self.x = i
-								self.secondEdit6 = True
+								self.secondEdit = True
 
 						for i in range(len(self.mylabel)):
-							if self.mylabel[i] == value:
+							if self.mylabel[i] == value and self.mylabel[i-1]== '06%':
 								self.y = i
-								self.flagEdit6 = True
+								self.flagEdit = True
 
-						if self.flagEdit6 == True:
+						if self.flagEdit == True:
 							self.mylabel.pop(self.y+1)
 							self.mylabel.pop(self.y)
 							self.mylabel.pop(self.y-1)
-							self.flagEdit6 = False
+							self.flagEdit = False
 
-						if self.secondEdit6 == True: 
+						if self.secondEdit == True: 
 							self.mylist.pop(self.x+2)
 							self.mylist.pop(self.x+1)
 							self.mylist.pop(self.x) #se recorre un lugar a la izquierda
 							self.mylist.pop(self.x-1) 
-							self.secondEdit6 = False
+							self.secondEdit = False
 
 		if self.tableWidget_7.isVisible()==True:
 			print("clearTable7")
 			msgClear = QtWidgets.QMessageBox()
 			for item in self.tableWidget_7.selectedItems():
 				if item.text()!='':
-					self.editDelete7 = True 
+					self.editDelete = True 
 
-			if self.editDelete7 == True:
+			if self.editDelete == True:
 				returnValue = msgClear.warning(self.MainWindow,'Warning','Are you sure you want to delete?',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
-				self.editDelete7 = False
+				self.editDelete = False
 
 				if returnValue == msgClear.Yes:
 					for item in self.tableWidget_7.selectedItems(): 
@@ -1614,38 +1595,38 @@ class Ui_MainWindow(object):
 						item.setText('')
 
 						for i in range(len(self.mylist)): 
-							if self.mylist[i] == value:
+							if self.mylist[i] == value and self.mylist[i-1]== '07%':
 								self.x = i
-								self.secondEdit7 = True
+								self.secondEdit = True
 
 						for i in range(len(self.mylabel)):
-							if self.mylabel[i] == value:
+							if self.mylabel[i] == value and self.mylabel[i-1]== '07%':
 								self.y = i
-								self.flagEdit7 = True
+								self.flagEdit = True
 
-						if self.flagEdit7 == True:
+						if self.flagEdit == True:
 							self.mylabel.pop(self.y+1)
 							self.mylabel.pop(self.y)
 							self.mylabel.pop(self.y-1)
-							self.flagEdit7 = False
+							self.flagEdit = False
 
-						if self.secondEdit7 == True: 
+						if self.secondEdit == True: 
 							self.mylist.pop(self.x+2)
 							self.mylist.pop(self.x+1)
 							self.mylist.pop(self.x) #se recorre un lugar a la izquierda
 							self.mylist.pop(self.x-1)
-							self.secondEdit7 = False
+							self.secondEdit = False
 
 		if self.tableWidget_8.isVisible()==True:
 			print("clearTable8")
 			msgClear = QtWidgets.QMessageBox()
 			for item in self.tableWidget_8.selectedItems():
 				if item.text()!='':
-					self.editDelete8 = True 
+					self.editDelete = True 
 
-			if self.editDelete8 == True:
+			if self.editDelete == True:
 				returnValue = msgClear.warning(self.MainWindow,'Warning','Are you sure you want to delete?',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
-				self.editDelete8 = False
+				self.editDelete = False
 
 				if returnValue == msgClear.Yes:
 					for item in self.tableWidget_8.selectedItems(): 
@@ -1657,38 +1638,38 @@ class Ui_MainWindow(object):
 						item.setText('')
 
 						for i in range(len(self.mylist)): 
-							if self.mylist[i] == value:
+							if self.mylist[i] == value and self.mylist[i-1]== '08%':
 								self.x = i
-								self.secondEdit8 = True
+								self.secondEdit = True
 
 						for i in range(len(self.mylabel)):
-							if self.mylabel[i] == value:
+							if self.mylabel[i] == value and self.mylabel[i-1]== '08%':
 								self.y = i
-								self.flagEdit8 = True
+								self.flagEdit = True
 
-						if self.flagEdit8 == True:
+						if self.flagEdit == True:
 							self.mylabel.pop(self.y+1)
 							self.mylabel.pop(self.y)
 							self.mylabel.pop(self.y-1)
-							self.flagEdit8 = False
+							self.flagEdit = False
 
-						if self.secondEdit8 == True: 
+						if self.secondEdit == True: 
 							self.mylist.pop(self.x+2)
 							self.mylist.pop(self.x+1)
 							self.mylist.pop(self.x) #se recorre un lugar a la izquierda
 							self.mylist.pop(self.x-1)
-							self.secondEdit8 = False
+							self.secondEdit = False
 
 		if self.tableWidget_9.isVisible()==True:
 			print("clearTable9")
 			msgClear = QtWidgets.QMessageBox()
 			for item in self.tableWidget_9.selectedItems():
 				if item.text()!='':
-					self.editDelete9 = True 
+					self.editDelete = True 
 
-			if self.editDelete9 == True:
+			if self.editDelete == True:
 				returnValue = msgClear.warning(self.MainWindow,'Warning','Are you sure you want to delete?',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
-				self.editDelete9 = False
+				self.editDelete = False
 
 				if returnValue == msgClear.Yes:
 					for item in self.tableWidget_9.selectedItems(): 
@@ -1700,38 +1681,38 @@ class Ui_MainWindow(object):
 						item.setText('')
 
 						for i in range(len(self.mylist)): 
-							if self.mylist[i] == value:
+							if self.mylist[i] == value and self.mylist[i-1]== '09%':
 								self.x = i
-								self.secondEdit9 = True
+								self.secondEdit = True
 
 						for i in range(len(self.mylabel)):
-							if self.mylabel[i] == value:
+							if self.mylabel[i] == value and self.mylabel[i-1]== '09%':
 								self.y = i
-								self.flagEdit9 = True
+								self.flagEdit = True
 
-						if self.flagEdit9 == True:
+						if self.flagEdit == True:
 							self.mylabel.pop(self.y+1)
 							self.mylabel.pop(self.y)
 							self.mylabel.pop(self.y-1)
-							self.flagEdit9 = False
+							self.flagEdit = False
 
-						if self.secondEdit9 == True: 
+						if self.secondEdit == True: 
 							self.mylist.pop(self.x+2)
 							self.mylist.pop(self.x+1)
 							self.mylist.pop(self.x) #se recorre un lugar a la izquierda
 							self.mylist.pop(self.x-1)
-							self.secondEdit9 = False
+							self.secondEdit = False
 
 		if self.tableWidget_10.isVisible()==True:
 			print("clearTable10")
 			msgClear = QtWidgets.QMessageBox()
 			for item in self.tableWidget_10.selectedItems():
 				if item.text()!='':
-					self.editDelete10 = True 
+					self.editDelete = True 
 
-			if self.editDelete10 == True:
+			if self.editDelete == True:
 				returnValue = msgClear.warning(self.MainWindow,'Warning','Are you sure you want to delete?',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
-				self.editDelete10 = False
+				self.editDelete = False
 
 				if returnValue == msgClear.Yes:
 					for item in self.tableWidget_10.selectedItems(): 
@@ -1743,27 +1724,27 @@ class Ui_MainWindow(object):
 						item.setText('')
 
 						for i in range(len(self.mylist)): 
-							if self.mylist[i] == value:
+							if self.mylist[i] == value and self.mylist[i-1]== '10%':
 								self.x = i
-								self.secondEdit10 = True
+								self.secondEdit = True
 
 						for i in range(len(self.mylabel)):
-							if self.mylabel[i] == value:
+							if self.mylabel[i] == value and self.mylabel[i-1]== '10%':
 								self.y = i
-								self.flagEdit10 = True
+								self.flagEdit = True
 
-						if self.flagEdit10 == True:
+						if self.flagEdit == True:
 							self.mylabel.pop(self.y+1)
 							self.mylabel.pop(self.y)
 							self.mylabel.pop(self.y-1)
-							self.flagEdit10 = False
+							self.flagEdit = False
 
-						if self.secondEdit10 == True: 
+						if self.secondEdit == True: 
 							self.mylist.pop(self.x+2)
 							self.mylist.pop(self.x+1)
 							self.mylist.pop(self.x) #se recorre un lugar a la izquierda
 							self.mylist.pop(self.x-1)
-							self.secondEdit10 = False
+							self.secondEdit = False
 
 	def tabSelected(self):
 		print("tabSelect")
