@@ -86,34 +86,6 @@ class Ui_MainWindow(object):
 		self.tab_10 = QtWidgets.QWidget()
 		self.tab_10.setObjectName("tab_10")
 		self.tableWidget_10 = QtWidgets.QTableWidget(self.tab_10)
-		'''
-		self.tab_2 = QtWidgets.QWidget()
-		self.tab_2.setObjectName("tab_2")
-		self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.tab_2)
-		self.verticalLayout_3.setContentsMargins(11, 11, 11, 11)
-		self.verticalLayout_3.setSpacing(6)
-		self.verticalLayout_3.setObjectName("verticalLayout_3")
-		self.tableWidget_2 = QtWidgets.QTableWidget(self.tab_2)
-		self.tableWidget_2.setBaseSize(QtCore.QSize(0, 0))
-		self.tableWidget_2.setLayoutDirection(QtCore.Qt.LeftToRight)
-		self.tableWidget_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
-		self.tableWidget_2.setFrameShadow(QtWidgets.QFrame.Sunken)
-		self.tableWidget_2.setLineWidth(1)
-		self.tableWidget_2.setShowGrid(True)
-		self.tableWidget_2.setGridStyle(QtCore.Qt.DotLine)
-		self.tableWidget_2.setWordWrap(True)
-		self.tableWidget_2.setRowCount(6)
-		self.tableWidget_2.setColumnCount(6)
-		self.tableWidget_2.setObjectName("tableWidget_2")
-		self.tableWidget_2.horizontalHeader().setVisible(False)
-		self.tableWidget_2.horizontalHeader().setDefaultSectionSize(60)
-		self.tableWidget_2.horizontalHeader().setMinimumSectionSize(20)
-		self.tableWidget_2.verticalHeader().setVisible(False)
-		self.tableWidget_2.verticalHeader().setDefaultSectionSize(60)
-		self.tableWidget_2.verticalHeader().setMinimumSectionSize(20)
-		self.verticalLayout_3.addWidget(self.tableWidget_2)
-		self.tabWidget.addTab(self.tab_2, "")
-		'''
 
 		self.verticalLayout.addWidget(self.tabWidget)
 		MainWindow.setCentralWidget(self.centralWidget)
@@ -166,12 +138,14 @@ class Ui_MainWindow(object):
 		self.tmplist = list() 
 		self.comp1 = list()
 		self.comp2 = list()
+		self.maxTabs = list()	#lista, se guarda valores de tabs 
+		self.tempTabsList = list()
+		self.tempTabsLabel =list()
 
 		self.newtb.triggered.connect(self.newPage)
 		self.savetb.triggered.connect(self.saveLayout)
 		self.deletetb.triggered.connect(self.deletePage)
 		self.exittb.triggered.connect(self.exitLayout)
-		self.tabWidget.tabBarClicked.connect(self.tabSelected)
 
 		self.tableWidget.cellDoubleClicked.connect(self.on_doubleClickedTableW)
 		self.tableWidget_2.cellDoubleClicked.connect(self.on_doubleClickedTableW)
@@ -194,6 +168,9 @@ class Ui_MainWindow(object):
 		self.tableWidget_8.cellClicked.connect(self.on_cellClickedTableW)
 		self.tableWidget_9.cellClicked.connect(self.on_cellClickedTableW)
 		self.tableWidget_10.cellClicked.connect(self.on_cellClickedTableW)
+
+		#self.tabWidget.tabBarClicked.connect(self.prueba)
+		
 		
 		self.MainWindow = MainWindow
 
@@ -229,9 +206,37 @@ class Ui_MainWindow(object):
 
 	def showEvent(self,event):
 		print("ShowEvent")
+		settings = QtCore.QSettings('Settings/archivo.ini', QtCore.QSettings.NativeFormat)
+		if settings.value('Settings/archivo.ini')!='':
+			self.settingsList = settings.value("mylist")
+			self.settingsLabel = settings.value("mylabel")
 
-	def closeEvent(self,event):
+			if self.settingsList != None:
+				self.populateTabs()
+				self.mylist = self.settingsList[:] #para que no se corresponden con el mismo objeto
+				self.populateCircuit()
+
+			if self.settingsLabel != None:
+				self.mylabel = self.settingsLabel[:] #para que no se corresponden con el mismo objeto
+				self.populateLabel()
+
+	def closeEvent(self,event): 
 		print("CloseEvent")
+		if (len(self.mylist) != 0 or len(self.mylabel) != 0) and self.flagSave != True: 
+			if self.settingsList != self.mylist or self.settingsLabel != self.mylabel:
+				print("se han hecho cambios y no se ha guardado")
+				msgExit = QtWidgets.QMessageBox()
+				returnExit = msgExit.warning(self.MainWindow,'Warning','Do you want to save changes?',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No|QtWidgets.QMessageBox.Cancel)
+				if returnExit == msgExit.Yes:
+					self.saveLayout()
+					MainWindow.close()
+				if returnExit == msgExit.No:
+					MainWindow.close()
+			else:
+				MainWindow.close()
+		else:
+			MainWindow.close()
+			
 
 	#def mousePressEvent(self,event):
 	#	if event.button() == QtCore.Qt.RightButton:
@@ -474,6 +479,213 @@ class Ui_MainWindow(object):
 			if action == cutAct:
 				self.items_cut()
 
+
+	def populateCircuit(self): 
+		print("PopulateCircuit")
+		for i in range(0,len(self.mylist),4):
+			numberTab = self.mylist[i]
+			coordCell = self.mylist[i+1] 
+			nameCell = self.mylist[i+2]
+			addrCell = self.mylist[i+3]
+			if numberTab == '01%':
+				lblt = QtGui.QFont("Arial",10, QtGui.QFont.Normal)
+				item = QtWidgets.QTableWidgetItem(nameCell+'\n'+addrCell)
+				item.setFont(lblt)
+				item.setBackground(QtGui.QColor('lightblue'))
+				item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+				self.tableWidget.setItem(int(coordCell[2]),int(coordCell[6]),item)
+			if numberTab == '02%':
+				lblt = QtGui.QFont("Arial",10, QtGui.QFont.Normal)
+				item = QtWidgets.QTableWidgetItem(nameCell+'\n'+addrCell)
+				item.setFont(lblt)
+				item.setBackground(QtGui.QColor('lightblue'))
+				item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+				self.tableWidget_2.setItem(int(coordCell[2]),int(coordCell[6]),item)
+			if numberTab == '03%':
+				lblt = QtGui.QFont("Arial",10, QtGui.QFont.Normal)
+				item = QtWidgets.QTableWidgetItem(nameCell+'\n'+addrCell)
+				item.setFont(lblt)
+				item.setBackground(QtGui.QColor('lightblue'))
+				item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+				self.tableWidget_3.setItem(int(coordCell[2]),int(coordCell[6]),item)
+			if numberTab == '04%':
+				lblt = QtGui.QFont("Arial",10, QtGui.QFont.Normal)
+				item = QtWidgets.QTableWidgetItem(nameCell+'\n'+addrCell)
+				item.setFont(lblt)
+				item.setBackground(QtGui.QColor('lightblue'))
+				item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+				self.tableWidget_4.setItem(int(coordCell[2]),int(coordCell[6]),item)
+			if numberTab == '05%':
+				lblt = QtGui.QFont("Arial",10, QtGui.QFont.Normal)
+				item = QtWidgets.QTableWidgetItem(nameCell+'\n'+addrCell)
+				item.setFont(lblt)
+				item.setBackground(QtGui.QColor('lightblue'))
+				item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+				self.tableWidget_5.setItem(int(coordCell[2]),int(coordCell[6]),item)
+			if numberTab == '06%':
+				lblt = QtGui.QFont("Arial",10, QtGui.QFont.Normal)
+				item = QtWidgets.QTableWidgetItem(nameCell+'\n'+addrCell)
+				item.setFont(lblt)
+				item.setBackground(QtGui.QColor('lightblue'))
+				item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+				self.tableWidget_6.setItem(int(coordCell[2]),int(coordCell[6]),item)
+			if numberTab == '07%':
+				lblt = QtGui.QFont("Arial",10, QtGui.QFont.Normal)
+				item = QtWidgets.QTableWidgetItem(nameCell+'\n'+addrCell)
+				item.setFont(lblt)
+				item.setBackground(QtGui.QColor('lightblue'))
+				item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+				self.tableWidget_7.setItem(int(coordCell[2]),int(coordCell[6]),item)
+			if numberTab == '08%':
+				lblt = QtGui.QFont("Arial",10, QtGui.QFont.Normal)
+				item = QtWidgets.QTableWidgetItem(nameCell+'\n'+addrCell)
+				item.setFont(lblt)
+				item.setBackground(QtGui.QColor('lightblue'))
+				item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+				self.tableWidget_8.setItem(int(coordCell[2]),int(coordCell[6]),item)
+			if numberTab == '09%':
+				lblt = QtGui.QFont("Arial",10, QtGui.QFont.Normal)
+				item = QtWidgets.QTableWidgetItem(nameCell+'\n'+addrCell)
+				item.setFont(lblt)
+				item.setBackground(QtGui.QColor('lightblue'))
+				item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+				self.tableWidget_9.setItem(int(coordCell[2]),int(coordCell[6]),item)
+			if numberTab == '10%':
+				lblt = QtGui.QFont("Arial",10, QtGui.QFont.Normal)
+				item = QtWidgets.QTableWidgetItem(nameCell+'\n'+addrCell)
+				item.setFont(lblt)
+				item.setBackground(QtGui.QColor('lightblue'))
+				item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+				self.tableWidget_10.setItem(int(coordCell[2]),int(coordCell[6]),item)
+
+	def populateLabel(self):
+		print("PopulateLabel")
+		for i in range(0,len(self.mylabel),3):
+			numberTabL = self.mylabel[i]
+			coordCellL = self.mylabel[i+1]  #2 - x  6- y
+			nameCellL = self.mylabel[i+2]
+
+			label = nameCellL.split('#')
+			number = label[1].split('$')
+			lblt = QtGui.QFont("Arial",int(number[0]), QtGui.QFont.Black)
+			item = QtWidgets.QTableWidgetItem(label[0])
+
+			if number[1] == 'AT':
+				item.setTextAlignment(QtCore.Qt.AlignTop)
+			else:
+				item.setTextAlignment(QtCore.Qt.AlignBottom)
+
+			item.setFont(lblt)
+			item.setBackground(QtGui.QColor('lightyellow'))
+
+			if numberTabL == '01%':
+				item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+				self.tableWidget.setItem(int(coordCellL[2]),int(coordCellL[6]),item)
+
+			if numberTabL == '02%':
+				item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+				self.tableWidget_2.setItem(int(coordCellL[2]),int(coordCellL[6]),item)
+
+			if numberTabL == '03%':
+				item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+				self.tableWidget_3.setItem(int(coordCellL[2]),int(coordCellL[6]),item)
+			
+			if numberTabL == '04%':
+				item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+				self.tableWidget_4.setItem(int(coordCellL[2]),int(coordCellL[6]),item)
+
+			if numberTabL == '05%':
+				item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+				self.tableWidget_5.setItem(int(coordCellL[2]),int(coordCellL[6]),item)
+
+			if numberTabL == '06%':
+				item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+				self.tableWidget_6.setItem(int(coordCellL[2]),int(coordCellL[6]),item)
+
+			if numberTabL == '07%':
+				item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+				self.tableWidget_7.setItem(int(coordCellL[2]),int(coordCellL[6]),item)
+
+			if numberTabL == '08%':
+				item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+				self.tableWidget_8.setItem(int(coordCellL[2]),int(coordCellL[6]),item)
+			
+			if numberTabL == '09%':
+				item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+				self.tableWidget_9.setItem(int(coordCellL[2]),int(coordCellL[6]),item)
+
+			if numberTabL == '10%':
+				item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+				self.tableWidget_10.setItem(int(coordCellL[2]),int(coordCellL[6]),item)
+
+
+	def populateTabs(self):
+		print("populateTabs")
+		for i in range(0,len(self.settingsList),4):
+			self.maxTabs.append(self.settingsList[i])
+
+		for i in range(0,len(self.settingsLabel),3):
+			self.maxTabs.append(self.settingsLabel[i])
+
+		y = max(self.maxTabs)
+		print(y)
+		self.maxTabs.clear()
+
+		if y == '02%':
+			self.countPage2()
+		if y == '03%':
+			self.countPage2()
+			self.countPage3()
+		if y == '04%':
+			self.countPage2()
+			self.countPage3()
+			self.countPage4()
+		if y == '05%':
+			self.countPage2()
+			self.countPage3()
+			self.countPage4()
+			self.countPage5()
+		if y == '06%':
+			self.countPage2()
+			self.countPage3()
+			self.countPage4()
+			self.countPage5()
+			self.countPage6()
+		if y == '07%':
+			self.countPage2()
+			self.countPage3()
+			self.countPage4()
+			self.countPage5()
+			self.countPage6()
+			self.countPage7()
+		if y == '08%':
+			self.countPage2()
+			self.countPage3()
+			self.countPage4()
+			self.countPage5()
+			self.countPage6()
+			self.countPage7()
+			self.countPage8()
+		if y == '09%':
+			self.countPage2()
+			self.countPage3()
+			self.countPage4()
+			self.countPage5()
+			self.countPage6()
+			self.countPage7()
+			self.countPage8()
+			self.countPage9()
+		if y == '10%':
+			self.countPage2()
+			self.countPage3()
+			self.countPage4()
+			self.countPage5()
+			self.countPage6()
+			self.countPage7()
+			self.countPage8()
+			self.countPage9()
+			self.countPage10()
+	
 	i = 0
 	flagLabel = False
 	flagOverLabel = False
@@ -483,6 +695,7 @@ class Ui_MainWindow(object):
 		if self.i == 0:
 			if self.tableWidget.isVisible()==True:
 				print("Cut-1")
+				vz = self.tabWidget.currentIndex()
 				for item in self.tableWidget.selectedItems():
 					if item.text()!='':
 						self.flagLabel = False
@@ -493,18 +706,19 @@ class Ui_MainWindow(object):
 
 						for i in range(len(self.mylabel)):
 							x = coord2.replace('/','')
-							if self.mylabel[i] == x and self.mylabel[i-1]== '01%':
+							if self.mylabel[i] == x and self.mylabel[i-1]=="0"+str(vz+1)+"%":
 								self.flagLabel = True
-								self.tempCut.append("01%"+coord2+self.mylabel[i+1])
+								self.tempCut.append("0"+str(vz+1)+"%"+coord2+self.mylabel[i+1])
 
 						if self.flagLabel != True:
-							self.tempCut.append("01%"+coord2+txt)
+							self.tempCut.append("0"+str(vz+1)+"%"+coord2+txt)
 							
 						item.setBackground(QtGui.QColor('white'))
 						item.setText('')
 
 			if self.tableWidget_2.isVisible()==True:
 				print("Cut-2")
+				vz = self.tabWidget.currentIndex()
 				for item in self.tableWidget_2.selectedItems():
 					if item.text()!='':
 						self.flagLabel = False
@@ -515,18 +729,19 @@ class Ui_MainWindow(object):
 
 						for i in range(len(self.mylabel)):
 							x = coord2.replace('/','')
-							if self.mylabel[i] == x and self.mylabel[i-1]== '02%':
+							if self.mylabel[i] == x and self.mylabel[i-1]=="0"+str(vz+1)+"%":
 								self.flagLabel = True
-								self.tempCut.append("02%"+coord2+self.mylabel[i+1])
+								self.tempCut.append("0"+str(vz+1)+"%"+coord2+self.mylabel[i+1])
 
 						if self.flagLabel != True:
-							self.tempCut.append("02%"+coord2+txt)
+							self.tempCut.append("0"+str(vz+1)+"%"+coord2+txt)
 							
 						item.setBackground(QtGui.QColor('white'))
 						item.setText('')
 
 			if self.tableWidget_3.isVisible()==True:
 				print("Cut-3")
+				vz = self.tabWidget.currentIndex()
 				for item in self.tableWidget_3.selectedItems():
 					if item.text()!='':
 						self.flagLabel = False
@@ -537,18 +752,19 @@ class Ui_MainWindow(object):
 
 						for i in range(len(self.mylabel)):
 							x = coord2.replace('/','')
-							if self.mylabel[i] == x and self.mylabel[i-1]== '03%':
+							if self.mylabel[i] == x and self.mylabel[i-1]=="0"+str(vz+1)+"%":
 								self.flagLabel = True
-								self.tempCut.append("03%"+coord2+self.mylabel[i+1])
+								self.tempCut.append("0"+str(vz+1)+"%"+coord2+self.mylabel[i+1])
 
 						if self.flagLabel != True:
-							self.tempCut.append("03%"+coord2+txt)
+							self.tempCut.append("0"+str(vz+1)+"%"+coord2+txt)
 							
 						item.setBackground(QtGui.QColor('white'))
 						item.setText('')
 
 			if self.tableWidget_4.isVisible()==True:
 				print("Cut-4")
+				vz = self.tabWidget.currentIndex()
 				for item in self.tableWidget_4.selectedItems():
 					if item.text()!='':
 						self.flagLabel = False
@@ -559,18 +775,19 @@ class Ui_MainWindow(object):
 
 						for i in range(len(self.mylabel)):
 							x = coord2.replace('/','')
-							if self.mylabel[i] == x and self.mylabel[i-1]== '04%':
+							if self.mylabel[i] == x and self.mylabel[i-1]=="0"+str(vz+1)+"%":
 								self.flagLabel = True
-								self.tempCut.append("04%"+coord2+self.mylabel[i+1])
+								self.tempCut.append("0"+str(vz+1)+"%"+coord2+self.mylabel[i+1])
 
 						if self.flagLabel != True:
-							self.tempCut.append("04%"+coord2+txt)
+							self.tempCut.append("0"+str(vz+1)+"%"+coord2+txt)
 							
 						item.setBackground(QtGui.QColor('white'))
 						item.setText('')
 
 			if self.tableWidget_5.isVisible()==True:
 				print("Cut-5")
+				vz = self.tabWidget.currentIndex()
 				for item in self.tableWidget_5.selectedItems():
 					if item.text()!='':
 						self.flagLabel = False
@@ -581,18 +798,19 @@ class Ui_MainWindow(object):
 
 						for i in range(len(self.mylabel)):
 							x = coord2.replace('/','')
-							if self.mylabel[i] == x and self.mylabel[i-1]== '05%':
+							if self.mylabel[i] == x and self.mylabel[i-1]=="0"+str(vz+1)+"%":
 								self.flagLabel = True
-								self.tempCut.append("05%"+coord2+self.mylabel[i+1])
+								self.tempCut.append("0"+str(vz+1)+"%"+coord2+self.mylabel[i+1])
 
 						if self.flagLabel != True:
-							self.tempCut.append("05%"+coord2+txt)
+							self.tempCut.append("0"+str(vz+1)+"%"+coord2+txt)
 							
 						item.setBackground(QtGui.QColor('white'))
 						item.setText('')
 
 			if self.tableWidget_6.isVisible()==True:
 				print("Cut-6")
+				vz = self.tabWidget.currentIndex()
 				for item in self.tableWidget_6.selectedItems():
 					if item.text()!='':
 						self.flagLabel = False
@@ -603,18 +821,19 @@ class Ui_MainWindow(object):
 
 						for i in range(len(self.mylabel)):
 							x = coord2.replace('/','')
-							if self.mylabel[i] == x and self.mylabel[i-1]== '06%':
+							if self.mylabel[i] == x and self.mylabel[i-1]=="0"+str(vz+1)+"%":
 								self.flagLabel = True
-								self.tempCut.append("06%"+coord2+self.mylabel[i+1])
+								self.tempCut.append("0"+str(vz+1)+"%"+coord2+self.mylabel[i+1])
 
 						if self.flagLabel != True:
-							self.tempCut.append("06%"+coord2+txt)
+							self.tempCut.append("0"+str(vz+1)+"%"+coord2+txt)
 							
 						item.setBackground(QtGui.QColor('white'))
 						item.setText('')
 
 			if self.tableWidget_7.isVisible()==True:
 				print("Cut-7")
+				vz = self.tabWidget.currentIndex()
 				for item in self.tableWidget_7.selectedItems():
 					if item.text()!='':
 						self.flagLabel = False
@@ -625,18 +844,19 @@ class Ui_MainWindow(object):
 
 						for i in range(len(self.mylabel)):
 							x = coord2.replace('/','')
-							if self.mylabel[i] == x and self.mylabel[i-1]== '07%':
+							if self.mylabel[i] == x and self.mylabel[i-1]=="0"+str(vz+1)+"%":
 								self.flagLabel = True
-								self.tempCut.append("07%"+coord2+self.mylabel[i+1])
+								self.tempCut.append("0"+str(vz+1)+"%"+coord2+self.mylabel[i+1])
 
 						if self.flagLabel != True:
-							self.tempCut.append("07%"+coord2+txt)
+							self.tempCut.append("0"+str(vz+1)+"%"+coord2+txt)
 							
 						item.setBackground(QtGui.QColor('white'))
 						item.setText('')
 
 			if self.tableWidget_8.isVisible()==True:
 				print("Cut-8")
+				vz = self.tabWidget.currentIndex()
 				for item in self.tableWidget_8.selectedItems():
 					if item.text()!='':
 						self.flagLabel = False
@@ -647,18 +867,19 @@ class Ui_MainWindow(object):
 
 						for i in range(len(self.mylabel)):
 							x = coord2.replace('/','')
-							if self.mylabel[i] == x and self.mylabel[i-1]== '08%':
+							if self.mylabel[i] == x and self.mylabel[i-1]=="0"+str(vz+1)+"%":
 								self.flagLabel = True
-								self.tempCut.append("08%"+coord2+self.mylabel[i+1])
+								self.tempCut.append("0"+str(vz+1)+"%"+coord2+self.mylabel[i+1])
 
 						if self.flagLabel != True:
-							self.tempCut.append("08%"+coord2+txt)
+							self.tempCut.append("0"+str(vz+1)+"%"+coord2+txt)
 							
 						item.setBackground(QtGui.QColor('white'))
 						item.setText('')
 
 			if self.tableWidget_9.isVisible()==True:
 				print("Cut-9")
+				vz = self.tabWidget.currentIndex()
 				for item in self.tableWidget_9.selectedItems():
 					if item.text()!='':
 						self.flagLabel = False
@@ -669,18 +890,19 @@ class Ui_MainWindow(object):
 
 						for i in range(len(self.mylabel)):
 							x = coord2.replace('/','')
-							if self.mylabel[i] == x and self.mylabel[i-1]== '09%':
+							if self.mylabel[i] == x and self.mylabel[i-1]=="0"+str(vz+1)+"%":
 								self.flagLabel = True
-								self.tempCut.append("09%"+coord2+self.mylabel[i+1])
+								self.tempCut.append("0"+str(vz+1)+"%"+coord2+self.mylabel[i+1])
 
 						if self.flagLabel != True:
-							self.tempCut.append("09%"+coord2+txt)
+							self.tempCut.append("0"+str(vz+1)+"%"+coord2+txt)
 							
 						item.setBackground(QtGui.QColor('white'))
 						item.setText('')
 
 			if self.tableWidget_10.isVisible()==True:
 				print("Cut-10")
+				vz = self.tabWidget.currentIndex()
 				for item in self.tableWidget_10.selectedItems():
 					if item.text()!='':
 						self.flagLabel = False
@@ -691,12 +913,12 @@ class Ui_MainWindow(object):
 
 						for i in range(len(self.mylabel)):
 							x = coord2.replace('/','')
-							if self.mylabel[i] == x and self.mylabel[i-1]== '10%':
+							if self.mylabel[i] == x and self.mylabel[i-1]== "0"+str(vz+1)+"%":
 								self.flagLabel = True
-								self.tempCut.append("10%"+coord2+self.mylabel[i+1])
+								self.tempCut.append("0"+str(vz+1)+"%"+coord2+self.mylabel[i+1])
 
 						if self.flagLabel != True:
-							self.tempCut.append("10%"+coord2+txt)
+							self.tempCut.append("0"+str(vz+1)+"%"+coord2+txt)
 							
 						item.setBackground(QtGui.QColor('white'))
 						item.setText('')
@@ -714,6 +936,7 @@ class Ui_MainWindow(object):
 				self.tempCut.clear()
 				
 				if self.tableWidget.isVisible()==True:
+					vz = self.tabWidget.currentIndex()
 					for item in self.tableWidget.selectedItems():
 						if item.text()!='':
 							self.flagLabel = False
@@ -723,17 +946,18 @@ class Ui_MainWindow(object):
 
 							for i in range(len(self.mylabel)):
 								x = coord2.replace('/','')
-								if self.mylabel[i] == x and self.mylabel[i-1]== '01%':
+								if self.mylabel[i] == x and self.mylabel[i-1]== "0"+str(vz+1)+"%":
 									self.flagLabel = True
-									self.tempCut.append("01%"+coord2+self.mylabel[i+1])
+									self.tempCut.append("0"+str(vz+1)+"%"+coord2+self.mylabel[i+1])
 
 							if self.flagLabel != True:
-								self.tempCut.append("01%"+coord2+txt)
+								self.tempCut.append("0"+str(vz+1)+"%"+coord2+txt)
 
 							item.setBackground(QtGui.QColor('white'))
 							item.setText('')
 				
 				if self.tableWidget_2.isVisible()==True:
+					vz = self.tabWidget.currentIndex()
 					for item in self.tableWidget_2.selectedItems():
 						if item.text()!='':
 							self.flagLabel = False
@@ -743,17 +967,18 @@ class Ui_MainWindow(object):
 
 							for i in range(len(self.mylabel)):
 								x = coord2.replace('/','')
-								if self.mylabel[i] == x and self.mylabel[i-1]== '02%':
+								if self.mylabel[i] == x and self.mylabel[i-1]== "0"+str(vz+1)+"%":
 									self.flagLabel = True
-									self.tempCut.append("02%"+coord2+self.mylabel[i+1])
+									self.tempCut.append("0"+str(vz+1)+"%"+coord2+self.mylabel[i+1])
 
 							if self.flagLabel != True:
-								self.tempCut.append("02%"+coord2+txt)
+								self.tempCut.append("0"+str(vz+1)+"%"+coord2+txt)
 
 							item.setBackground(QtGui.QColor('white'))
 							item.setText('')
 
 				if self.tableWidget_3.isVisible()==True:
+					vz = self.tabWidget.currentIndex()
 					for item in self.tableWidget_3.selectedItems():
 						if item.text()!='':
 							self.flagLabel = False
@@ -763,17 +988,18 @@ class Ui_MainWindow(object):
 
 							for i in range(len(self.mylabel)):
 								x = coord2.replace('/','')
-								if self.mylabel[i] == x and self.mylabel[i-1]== '03%':
+								if self.mylabel[i] == x and self.mylabel[i-1]=="0"+str(vz+1)+"%":
 									self.flagLabel = True
-									self.tempCut.append("03%"+coord2+self.mylabel[i+1])
+									self.tempCut.append("0"+str(vz+1)+"%"+coord2+self.mylabel[i+1])
 
 							if self.flagLabel != True:
-								self.tempCut.append("03%"+coord2+txt)
+								self.tempCut.append("0"+str(vz+1)+"%"+coord2+txt)
 
 							item.setBackground(QtGui.QColor('white'))
 							item.setText('')
 
 				if self.tableWidget_4.isVisible()==True:
+					vz = self.tabWidget.currentIndex()
 					for item in self.tableWidget_4.selectedItems():
 						if item.text()!='':
 							self.flagLabel = False
@@ -783,17 +1009,18 @@ class Ui_MainWindow(object):
 
 							for i in range(len(self.mylabel)):
 								x = coord2.replace('/','')
-								if self.mylabel[i] == x and self.mylabel[i-1]== '04%':
+								if self.mylabel[i] == x and self.mylabel[i-1]== "0"+str(vz+1)+"%":
 									self.flagLabel = True
-									self.tempCut.append("04%"+coord2+self.mylabel[i+1])
+									self.tempCut.append("0"+str(vz+1)+"%"+coord2+self.mylabel[i+1])
 
 							if self.flagLabel != True:
-								self.tempCut.append("04%"+coord2+txt)
+								self.tempCut.append("0"+str(vz+1)+"%"+coord2+txt)
 
 							item.setBackground(QtGui.QColor('white'))
 							item.setText('')
 
 				if self.tableWidget_5.isVisible()==True:
+					vz = self.tabWidget.currentIndex()
 					for item in self.tableWidget_5.selectedItems():
 						if item.text()!='':
 							self.flagLabel = False
@@ -803,17 +1030,18 @@ class Ui_MainWindow(object):
 
 							for i in range(len(self.mylabel)):
 								x = coord2.replace('/','')
-								if self.mylabel[i] == x and self.mylabel[i-1]== '05%':
+								if self.mylabel[i] == x and self.mylabel[i-1]== "0"+str(vz+1)+"%":
 									self.flagLabel = True
-									self.tempCut.append("05%"+coord2+self.mylabel[i+1])
+									self.tempCut.append("0"+str(vz+1)+"%"+coord2+self.mylabel[i+1])
 
 							if self.flagLabel != True:
-								self.tempCut.append("05%"+coord2+txt)
+								self.tempCut.append("0"+str(vz+1)+"%"+coord2+txt)
 
 							item.setBackground(QtGui.QColor('white'))
 							item.setText('')
 
 				if self.tableWidget_6.isVisible()==True:
+					vz = self.tabWidget.currentIndex()
 					for item in self.tableWidget_6.selectedItems():
 						if item.text()!='':
 							self.flagLabel = False
@@ -823,17 +1051,18 @@ class Ui_MainWindow(object):
 
 							for i in range(len(self.mylabel)):
 								x = coord2.replace('/','')
-								if self.mylabel[i] == x and self.mylabel[i-1]== '06%':
+								if self.mylabel[i] == x and self.mylabel[i-1]=="0"+str(vz+1)+"%":
 									self.flagLabel = True
-									self.tempCut.append("06%"+coord2+self.mylabel[i+1])
+									self.tempCut.append("0"+str(vz+1)+"%"+coord2+self.mylabel[i+1])
 
 							if self.flagLabel != True:
-								self.tempCut.append("06%"+coord2+txt)
+								self.tempCut.append("0"+str(vz+1)+"%"+coord2+txt)
 
 							item.setBackground(QtGui.QColor('white'))
 							item.setText('')
 
 				if self.tableWidget_7.isVisible()==True:
+					vz = self.tabWidget.currentIndex()
 					for item in self.tableWidget_7.selectedItems():
 						if item.text()!='':
 							self.flagLabel = False
@@ -843,17 +1072,18 @@ class Ui_MainWindow(object):
 
 							for i in range(len(self.mylabel)):
 								x = coord2.replace('/','')
-								if self.mylabel[i] == x and self.mylabel[i-1]== '07%':
+								if self.mylabel[i] == x and self.mylabel[i-1]=="0"+str(vz+1)+"%":
 									self.flagLabel = True
-									self.tempCut.append("07%"+coord2+self.mylabel[i+1])
+									self.tempCut.append("0"+str(vz+1)+"%"+coord2+self.mylabel[i+1])
 
 							if self.flagLabel != True:
-								self.tempCut.append("07%"+coord2+txt)
+								self.tempCut.append("0"+str(vz+1)+"%"+coord2+txt)
 
 							item.setBackground(QtGui.QColor('white'))
 							item.setText('')
 
 				if self.tableWidget_8.isVisible()==True:
+					vz = self.tabWidget.currentIndex()
 					for item in self.tableWidget_8.selectedItems():
 						if item.text()!='':
 							self.flagLabel = False
@@ -863,17 +1093,18 @@ class Ui_MainWindow(object):
 
 							for i in range(len(self.mylabel)):
 								x = coord2.replace('/','')
-								if self.mylabel[i] == x and self.mylabel[i-1]== '08%':
+								if self.mylabel[i] == x and self.mylabel[i-1]== "0"+str(vz+1)+"%":
 									self.flagLabel = True
-									self.tempCut.append("08%"+coord2+self.mylabel[i+1])
+									self.tempCut.append("0"+str(vz+1)+"%"+coord2+self.mylabel[i+1])
 
 							if self.flagLabel != True:
-								self.tempCut.append("08%"+coord2+txt)
+								self.tempCut.append("0"+str(vz+1)+"%"+coord2+txt)
 
 							item.setBackground(QtGui.QColor('white'))
 							item.setText('')
 
 				if self.tableWidget_9.isVisible()==True:
+					vz = self.tabWidget.currentIndex()
 					for item in self.tableWidget_9.selectedItems():
 						if item.text()!='':
 							self.flagLabel = False
@@ -883,17 +1114,18 @@ class Ui_MainWindow(object):
 
 							for i in range(len(self.mylabel)):
 								x = coord2.replace('/','')
-								if self.mylabel[i] == x and self.mylabel[i-1]== '09%':
+								if self.mylabel[i] == x and self.mylabel[i-1]== "0"+str(vz+1)+"%":
 									self.flagLabel = True
-									self.tempCut.append("09%"+coord2+self.mylabel[i+1])
+									self.tempCut.append("0"+str(vz+1)+"%"+coord2+self.mylabel[i+1])
 
 							if self.flagLabel != True:
-								self.tempCut.append("09%"+coord2+txt)
+								self.tempCut.append("0"+str(vz+1)+"%"+coord2+txt)
 
 							item.setBackground(QtGui.QColor('white'))
 							item.setText('')
 
 				if self.tableWidget_10.isVisible()==True:
+					vz = self.tabWidget.currentIndex()
 					for item in self.tableWidget_10.selectedItems():
 						if item.text()!='':
 							self.flagLabel = False
@@ -903,12 +1135,12 @@ class Ui_MainWindow(object):
 
 							for i in range(len(self.mylabel)):
 								x = coord2.replace('/','')
-								if self.mylabel[i] == x and self.mylabel[i-1]== '10%':
+								if self.mylabel[i] == x and self.mylabel[i-1]=="0"+str(vz+1)+"%":
 									self.flagLabel = True
-									self.tempCut.append("10%"+coord2+self.mylabel[i+1])
+									self.tempCut.append("0"+str(vz+1)+"%"+coord2+self.mylabel[i+1])
 
 							if self.flagLabel != True:
-								self.tempCut.append("10%"+coord2+txt)
+								self.tempCut.append("0"+str(vz+1)+"%"+coord2+txt)
 
 							item.setBackground(QtGui.QColor('white'))
 							item.setText('')
@@ -964,52 +1196,62 @@ class Ui_MainWindow(object):
 		x = copy.split("/")
 		#///////////////////////////////////////////////////////////////////////////
 		if self.tableWidget.isVisible()==True:
-			table = "01%"
+			vz = self.tabWidget.currentIndex()
+			table = "0"+str(vz+1)+"%"
 			vx = self.tableWidget.currentRow()
 			vy = self.tableWidget.currentColumn()
 
 		if self.tableWidget_2.isVisible()==True:
-			table = "02%"
+			vz = self.tabWidget.currentIndex()
+			table = "0"+str(vz+1)+"%"
 			vx = self.tableWidget_2.currentRow()
 			vy = self.tableWidget_2.currentColumn()
 
 		if self.tableWidget_3.isVisible()==True:
-			table = "03%"
+			vz = self.tabWidget.currentIndex()
+			table = "0"+str(vz+1)+"%"
 			vx = self.tableWidget_3.currentRow()
 			vy = self.tableWidget_3.currentColumn()
 
 		if self.tableWidget_4.isVisible()==True:
-			table = "04%"
+			vz = self.tabWidget.currentIndex()
+			table = "0"+str(vz+1)+"%"
 			vx = self.tableWidget_4.currentRow()
 			vy = self.tableWidget_4.currentColumn()
 
 		if self.tableWidget_5.isVisible()==True:
-			table = "05%"
+			vz = self.tabWidget.currentIndex()
+			table = "0"+str(vz+1)+"%"
 			vx = self.tableWidget_5.currentRow()
 			vy = self.tableWidget_5.currentColumn()
 
 		if self.tableWidget_6.isVisible()==True:
-			table = "06%"
+			vz = self.tabWidget.currentIndex()
+			table = "0"+str(vz+1)+"%"
 			vx = self.tableWidget_6.currentRow()
 			vy = self.tableWidget_6.currentColumn()
 
 		if self.tableWidget_7.isVisible()==True:
-			table = "07%"
+			vz = self.tabWidget.currentIndex()
+			table = "0"+str(vz+1)+"%"
 			vx = self.tableWidget_7.currentRow()
 			vy = self.tableWidget_7.currentColumn()
 
 		if self.tableWidget_8.isVisible()==True:
-			table = "08%"
+			vz = self.tabWidget.currentIndex()
+			table = "0"+str(vz+1)+"%"
 			vx = self.tableWidget_8.currentRow()
 			vy = self.tableWidget_8.currentColumn()
 
 		if self.tableWidget_9.isVisible()==True:
-			table = "09%"
+			vz = self.tabWidget.currentIndex()
+			table = "0"+str(vz+1)+"%"
 			vx = self.tableWidget_9.currentRow()
 			vy = self.tableWidget_9.currentColumn()
 
 		if self.tableWidget_10.isVisible()==True:
-			table = "10%"
+			vz = self.tabWidget.currentIndex()
+			table = "0"+str(vz+1)+"%"
 			vx = self.tableWidget_10.currentRow()
 			vy = self.tableWidget_10.currentColumn()
 
@@ -1312,7 +1554,7 @@ class Ui_MainWindow(object):
 						self.tableWidget_10.setItem(int(t[2]),int(t[6]),item)
 		
 
-	editDelete = False ##verificar banderas que funcionen correctamente 
+	editDelete = False 
 	secondEdit = False
 	flagEdit = False
 	def items_clear(self):
@@ -1331,18 +1573,19 @@ class Ui_MainWindow(object):
 					for item in self.tableWidget.selectedItems(): 
 						vy = item.column()
 						vx = item.row()
+						vz = self.tabWidget.currentIndex()
 						value = "X="+str(vx)+" Y="+str(vy)
 
 						item.setBackground(QtGui.QColor('white'))
 						item.setText('')
 
 						for i in range(len(self.mylist)): 
-							if self.mylist[i] == value and self.mylist[i-1]== '01%':
+							if self.mylist[i] == value and self.mylist[i-1]=="0"+str(vz+1)+"%":
 								self.x = i
 								self.secondEdit = True
 
 						for i in range(len(self.mylabel)):
-							if self.mylabel[i] == value and self.mylabel[i-1]== '01%':
+							if self.mylabel[i] == value and self.mylabel[i-1]=="0"+str(vz+1)+"%":
 								self.y = i
 								self.flagEdit = True
 
@@ -1374,18 +1617,19 @@ class Ui_MainWindow(object):
 					for item in self.tableWidget_2.selectedItems(): 
 						vy = item.column()
 						vx = item.row()
+						vz = self.tabWidget.currentIndex()
 						value = "X="+str(vx)+" Y="+str(vy)
 
 						item.setBackground(QtGui.QColor('white'))
 						item.setText('')
 
 						for i in range(len(self.mylist)): 
-							if self.mylist[i] == value and self.mylist[i-1]== '02%':
+							if self.mylist[i] == value and self.mylist[i-1]=="0"+str(vz+1)+"%":
 								self.x = i
 								self.secondEdit = True
 
 						for i in range(len(self.mylabel)):
-							if self.mylabel[i] == value and self.mylabel[i-1]== '02%':
+							if self.mylabel[i] == value and self.mylabel[i-1]=="0"+str(vz+1)+"%":
 								self.y = i
 								self.flagEdit = True
 
@@ -1417,18 +1661,19 @@ class Ui_MainWindow(object):
 					for item in self.tableWidget_3.selectedItems(): 
 						vy = item.column()
 						vx = item.row()
+						vz = self.tabWidget.currentIndex()
 						value = "X="+str(vx)+" Y="+str(vy)
 
 						item.setBackground(QtGui.QColor('white'))
 						item.setText('')
 
 						for i in range(len(self.mylist)): 
-							if self.mylist[i] == value and self.mylist[i-1]== '03%':
+							if self.mylist[i] == value and self.mylist[i-1]=="0"+str(vz+1)+"%":
 								self.x = i
 								self.secondEdit = True
 
 						for i in range(len(self.mylabel)):
-							if self.mylabel[i] == value and self.mylabel[i-1]== '03%':
+							if self.mylabel[i] == value and self.mylabel[i-1]=="0"+str(vz+1)+"%":
 								self.y = i
 								self.flagEdit = True
 
@@ -1460,18 +1705,19 @@ class Ui_MainWindow(object):
 					for item in self.tableWidget_4.selectedItems(): 
 						vy = item.column()
 						vx = item.row()
+						vz = self.tabWidget.currentIndex()
 						value = "X="+str(vx)+" Y="+str(vy)
 
 						item.setBackground(QtGui.QColor('white'))
 						item.setText('')
 
 						for i in range(len(self.mylist)): 
-							if self.mylist[i] == value and self.mylist[i-1]== '04%':
+							if self.mylist[i] == value and self.mylist[i-1]=="0"+str(vz+1)+"%":
 								self.x = i
 								self.secondEdit = True
 
 						for i in range(len(self.mylabel)):
-							if self.mylabel[i] == value and self.mylabel[i-1]== '04%':
+							if self.mylabel[i] == value and self.mylabel[i-1]=="0"+str(vz+1)+"%":
 								self.y = i
 								self.flagEdit = True
 
@@ -1503,18 +1749,19 @@ class Ui_MainWindow(object):
 					for item in self.tableWidget_5.selectedItems(): 
 						vy = item.column()
 						vx = item.row()
+						vz = self.tabWidget.currentIndex()
 						value = "X="+str(vx)+" Y="+str(vy)
 
 						item.setBackground(QtGui.QColor('white'))
 						item.setText('')
 
 						for i in range(len(self.mylist)): 
-							if self.mylist[i] == value and self.mylist[i-1]== '05%':
+							if self.mylist[i] == value and self.mylist[i-1]=="0"+str(vz+1)+"%":
 								self.x = i
 								self.secondEdit = True
 
 						for i in range(len(self.mylabel)):
-							if self.mylabel[i] == value and self.mylabel[i-1]== '05%':
+							if self.mylabel[i] == value and self.mylabel[i-1]=="0"+str(vz+1)+"%":
 								self.y = i
 								self.flagEdit = True
 
@@ -1546,18 +1793,19 @@ class Ui_MainWindow(object):
 					for item in self.tableWidget_6.selectedItems(): 
 						vy = item.column()
 						vx = item.row()
+						vz = self.tabWidget.currentIndex()
 						value = "X="+str(vx)+" Y="+str(vy)
 
 						item.setBackground(QtGui.QColor('white'))
 						item.setText('')
 
 						for i in range(len(self.mylist)): 
-							if self.mylist[i] == value and self.mylist[i-1]== '06%':
+							if self.mylist[i] == value and self.mylist[i-1]=="0"+str(vz+1)+"%":
 								self.x = i
 								self.secondEdit = True
 
 						for i in range(len(self.mylabel)):
-							if self.mylabel[i] == value and self.mylabel[i-1]== '06%':
+							if self.mylabel[i] == value and self.mylabel[i-1]=="0"+str(vz+1)+"%":
 								self.y = i
 								self.flagEdit = True
 
@@ -1589,18 +1837,19 @@ class Ui_MainWindow(object):
 					for item in self.tableWidget_7.selectedItems(): 
 						vy = item.column()
 						vx = item.row()
+						vz = self.tabWidget.currentIndex()
 						value = "X="+str(vx)+" Y="+str(vy)
 
 						item.setBackground(QtGui.QColor('white'))
 						item.setText('')
 
 						for i in range(len(self.mylist)): 
-							if self.mylist[i] == value and self.mylist[i-1]== '07%':
+							if self.mylist[i] == value and self.mylist[i-1]=="0"+str(vz+1)+"%":
 								self.x = i
 								self.secondEdit = True
 
 						for i in range(len(self.mylabel)):
-							if self.mylabel[i] == value and self.mylabel[i-1]== '07%':
+							if self.mylabel[i] == value and self.mylabel[i-1]=="0"+str(vz+1)+"%":
 								self.y = i
 								self.flagEdit = True
 
@@ -1632,18 +1881,19 @@ class Ui_MainWindow(object):
 					for item in self.tableWidget_8.selectedItems(): 
 						vy = item.column()
 						vx = item.row()
+						vz = self.tabWidget.currentIndex()
 						value = "X="+str(vx)+" Y="+str(vy)
 
 						item.setBackground(QtGui.QColor('white'))
 						item.setText('')
 
 						for i in range(len(self.mylist)): 
-							if self.mylist[i] == value and self.mylist[i-1]== '08%':
+							if self.mylist[i] == value and self.mylist[i-1]=="0"+str(vz+1)+"%":
 								self.x = i
 								self.secondEdit = True
 
 						for i in range(len(self.mylabel)):
-							if self.mylabel[i] == value and self.mylabel[i-1]== '08%':
+							if self.mylabel[i] == value and self.mylabel[i-1]=="0"+str(vz+1)+"%":
 								self.y = i
 								self.flagEdit = True
 
@@ -1675,18 +1925,19 @@ class Ui_MainWindow(object):
 					for item in self.tableWidget_9.selectedItems(): 
 						vy = item.column()
 						vx = item.row()
+						vz = self.tabWidget.currentIndex()
 						value = "X="+str(vx)+" Y="+str(vy)
 
 						item.setBackground(QtGui.QColor('white'))
 						item.setText('')
 
 						for i in range(len(self.mylist)): 
-							if self.mylist[i] == value and self.mylist[i-1]== '09%':
+							if self.mylist[i] == value and self.mylist[i-1]=="0"+str(vz+1)+"%":
 								self.x = i
 								self.secondEdit = True
 
 						for i in range(len(self.mylabel)):
-							if self.mylabel[i] == value and self.mylabel[i-1]== '09%':
+							if self.mylabel[i] == value and self.mylabel[i-1]=="0"+str(vz+1)+"%":
 								self.y = i
 								self.flagEdit = True
 
@@ -1718,18 +1969,19 @@ class Ui_MainWindow(object):
 					for item in self.tableWidget_10.selectedItems(): 
 						vy = item.column()
 						vx = item.row()
+						vz = self.tabWidget.currentIndex()
 						value = "X="+str(vx)+" Y="+str(vy)
 
 						item.setBackground(QtGui.QColor('white'))
 						item.setText('')
 
 						for i in range(len(self.mylist)): 
-							if self.mylist[i] == value and self.mylist[i-1]== '10%':
+							if self.mylist[i] == value and self.mylist[i-1]=="0"+str(vz+1)+"%":
 								self.x = i
 								self.secondEdit = True
 
 						for i in range(len(self.mylabel)):
-							if self.mylabel[i] == value and self.mylabel[i-1]== '10%':
+							if self.mylabel[i] == value and self.mylabel[i-1]=="0"+str(vz+1)+"%":
 								self.y = i
 								self.flagEdit = True
 
@@ -1745,9 +1997,6 @@ class Ui_MainWindow(object):
 							self.mylist.pop(self.x) #se recorre un lugar a la izquierda
 							self.mylist.pop(self.x-1)
 							self.secondEdit = False
-
-	def tabSelected(self):
-		print("tabSelect")
 
 	flagCancel = False
 	def bttnCancel(self):
@@ -1919,80 +2168,11 @@ class Ui_MainWindow(object):
 			vy = self.tableWidget_10.currentColumn()
 			self.tableWidget_10.setItem(vx,vy,item)
 
-	def tableLabel(self,sizeW,text,textAlign):
-		item = QtWidgets.QTableWidgetItem(text)
-		lblt = QtGui.QFont("Arial",int(sizeW), QtGui.QFont.Black)
-		item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
-
-		if textAlign == 'AlignTop':
-			item.setTextAlignment(QtCore.Qt.AlignTop)
-			item.setFont(lblt)
-			item.setBackground(QtGui.QColor('lightyellow'))
-			
-		else:
-			item.setTextAlignment(QtCore.Qt.AlignBottom)
-			item.setFont(lblt)
-			item.setBackground(QtGui.QColor('lightyellow'))
-		
-		if self.tableWidget.isVisible()==True:
-			vx = self.tableWidget.currentRow()
-			vy = self.tableWidget.currentColumn()
-			self.tableWidget.setItem(vx,vy,item)
-			self.mylabel.append("X="+str(vx)+" Y="+str(vy))
-
-		if self.tableWidget_2.isVisible()==True:
-			vx = self.tableWidget_2.currentRow()
-			vy = self.tableWidget_2.currentColumn()
-			self.tableWidget_2.setItem(vx,vy,item)
-
-		if self.tableWidget_3.isVisible()==True:
-			vx = self.tableWidget_3.currentRow()
-			vy = self.tableWidget_3.currentColumn()
-			self.tableWidget_3.setItem(vx,vy,item)
-
-		if self.tableWidget_4.isVisible()==True:
-			vx = self.tableWidget_4.currentRow()
-			vy = self.tableWidget_4.currentColumn()
-			self.tableWidget_4.setItem(vx,vy,item)
-
-		if self.tableWidget_5.isVisible()==True:
-			vx = self.tableWidget_5.currentRow()
-			vy = self.tableWidget_5.currentColumn()
-			self.tableWidget_5.setItem(vx,vy,item)
-
-		if self.tableWidget_6.isVisible()==True:
-			vx = self.tableWidget_6.currentRow()
-			vy = self.tableWidget_6.currentColumn()
-			self.tableWidget_6.setItem(vx,vy,item)
-
-		if self.tableWidget_7.isVisible()==True:
-			vx = self.tableWidget_7.currentRow()
-			vy = self.tableWidget_7.currentColumn()
-			self.tableWidget_7.setItem(vx,vy,item)
-
-		if self.tableWidget_8.isVisible()==True:
-			vx = self.tableWidget_8.currentRow()
-			vy = self.tableWidget_8.currentColumn()
-			self.tableWidget_8.setItem(vx,vy,item)
-
-		if self.tableWidget_9.isVisible()==True:
-			vx = self.tableWidget_9.currentRow()
-			vy = self.tableWidget_9.currentColumn()
-			self.tableWidget_9.setItem(vx,vy,item)
-
-		if self.tableWidget_10.isVisible()==True:
-			vx = self.tableWidget_10.currentRow()
-			vy = self.tableWidget_10.currentColumn()
-			self.tableWidget_10.setItem(vx,vy,item)
-
-		self.mylabel.append(text)
-
 	def on_cellClickedTableW(self):
 		print("mylist",self.mylist)
 		print("mylabel",self.mylabel)
 		if self.tableWidget.isVisible()==True:
 			print("Tabla1")
-			#self.tableWidget.setItem(3,3,QtWidgets.QTableWidgetItem("Hola"))
 			y = self.tableWidget.columnCount()
 			x = self.tableWidget.rowCount()
 			if self.tableWidget.currentRow() == x-1:
@@ -2099,9 +2279,23 @@ class Ui_MainWindow(object):
 				Ui_NewLabel(self).exec_()
 
 	count = 1
-	def newPage(self):
+	def newPage(self): ## verificar tab actual para poner al agregar 
 		print("newPage")
-		self.count = self.count + 1
+		y = self.tabWidget.count()
+		print("countTabs:",y)
+
+		
+
+		if y != 0:
+			self.count = y + 1
+			
+		else:
+			self.count = self.count + 1
+		
+		
+		print("countNEW:",self.count)
+
+
 
 		if self.count == 2:
 			self.countPage2()
@@ -2122,15 +2316,118 @@ class Ui_MainWindow(object):
 		if self.count == 10:
 			self.countPage10()
 
-	def saveLayout(self):
+	flagSave = False
+	def saveLayout(self): 
 		print("Save")
+		if len(self.mylist) != 0 or len(self.mylabel) != 0:
+			self.flagSave = True
+			print("hay algo que guardar")
+			settings = QtCore.QSettings('Settings/archivo.ini', QtCore.QSettings.NativeFormat)
+			settings.setValue("mylist",self.mylist)
+			settings.setValue("mylabel",self.mylabel)
 
-	def deletePage(self):
-		print("Delete")
+	flagDelete = False
+	def deletePage(self): #borrar y actualizar valores de tabs
+		print("DeletePage")
+		self.count = self.count - 1
+		print("COUNT:",self.count)
+		x = self.tabWidget.currentIndex()
+		print("index:",x)
+
+		self.tabWidget.removeTab(x)
+		
+
+		#if self.verticalLayout.
+		#	print("tab1Ve")
+			#self.verticalLayout.removeWidget()
+
+		y = self.tabWidget.count()
+		print("tabC:",y)
+
+		dif = y - x
+		
+		for k in range(0,dif+1):
+			#print("k:",k)
+			j = k + 1
+			print("x+k",x+k)
+			#print("x+j:",x+j)
+			self.tabWidget.setTabText(x+k,"Page"+str(x+j))
+
+			for i in range(0,len(self.mylist)-1,4):
+				#if self.mylist[i] == '0'+str(x+1)+'%':
+				#	self.tempCut.append(self.mylist[i]+self.mylist[i+1]+'/'+self.mylist[i+2]+"\n"+self.mylist[i+3])
+				if self.mylist[i] == '0'+str(x+j)+'%':
+					#print("cambia valor tabList")
+					self.flagDelete = True
+					self.tempCut.append(self.mylist[i]+self.mylist[i+1]+'/'+self.mylist[i+2]+"\n"+self.mylist[i+3])
+					if k != 0:
+						self.tempTabsList.append(self.mylist[i])
+						self.tempTabsList.append(self.mylist[i+1])
+						self.tempTabsList.append(self.mylist[i+2])
+						self.tempTabsList.append(self.mylist[i+3])
+
+			for i in range(0,len(self.mylabel)-1,3):
+				#if self.mylabel[i] == '0'+str(x+1)+'%':
+				#	self.tempCut.append(self.mylabel[i]+self.mylabel[i+1]+'/'+self.mylabel[i+2])
+				if self.mylabel[i] == '0'+str(x+j)+'%': #x+2
+					#print("cambia valor tabLabel")
+					self.flagDelete = True
+					self.tempCut.append(self.mylabel[i]+self.mylabel[i+1]+'/'+self.mylabel[i+2])
+					if k != 0:
+						self.tempTabsLabel.append(self.mylabel[i])
+						self.tempTabsLabel.append(self.mylabel[i+1])
+						self.tempTabsLabel.append(self.mylabel[i+2])
+
+		self.cleanMylist()
+		self.tempCut.clear()
+
+		if self.flagDelete != False:
+			self.flagDelete = False
+			#print("TempTabslist:",self.tempTabsList)
+			#print("TempTabslabel:",self.tempTabsLabel)
+			
+			for k in range(0,dif):
+				#print("k2:",k)
+				j = k + 2
+				df = x+j
+				#print("2x+j:",x+j)
+				
+				for i in range(0,len(self.tempTabsList),4):
+					if  self.tempTabsList[i] == '0'+str(x+j)+'%':
+						self.mylist.append('0'+str(df-1)+'%')
+						self.mylist.append(self.tempTabsList[i+1])
+						self.mylist.append(self.tempTabsList[i+2])
+						self.mylist.append(self.tempTabsList[i+3])
+
+				for i in range(0,len(self.tempTabsLabel),3):
+					if  self.tempTabsLabel[i] == '0'+str(x+j)+'%':
+						self.mylabel.append('0'+str(df-1)+'%')
+						self.mylabel.append(self.tempTabsLabel[i+1])
+						self.mylabel.append(self.tempTabsLabel[i+2])
+
+		self.tempTabsList.clear()
+		self.tempTabsLabel.clear()
 
 	def exitLayout(self):
-		print("Exit")
-		MainWindow.close()
+		print("Exit") 
+		cl = QtGui.QCloseEvent 
+		self.closeEvent(cl)
+		'''
+		if (len(self.mylist) != 0 or len(self.mylabel) != 0) and self.flagSave != True: 
+			if self.settingsList != self.mylist or self.settingsLabel != self.mylabel:
+				print("se han hecho cambios y no se ha guardado")
+				msgExit = QtWidgets.QMessageBox()
+				returnExit = msgExit.warning(self.MainWindow,'Warning','Do you want to save changes?',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No|QtWidgets.QMessageBox.Cancel)
+				if returnExit == msgExit.Yes:
+					self.saveLayout()
+					MainWindow.close()
+				if returnExit == msgExit.No:
+					MainWindow.close()
+			else:
+				MainWindow.close()
+		else:
+			MainWindow.close()
+		'''
 
 	def countPage2(self):
 		#self.tab_2 = QtWidgets.QWidget()
@@ -2158,7 +2455,7 @@ class Ui_MainWindow(object):
 		self.tableWidget_2.verticalHeader().setDefaultSectionSize(60)
 		#self.tableWidget_2.verticalHeader().setMinimumSectionSize(20)
 		self.verticalLayout_3.addWidget(self.tableWidget_2)
-		self.tabWidget.addTab(self.tab_2, "Page 2")
+		self.tabWidget.addTab(self.tab_2, "Page 2") 
 
 	def countPage3(self):
 		#self.tab_3 = QtWidgets.QWidget()
