@@ -11,9 +11,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_NewLabel(QtWidgets.QDialog):
 	#def setupUi(self, NewLabel,parent=None):
-	def __init__(self,parent=None):
+	def __init__(self,currentTabL,parent=None):
 		super(Ui_NewLabel, self).__init__()
 		self.parent = parent
+		self.currentTabL = currentTabL
 		#self.setupUi()
 
 	#def setupUi(self):
@@ -84,7 +85,8 @@ class Ui_NewLabel(QtWidgets.QDialog):
 			msgN = QtWidgets.QMessageBox()
 			msgN.critical(self,'Error','Enter a label')
 		else:
-			if len(self.parent.mylabel) == 0:
+			self.parent.totalMylabel()
+			if len(self.parent.Auxmylabel) == 0:
 				item = QtWidgets.QTableWidgetItem(text)
 				lblt = QtGui.QFont("Arial",int(sizeW), QtGui.QFont.Black)
 				item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
@@ -100,95 +102,23 @@ class Ui_NewLabel(QtWidgets.QDialog):
 					txtA = 'AB'
 				
 				item.setBackground(QtGui.QColor('lightyellow'))
+
+				#vz = self.parent.tabWidget.currentIndex()
+				vz = self.currentTabL
+				vx = self.parent.tableWidget.currentRow()
+				vy = self.parent.tableWidget.currentColumn()
+				self.parent.tableWidget.setItem(vx,vy,item)
 				
-				if self.parent.tableWidget.isVisible()==True:
-					vz = self.parent.tabWidget.currentIndex()
-					vx = self.parent.tableWidget.currentRow()
-					vy = self.parent.tableWidget.currentColumn()
-					self.parent.tableWidget.setItem(vx,vy,item)
-					self.parent.mylabel.append("0"+str(vz+1)+"%")
-					self.parent.mylabel.append("X="+str(vx)+" Y="+str(vy))
+				self.parent.saveMylabel(vz)
+				self.parent.saveMylabel("X="+str(vx)+" Y="+str(vy))
+				self.parent.saveMylabel(text+"#"+sizeW+"$"+txtA)
 
-				if self.parent.tableWidget_2.isVisible()==True:
-					vz = self.parent.tabWidget.currentIndex()
-					vx = self.parent.tableWidget_2.currentRow()
-					vy = self.parent.tableWidget_2.currentColumn()
-					self.parent.tableWidget_2.setItem(vx,vy,item)
-					self.parent.mylabel.append("0"+str(vz+1)+"%")
-					self.parent.mylabel.append("X="+str(vx)+" Y="+str(vy))
-
-				if self.parent.tableWidget_3.isVisible()==True:
-					vz = self.parent.tabWidget.currentIndex()
-					vx = self.parent.tableWidget_3.currentRow()
-					vy = self.parent.tableWidget_3.currentColumn()
-					self.parent.tableWidget_3.setItem(vx,vy,item)
-					self.parent.mylabel.append("0"+str(vz+1)+"%")
-					self.parent.mylabel.append("X="+str(vx)+" Y="+str(vy))
-
-				if self.parent.tableWidget_4.isVisible()==True:
-					vz = self.parent.tabWidget.currentIndex()
-					vx = self.parent.tableWidget_4.currentRow()
-					vy = self.parent.tableWidget_4.currentColumn()
-					self.parent.tableWidget_4.setItem(vx,vy,item)
-					self.parent.mylabel.append("0"+str(vz+1)+"%")
-					self.parent.mylabel.append("X="+str(vx)+" Y="+str(vy))
-
-				if self.parent.tableWidget_5.isVisible()==True:
-					vz = self.parent.tabWidget.currentIndex()
-					vx = self.parent.tableWidget_5.currentRow()
-					vy = self.parent.tableWidget_5.currentColumn()
-					self.parent.tableWidget_5.setItem(vx,vy,item)
-					self.parent.mylabel.append("0"+str(vz+1)+"%")
-					self.parent.mylabel.append("X="+str(vx)+" Y="+str(vy))
-
-				if self.parent.tableWidget_6.isVisible()==True:
-					vz = self.parent.tabWidget.currentIndex()
-					vx = self.parent.tableWidget_6.currentRow()
-					vy = self.parent.tableWidget_6.currentColumn()
-					self.parent.tableWidget_6.setItem(vx,vy,item)
-					self.parent.mylabel.append("0"+str(vz+1)+"%")
-					self.parent.mylabel.append("X="+str(vx)+" Y="+str(vy))
-
-				if self.parent.tableWidget_7.isVisible()==True:
-					vz = self.parent.tabWidget.currentIndex()
-					vx = self.parent.tableWidget_7.currentRow()
-					vy = self.parent.tableWidget_7.currentColumn()
-					self.parent.tableWidget_7.setItem(vx,vy,item)
-					self.parent.mylabel.append("0"+str(vz+1)+"%")
-					self.parent.mylabel.append("X="+str(vx)+" Y="+str(vy))
-
-				if self.parent.tableWidget_8.isVisible()==True:
-					vz = self.parent.tabWidget.currentIndex()
-					vx = self.parent.tableWidget_8.currentRow()
-					vy = self.parent.tableWidget_8.currentColumn()
-					self.parent.tableWidget_8.setItem(vx,vy,item)
-					self.parent.mylabel.append("0"+str(vz+1)+"%")
-					self.parent.mylabel.append("X="+str(vx)+" Y="+str(vy))
-
-				if self.parent.tableWidget_9.isVisible()==True:
-					vz = self.parent.tabWidget.currentIndex()
-					vx = self.parent.tableWidget_9.currentRow()
-					vy = self.parent.tableWidget_9.currentColumn()
-					self.parent.tableWidget_9.setItem(vx,vy,item)
-					self.parent.mylabel.append("0"+str(vz+1)+"%")
-					self.parent.mylabel.append("X="+str(vx)+" Y="+str(vy))
-
-				if self.parent.tableWidget_10.isVisible()==True:
-					vz = self.parent.tabWidget.currentIndex()
-					vx = self.parent.tableWidget_10.currentRow()
-					vy = self.parent.tableWidget_10.currentColumn()
-					self.parent.tableWidget_10.setItem(vx,vy,item)
-					self.parent.mylabel.append("0"+str(vz+1)+"%")
-					self.parent.mylabel.append("X="+str(vx)+" Y="+str(vy))
-
-				#self.parent.mylabel.append(text)
-				self.parent.mylabel.append(text+"#"+sizeW+"$"+txtA)
-				self.parent.flagSave = False
+				self.parent.flagSaveF(False)
 				self.close()
 			
 			else:
-				for i in range(len(self.parent.mylabel)):
-					x = self.parent.mylabel[i].split('#')
+				for i in range(len(self.parent.Auxmylabel)):
+					x = self.parent.Auxmylabel[i].split('#')
 					#if self.parent.mylabel[i] ==text:
 					if x[0] == text:
 						self.validatorLabel = True
@@ -214,90 +144,21 @@ class Ui_NewLabel(QtWidgets.QDialog):
 						txtA = 'AB'
 					
 					item.setBackground(QtGui.QColor('lightyellow'))
-					
-					if self.parent.tableWidget.isVisible()==True:
-						vz = self.parent.tabWidget.currentIndex()
-						vx = self.parent.tableWidget.currentRow()
-						vy = self.parent.tableWidget.currentColumn()
-						self.parent.tableWidget.setItem(vx,vy,item)
-						self.parent.mylabel.append("0"+str(vz+1)+"%")
-						self.parent.mylabel.append("X="+str(vx)+" Y="+str(vy))
 
-					if self.parent.tableWidget_2.isVisible()==True:
-						vz = self.parent.tabWidget.currentIndex()
-						vx = self.parent.tableWidget_2.currentRow()
-						vy = self.parent.tableWidget_2.currentColumn()
-						self.parent.tableWidget_2.setItem(vx,vy,item)
-						self.parent.mylabel.append("0"+str(vz+1)+"%")
-						self.parent.mylabel.append("X="+str(vx)+" Y="+str(vy))
+					vz = self.currentTabL
+					vx = self.parent.tableWidget.currentRow()
+					vy = self.parent.tableWidget.currentColumn()
+					self.parent.tableWidget.setItem(vx,vy,item)
 
-					if self.parent.tableWidget_3.isVisible()==True:
-						vz = self.parent.tabWidget.currentIndex()
-						vx = self.parent.tableWidget_3.currentRow()
-						vy = self.parent.tableWidget_3.currentColumn()
-						self.parent.tableWidget_3.setItem(vx,vy,item)
-						self.parent.mylabel.append("0"+str(vz+1)+"%")
-						self.parent.mylabel.append("X="+str(vx)+" Y="+str(vy))
-
-					if self.parent.tableWidget_4.isVisible()==True:
-						vz = self.parent.tabWidget.currentIndex()
-						vx = self.parent.tableWidget_4.currentRow()
-						vy = self.parent.tableWidget_4.currentColumn()
-						self.parent.tableWidget_4.setItem(vx,vy,item)
-						self.parent.mylabel.append("0"+str(vz+1)+"%")
-						self.parent.mylabel.append("X="+str(vx)+" Y="+str(vy))
-
-					if self.parent.tableWidget_5.isVisible()==True:
-						vz = self.parent.tabWidget.currentIndex()
-						vx = self.parent.tableWidget_5.currentRow()
-						vy = self.parent.tableWidget_5.currentColumn()
-						self.parent.tableWidget_5.setItem(vx,vy,item)
-						self.parent.mylabel.append("0"+str(vz+1)+"%")
-						self.parent.mylabel.append("X="+str(vx)+" Y="+str(vy))
-
-					if self.parent.tableWidget_6.isVisible()==True:
-						vz = self.parent.tabWidget.currentIndex()
-						vx = self.parent.tableWidget_6.currentRow()
-						vy = self.parent.tableWidget_6.currentColumn()
-						self.parent.tableWidget_6.setItem(vx,vy,item)
-						self.parent.mylabel.append("0"+str(vz+1)+"%")
-						self.parent.mylabel.append("X="+str(vx)+" Y="+str(vy))
-
-					if self.parent.tableWidget_7.isVisible()==True:
-						vz = self.parent.tabWidget.currentIndex()
-						vx = self.parent.tableWidget_7.currentRow()
-						vy = self.parent.tableWidget_7.currentColumn()
-						self.parent.tableWidget_7.setItem(vx,vy,item)
-						self.parent.mylabel.append("0"+str(vz+1)+"%")
-						self.parent.mylabel.append("X="+str(vx)+" Y="+str(vy))
-
-					if self.parent.tableWidget_8.isVisible()==True:
-						vz = self.parent.tabWidget.currentIndex()
-						vx = self.parent.tableWidget_8.currentRow()
-						vy = self.parent.tableWidget_8.currentColumn()
-						self.parent.tableWidget_8.setItem(vx,vy,item)
-						self.parent.mylabel.append("0"+str(vz+1)+"%")
-						self.parent.mylabel.append("X="+str(vx)+" Y="+str(vy))
-
-					if self.parent.tableWidget_9.isVisible()==True:
-						vz = self.parent.tabWidget.currentIndex()
-						vx = self.parent.tableWidget_9.currentRow()
-						vy = self.parent.tableWidget_9.currentColumn()
-						self.parent.tableWidget_9.setItem(vx,vy,item)
-						self.parent.mylabel.append("0"+str(vz+1)+"%")
-						self.parent.mylabel.append("X="+str(vx)+" Y="+str(vy))
-
-					if self.parent.tableWidget_10.isVisible()==True:
-						vz = self.parent.tabWidget.currentIndex()
-						vx = self.parent.tableWidget_10.currentRow()
-						vy = self.parent.tableWidget_10.currentColumn()
-						self.parent.tableWidget_10.setItem(vx,vy,item)
-						self.parent.mylabel.append("0"+str(vz+1)+"%")
-						self.parent.mylabel.append("X="+str(vx)+" Y="+str(vy))
+					self.parent.saveMylabel(vz)
+					self.parent.saveMylabel("X="+str(vx)+" Y="+str(vy))
+					self.parent.saveMylabel(text+"#"+sizeW+"$"+txtA)
+					#self.parent.mylabel.append("0"+str(vz+1)+"%")
+					#self.parent.mylabel.append("X="+str(vx)+" Y="+str(vy))
 
 					#self.parent.mylabel.append(text)
-					self.parent.mylabel.append(text+"#"+sizeW+"$"+txtA)
-					self.parent.flagSave = False
+					#self.parent.mylabel.append(text+"#"+sizeW+"$"+txtA)
+					self.parent.flagSaveF(False)
 					self.close()
 		
 	def bttnCancel(self):

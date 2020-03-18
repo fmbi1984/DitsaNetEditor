@@ -11,9 +11,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_NewCircuit(QtWidgets.QDialog):
-	def __init__(self,parent=None):
+	def __init__(self,currentTab,parent=None):
 		super(Ui_NewCircuit, self).__init__()
 		self.parent = parent
+		self.currentTab = currentTab
 	#def setupUi(self, NewCircuit):
 		#NewCircuit.setObjectName("NewCircuit")
 		#NewCircuit.resize(268, 186)
@@ -59,8 +60,6 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 		self.buttonBox.accepted.connect(self.bttnDone)
 		self.buttonBox.rejected.connect(self.bttnCancel)
 		self.passEdit = False
-		#self.lineName.editingFinished.connect(self.fname)
-		#NewCircuit.showEvent = self.showEvent
 		QtCore.QMetaObject.connectSlotsByName(self) #NEw
 
 	def retranslateUi(self, NewCircuit):
@@ -70,93 +69,48 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 		self.lblAddrs.setText(_translate("NewCircuit", "Address"))
 
 	def showEvent(self,event):
-		if self.parent.tableWidget.isVisible()==True:
-			vx = self.parent.tableWidget.currentRow()
-			vy = self.parent.tableWidget.currentColumn()
-			value = "X="+str(vx)+" Y="+str(vy)
-			tble = "01%"
+		vx = self.parent.tableWidget.currentRow()
+		vy = self.parent.tableWidget.currentColumn()
+		value = "X="+str(vx)+" Y="+str(vy)
 
-		if self.parent.tableWidget_2.isVisible()==True:
-			vx = self.parent.tableWidget_2.currentRow()
-			vy = self.parent.tableWidget_2.currentColumn()
-			value = "X="+str(vx)+" Y="+str(vy)
-			tble = "02%"
-
-		if self.parent.tableWidget_3.isVisible()==True:
-			vx = self.parent.tableWidget_3.currentRow()
-			vy = self.parent.tableWidget_3.currentColumn()
-			value = "X="+str(vx)+" Y="+str(vy)
-			tble = "03%"
-
-		if self.parent.tableWidget_4.isVisible()==True:
-			vx = self.parent.tableWidget_4.currentRow()
-			vy = self.parent.tableWidget_4.currentColumn()
-			value = "X="+str(vx)+" Y="+str(vy)
-			tble = "04%"
-
-		if self.parent.tableWidget_5.isVisible()==True:
-			vx = self.parent.tableWidget_5.currentRow()
-			vy = self.parent.tableWidget_5.currentColumn()
-			value = "X="+str(vx)+" Y="+str(vy)
-			tble = "05%"
-
-		if self.parent.tableWidget_6.isVisible()==True:
-			vx = self.parent.tableWidget_6.currentRow()
-			vy = self.parent.tableWidget_6.currentColumn()
-			value = "X="+str(vx)+" Y="+str(vy)
-			tble = "06%"
-
-		if self.parent.tableWidget_7.isVisible()==True:
-			vx = self.parent.tableWidget_7.currentRow()
-			vy = self.parent.tableWidget_7.currentColumn()
-			value = "X="+str(vx)+" Y="+str(vy)
-			tble = "07%"
-
-		if self.parent.tableWidget_8.isVisible()==True:
-			vx = self.parent.tableWidget_8.currentRow()
-			vy = self.parent.tableWidget_8.currentColumn()
-			value = "X="+str(vx)+" Y="+str(vy)
-			tble = "08%"
-
-		if self.parent.tableWidget_9.isVisible()==True:
-			vx = self.parent.tableWidget_9.currentRow()
-			vy = self.parent.tableWidget_9.currentColumn()
-			value = "X="+str(vx)+" Y="+str(vy)
-			tble = "09%"
-
-		if self.parent.tableWidget_10.isVisible()==True:
-			vx = self.parent.tableWidget_10.currentRow()
-			vy = self.parent.tableWidget_10.currentColumn()
-			value = "X="+str(vx)+" Y="+str(vy)
-			tble = "10%"
-
-		for i in range(len(self.parent.mylist)): 
-			if self.parent.mylist[i] == value and self.parent.mylist[i-1] == tble:
-				valueName = self.parent.mylist[i+1]
-				valueAddr = self.parent.mylist[i+2]
+		self.parent.totalMylist()
+		for i in range(len(self.parent.Auxmylist)): 
+			if self.parent.Auxmylist[i] == value and self.parent.Auxmylist[i-1] == self.currentTab:
+				valueName = self.parent.Auxmylist[i+1]
+				valueAddr = self.parent.Auxmylist[i+2]
 				valueName = valueName.replace('N=','')
 				valueAddr = valueAddr.replace('A=','')
 				self.x = i
 				self.passEdit = True 
-
+		
 		if self.passEdit == True:
-			self.coord = self.parent.mylist[self.x]
-			self.CircuitName = self.parent.mylist[self.x+1]
-			self.CircuitAddrs = self.parent.mylist[self.x+2]
+			self.numberTab = self.parent.Auxmylist[self.x-1]
+			self.coord = self.parent.Auxmylist[self.x]
+			self.CircuitName = self.parent.Auxmylist[self.x+1]
+			self.CircuitAddrs = self.parent.Auxmylist[self.x+2]
 
-			self.parent.mylist.pop(self.x+2)
-			self.parent.mylist.pop(self.x+1)
-			self.parent.mylist.pop(self.x) #se recorre un lugar a la izquierda
-			self.parent.mylist.pop(self.x-1)
+			self.parent.deleteMylist(self.x+2)
+			self.parent.deleteMylist(self.x+1)
+			self.parent.deleteMylist(self.x)
+			self.parent.deleteMylist(self.x-1)
+			#self.parent.mylist.pop(self.x+2)
+			#self.parent.mylist.pop(self.x+1)
+			#self.parent.mylist.pop(self.x) #se recorre un lugar a la izquierda
+			#self.parent.mylist.pop(self.x-1)
 			self.lineName.setText(valueName)
 			self.lineAddrs.setText(valueAddr)
-
-	def bttnCancel(self):
-		if len(self.parent.mylist) != 0:
+		
+	def bttnCancel(self): 
+		self.parent.totalMylist()
+		if len(self.parent.Auxmylist) != 0:
 			if self.passEdit != False:
-				self.parent.mylist.append(self.coord)
-				self.parent.mylist.append(self.CircuitName)
-				self.parent.mylist.append(self.CircuitAddrs)
+				self.parent.saveMylist(self.numberTab)
+				self.parent.saveMylist(self.coord)
+				self.parent.saveMylist(self.CircuitName)
+				self.parent.saveMylist(self.CircuitAddrs)
+				#self.parent.mylist.append(self.coord)
+				#self.parent.mylist.append(self.CircuitName)
+				#self.parent.mylist.append(self.CircuitAddrs)
 
 		self.parent.bttnCancel()
 		self.close()
@@ -176,105 +130,38 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 				msgA = QtWidgets.QMessageBox()
 				msgA.critical(self,'Error','Invalid address data')
 			else:
-				if len(self.parent.mylist) == 0:
+				self.parent.totalMylist()
+				if len(self.parent.Auxmylist) == 0:
 					lblt = QtGui.QFont("Arial",10, QtGui.QFont.Normal)
 					item = QtWidgets.QTableWidgetItem("N="+name+'\n'+"A="+addr)
 					item.setFont(lblt)
 					item.setBackground(QtGui.QColor('lightblue'))
 					item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
 
-					if self.parent.tableWidget.isVisible()==True:
-						vz = self.parent.tabWidget.currentIndex()
-						vx = self.parent.tableWidget.currentRow()
-						vy = self.parent.tableWidget.currentColumn()
-						self.parent.tableWidget.setItem(vx,vy,item)
-						self.parent.mylist.append("0"+str(vz+1)+"%")
-						self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
-
-					if self.parent.tableWidget_2.isVisible()==True:
-						vz = self.parent.tabWidget.currentIndex()
-						vx = self.parent.tableWidget_2.currentRow()
-						vy = self.parent.tableWidget_2.currentColumn()
-						self.parent.tableWidget_2.setItem(vx,vy,item)
-						self.parent.mylist.append("0"+str(vz+1)+"%")
-						self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
-
-					if self.parent.tableWidget_3.isVisible()==True:
-						vz = self.parent.tabWidget.currentIndex()
-						vx = self.parent.tableWidget_3.currentRow()
-						vy = self.parent.tableWidget_3.currentColumn()
-						self.parent.tableWidget_3.setItem(vx,vy,item)
-						self.parent.mylist.append("0"+str(vz+1)+"%")
-						self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
+					vz = self.currentTab
+					vx = self.parent.tableWidget.currentRow()
+					vy = self.parent.tableWidget.currentColumn()
+					self.parent.tableWidget.setItem(vx,vy,item)
 					
-					if self.parent.tableWidget_4.isVisible()==True:
-						vz = self.parent.tabWidget.currentIndex()
-						vx = self.parent.tableWidget_4.currentRow()
-						vy = self.parent.tableWidget_4.currentColumn()
-						self.parent.tableWidget_4.setItem(vx,vy,item)
-						self.parent.mylist.append("0"+str(vz+1)+"%")
-						self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
-					
-					if self.parent.tableWidget_5.isVisible()==True:
-						vz = self.parent.tabWidget.currentIndex()
-						vx = self.parent.tableWidget_5.currentRow()
-						vy = self.parent.tableWidget_5.currentColumn()
-						self.parent.tableWidget_5.setItem(vx,vy,item)
-						self.parent.mylist.append("0"+str(vz+1)+"%")
-						self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
+					self.parent.saveMylist(vz)
+					self.parent.saveMylist("X="+str(vx)+" Y="+str(vy))
+					self.parent.saveMylist("N="+name)
+					self.parent.saveMylist("A="+addr)
+					#self.parent.mylist.append(vz)
+					#self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
 
-					if self.parent.tableWidget_6.isVisible()==True:
-						vz = self.parent.tabWidget.currentIndex()
-						vx = self.parent.tableWidget_6.currentRow()
-						vy = self.parent.tableWidget_6.currentColumn()
-						self.parent.tableWidget_6.setItem(vx,vy,item)
-						self.parent.mylist.append("0"+str(vz+1)+"%")
-						self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
+					#self.parent.mylist.append("N="+name)
+					#self.parent.mylist.append("A="+addr)
 
-					if self.parent.tableWidget_7.isVisible()==True:
-						vz = self.parent.tabWidget.currentIndex()
-						vx = self.parent.tableWidget_7.currentRow()
-						vy = self.parent.tableWidget_7.currentColumn()
-						self.parent.tableWidget_7.setItem(vx,vy,item)
-						self.parent.mylist.append("0"+str(vz+1)+"%")
-						self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
-
-					if self.parent.tableWidget_8.isVisible()==True:
-						vz = self.parent.tabWidget.currentIndex()
-						vx = self.parent.tableWidget_8.currentRow()
-						vy = self.parent.tableWidget_8.currentColumn()
-						self.parent.tableWidget_8.setItem(vx,vy,item)
-						self.parent.mylist.append("0"+str(vz+1)+"%")
-						self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
-
-					if self.parent.tableWidget_9.isVisible()==True:
-						vz = self.parent.tabWidget.currentIndex()
-						vx = self.parent.tableWidget_9.currentRow()
-						vy = self.parent.tableWidget_9.currentColumn()
-						self.parent.tableWidget_9.setItem(vx,vy,item)
-						self.parent.mylist.append("0"+str(vz+1)+"%")
-						self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
-
-					if self.parent.tableWidget_10.isVisible()==True:
-						vz = self.parent.tabWidget.currentIndex()
-						vx = self.parent.tableWidget_10.currentRow()
-						vy = self.parent.tableWidget_10.currentColumn()
-						self.parent.tableWidget_10.setItem(vx,vy,item)
-						self.parent.mylist.append("0"+str(vz+1)+"%")
-						self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
-
-					self.parent.mylist.append("N="+name)
-					self.parent.mylist.append("A="+addr)
-
-					self.parent.flagSave = False
+					self.parent.flagSaveF(False)
 					self.close()
 				else:
-					for i in range(len(self.parent.mylist)):
-						if self.parent.mylist[i] =="N="+name:
+					for i in range(len(self.parent.Auxmylist)):
+						if self.parent.Auxmylist[i] =="N="+name:
 							self.validatorName = True
 
-					for i in range(len(self.parent.mylist)):
-						if self.parent.mylist[i] =="A="+addr:
+					for i in range(len(self.parent.Auxmylist)):
+						if self.parent.Auxmylist[i] =="A="+addr:
 							self.validatorAddr = True
 
 					if self.validatorName != False:
@@ -293,91 +180,22 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 							item.setBackground(QtGui.QColor('lightblue'))
 							item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
 
-							if self.parent.tableWidget.isVisible()==True:
-								vz = self.parent.tabWidget.currentIndex()
-								vx = self.parent.tableWidget.currentRow()
-								vy = self.parent.tableWidget.currentColumn()
-								self.parent.tableWidget.setItem(vx,vy,item)
-								self.parent.mylist.append("0"+str(vz+1)+"%")
-								self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
+							vz = self.currentTab
+							vx = self.parent.tableWidget.currentRow()
+							vy = self.parent.tableWidget.currentColumn()
+							self.parent.tableWidget.setItem(vx,vy,item)
 
-							if self.parent.tableWidget_2.isVisible()==True:
-								vz = self.parent.tabWidget.currentIndex()
-								vx = self.parent.tableWidget_2.currentRow()
-								vy = self.parent.tableWidget_2.currentColumn()
-								self.parent.tableWidget_2.setItem(vx,vy,item)
-								self.parent.mylist.append("0"+str(vz+1)+"%")
-								self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
+							self.parent.saveMylist(vz)
+							self.parent.saveMylist("X="+str(vx)+" Y="+str(vy))
+							self.parent.saveMylist("N="+name)
+							self.parent.saveMylist("A="+addr)
+							#self.parent.mylist.append(vz)
+							#self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
 
-							if self.parent.tableWidget_3.isVisible()==True:
-								vz = self.parent.tabWidget.currentIndex()
-								vx = self.parent.tableWidget_3.currentRow()
-								vy = self.parent.tableWidget_3.currentColumn()
-								self.parent.tableWidget_3.setItem(vx,vy,item)
-								self.parent.mylist.append("0"+str(vz+1)+"%")
-								self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
-							
-							if self.parent.tableWidget_4.isVisible()==True:
-								vz = self.parent.tabWidget.currentIndex()
-								vx = self.parent.tableWidget_4.currentRow()
-								vy = self.parent.tableWidget_4.currentColumn()
-								self.parent.tableWidget_4.setItem(vx,vy,item)
-								self.parent.mylist.append("0"+str(vz+1)+"%")
-								self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
-							
-							if self.parent.tableWidget_5.isVisible()==True:
-								vz = self.parent.tabWidget.currentIndex()
-								vx = self.parent.tableWidget_5.currentRow()
-								vy = self.parent.tableWidget_5.currentColumn()
-								self.parent.tableWidget_5.setItem(vx,vy,item)
-								self.parent.mylist.append("0"+str(vz+1)+"%")
-								self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
-
-							if self.parent.tableWidget_6.isVisible()==True:
-								vz = self.parent.tabWidget.currentIndex()
-								vx = self.parent.tableWidget_6.currentRow()
-								vy = self.parent.tableWidget_6.currentColumn()
-								self.parent.tableWidget_6.setItem(vx,vy,item)
-								self.parent.mylist.append("0"+str(vz+1)+"%")
-								self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
-
-							if self.parent.tableWidget_7.isVisible()==True:
-								vz = self.parent.tabWidget.currentIndex()
-								vx = self.parent.tableWidget_7.currentRow()
-								vy = self.parent.tableWidget_7.currentColumn()
-								self.parent.tableWidget_7.setItem(vx,vy,item)
-								self.parent.mylist.append("0"+str(vz+1)+"%")
-								self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
-
-							if self.parent.tableWidget_8.isVisible()==True:
-								vz = self.parent.tabWidget.currentIndex()
-								vx = self.parent.tableWidget_8.currentRow()
-								vy = self.parent.tableWidget_8.currentColumn()
-								self.parent.tableWidget_8.setItem(vx,vy,item)
-								self.parent.mylist.append("0"+str(vz+1)+"%")
-								self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
-
-							if self.parent.tableWidget_9.isVisible()==True:
-								vz = self.parent.tabWidget.currentIndex()
-								vx = self.parent.tableWidget_9.currentRow()
-								vy = self.parent.tableWidget_9.currentColumn()
-								self.parent.tableWidget_9.setItem(vx,vy,item)
-								self.parent.mylist.append("0"+str(vz+1)+"%")
-								self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
-
-							if self.parent.tableWidget_10.isVisible()==True:
-								vz = self.parent.tabWidget.currentIndex()
-								vx = self.parent.tableWidget_10.currentRow()
-								vy = self.parent.tableWidget_10.currentColumn()
-								self.parent.tableWidget_10.setItem(vx,vy,item)
-								self.parent.mylist.append("0"+str(vz+1)+"%")
-								self.parent.mylist.append("X="+str(vx)+" Y="+str(vy))
-
-							self.parent.mylist.append("N="+name)
-							self.parent.mylist.append("A="+addr)
-							self.parent.flagSave = False
+							#self.parent.mylist.append("N="+name)
+							#self.parent.mylist.append("A="+addr)
+							self.parent.flagSaveF(False)
 							self.close()
-
 '''
 if __name__ == "__main__":
 	import sys
