@@ -9,7 +9,6 @@
 import re
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-
 class Ui_NewCircuit(QtWidgets.QDialog):
 	def __init__(self,currentTab,parent=None):
 		super(Ui_NewCircuit, self).__init__()
@@ -37,6 +36,7 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 		self.horizontalLayout.addWidget(self.lblName)
 		self.lineName = QtWidgets.QLineEdit(self.widget)
 		self.lineName.setObjectName("lineName")
+		self.lineName.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("^[-A-Za-z\\d]*$"),self))
 		self.horizontalLayout.addWidget(self.lineName)
 		self.verticalLayout.addLayout(self.horizontalLayout)
 		self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
@@ -46,7 +46,8 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 		self.horizontalLayout_2.addWidget(self.lblAddrs)
 		self.lineAddrs = QtWidgets.QLineEdit(self.widget)
 		self.lineAddrs.setObjectName("lineAddrs")
-		self.lineAddrs.setValidator(QtGui.QIntValidator(1,999))
+		#self.lineAddrs.setValidator(QtGui.QIntValidator(1,999))
+		self.lineAddrs.setValidator(QtGui.QRegExpValidator(QtCore.QRegExp("[1-9]\\d{0,2}"),self)) #1-999
 		self.horizontalLayout_2.addWidget(self.lineAddrs)
 		self.verticalLayout.addLayout(self.horizontalLayout_2)
 		self.verticalLayout_2.addLayout(self.verticalLayout)
@@ -62,13 +63,19 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 		self.passEdit = False
 		QtCore.QMetaObject.connectSlotsByName(self) #NEw
 
+		self.abc = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','Ñ','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+		self.lineName.textChanged.connect(self.changeNameUpper)
+
 	def retranslateUi(self, NewCircuit):
 		_translate = QtCore.QCoreApplication.translate
 		self.setWindowTitle(_translate("NewCircuit", "New Circuit"))
 		self.lblName.setText(_translate("NewCircuit", "Name	"))
 		self.lblAddrs.setText(_translate("NewCircuit", "Address"))
 
+	flagD = False
+	flagD2 = False
 	def showEvent(self,event):
+		print("showCircuit")
 		vx = self.parent.tableWidget.currentRow()
 		vy = self.parent.tableWidget.currentColumn()
 		value = "X="+str(vx)+" Y="+str(vy)
@@ -93,12 +100,345 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 			self.parent.deleteMylist(self.x+1)
 			self.parent.deleteMylist(self.x)
 			self.parent.deleteMylist(self.x-1)
-			#self.parent.mylist.pop(self.x+2)
-			#self.parent.mylist.pop(self.x+1)
-			#self.parent.mylist.pop(self.x) #se recorre un lugar a la izquierda
-			#self.parent.mylist.pop(self.x-1)
 			self.lineName.setText(valueName)
 			self.lineAddrs.setText(valueAddr)
+
+		else:
+			print(self.parent.Auxmylist)
+			i = len(self.parent.Auxmylist)
+			#print("Tab:",self.parent.Auxmylist[i-4])
+			valueName = self.parent.Auxmylist[i-2]
+			valueAddr = self.parent.Auxmylist[i-1]
+			valueName = valueName.replace('N=','')
+			valueAddr = valueAddr.replace('A=','')
+			print("VName:",valueName)
+			print("VAddr:",valueAddr)
+
+			self.nextVName(valueName)
+			self.nextVAddr(valueAddr)
+
+	def nextVName(self,VName):
+		print("nextVName")
+		#y = '-' in VName 
+		if '-' in VName != False:
+			x = VName.rpartition('-')
+			v = VName.rindex('-')
+			if VName[v] == '-':
+				cmb = x[2]
+				digT = len(cmb)
+				midig = digT - 2 
+				tmp1 = cmb[0:midig]
+				tmp = cmb[midig:digT]
+
+				if tmp.isdigit():
+					print("dos digitos numeros")
+					self.flagD = True
+					num = tmp
+					#print("NUM:",num)
+					numT = int(num) + 1
+					#print("numT:",numT)
+					if num[0] == '0' and len(str(numT)) != len(num): ##agregar la cantidad de ceros
+						#print("digito 0")
+						if len(num) > len(str(numT)):
+							dif = len(num) - len(str(numT))
+							#print("dif:",dif)
+						dp = ''
+						for n in range(dif):
+							dp = dp + '0'
+						#print(dp)
+						numT = dp + str(numT) 
+					VNameF = str(x[0])+str(x[1])+str(tmp1)+str(numT)
+					self.valueMylistName(VNameF)
+				#	print("FinalMuestra:",VNameF)
+				#	self.lineName.setText(VNameF)
+
+				if tmp.isalpha():
+					print("dos digitos letra")
+					self.flagD = True
+					dig = tmp[0]
+					
+					for a in range(len(self.abc)):
+						if dig == self.abc[a]:
+							if dig == 'Z':
+								digF = '-'
+								break
+							digF = self.abc[a+1]
+					dig2 = '0'
+					VNameF = str(x[0])+str(x[1])+str(tmp1)+str(digF)+str(dig2)
+					self.valueMylistName(VNameF)
+				#	print(VNameF)
+				#	self.lineName.setText(VNameF)
+
+				if tmp.isalnum():
+					if self.flagD != True:
+						print("dos digitos letra-numero")
+						dig = tmp[0]
+						dig2 = tmp[1]
+
+						if dig.isalpha():
+							digF = dig  #dig letra
+						else:
+							digF = int(dig) + 1  #dig numero
+
+						if dig2.isalpha():
+							dig2F = '0'  #dig2 letra
+						else:
+							dig2F = int(dig2) + 1	#dig2 numero
+
+						VNameF = str(x[0])+str(x[1])+str(tmp1)+str(digF)+str(dig2F)
+						self.valueMylistName(VNameF)
+					#	print(VNameF)
+					#	self.lineName.setText(VNameF)
+
+		else:
+			lenAct = len(VName)
+			midAct = lenAct - 2 
+
+			valI = VName[0:midAct]
+			valS = VName[midAct:lenAct]
+
+			if valS.isdigit():
+				print("dos digitos numeros")
+				self.flagD = True
+				num = VName
+				numT = int(num) + 1
+				if num[0] == '0' and len(str(numT)) != len(num): ##agregar la cantidad de ceros
+					if len(num) > len(str(numT)):
+						dif = len(num) - len(str(numT))
+					dp = ''
+					for n in range(dif):
+						dp = dp + '0'
+					numT = dp + str(numT) 
+
+				VNameF = numT
+				self.valueMylistName(VNameF)
+			#	print("FinalMuestra:",VNameF)
+			#	self.lineName.setText(VNameF)
+
+			if valS.isalpha():
+				print("dos digitos letra")
+				self.flagD = True
+				dig = valS[0]
+
+				for a in range(len(self.abc)):
+					if dig == self.abc[a]:
+						#print("abc:",abc[a+1])
+						if dig == 'Z':
+							digF = '-'
+							break
+						digF = self.abc[a+1]
+				dig2 = '0'
+				VNameF = str(valI)+str(digF)+str(dig2)
+				self.valueMylistName(VNameF)
+			#	print(str(valI)+str(digF)+str(dig2))
+			#	self.lineName.setText(VNameF)
+
+			if valS.isalnum():
+				if self.flagD != True:
+					print("dos digitos letra-numero")
+					dig = valS[0]
+					dig2 = valS[1]
+
+					if dig.isalpha():
+						digF = dig	#dig letra
+					else:
+						digF = int(dig) + 1  #dig numero
+
+					if dig2.isalpha():
+						dig2F = '0'  #dig2 letra
+					else:
+						dig2F = int(dig2) + 1	#dig2 numero
+
+					VNameF = str(valI)+str(digF)+str(dig2F)
+					self.valueMylistName(VNameF)
+				#	print(str(valI)+str(digF)+str(dig2F))
+				#	self.lineName.setText(VNameF)
+
+	flagName = False
+	def valueMylistName(self,VNameF): 
+		t = 0
+		while t<len(self.parent.Auxmylist)/4:
+			t += 1
+			self.flagName = False
+			for i in range(2,len(self.parent.Auxmylist),4):
+				if self.parent.Auxmylist[i] == 'N='+str(VNameF):
+					VNameF = self.nextVNameW(VNameF)
+					self.flagName = True
+			
+			if self.flagName !=True:
+				self.flagName = False
+				break
+
+		self.lineName.setText(str(VNameF))
+
+
+	def nextVNameW(self,VNameF):
+		print("neW")
+		y = '-' in VNameF 
+		if '-' in VNameF != False:
+			x = VNameF.rpartition('-')
+			v = VNameF.rindex('-')
+			if VNameF[v] == '-':
+				cmb = x[2]
+				digT = len(cmb)
+				midig = digT - 2 
+				tmp1 = cmb[0:midig]
+				tmp = cmb[midig:digT]
+
+				if tmp.isdigit():
+					print("dos digitos numeros")
+					self.flagD2 = True
+					num = tmp
+					#print("NUM:",num)
+					numT = int(num) + 1
+					#print("numT:",numT)
+					if num[0] == '0' and len(str(numT)) != len(num): ##agregar la cantidad de ceros
+						#print("digito 0")
+						if len(num) > len(str(numT)):
+							dif = len(num) - len(str(numT))
+							#print("dif:",dif)
+						dp = ''
+						for n in range(dif):
+							dp = dp + '0'
+						#print(dp)
+						numT = dp + str(numT) 
+					VNameF2 = str(x[0])+str(x[1])+str(tmp1)+str(numT)
+				#	self.valueMylistName(VNameF)
+					print("FN:",VNameF2)
+					return VNameF2
+				#	self.lineName.setText(VNameF)
+
+				if tmp.isalpha():
+					print("dos digitos letra")
+					self.flagD2 = True
+					dig = tmp[0]
+					
+					for a in range(len(self.abc)):
+						if dig == self.abc[a]:
+							if dig == 'Z':
+								digF = '-'
+								break
+							digF = self.abc[a+1]
+					dig2 = '0'
+					VNameF2 = str(x[0])+str(x[1])+str(tmp1)+str(digF)+str(dig2)
+				#	self.valueMylistName(VNameF)
+					print("FN",VNameF2)
+					return VNameF2
+				#	self.lineName.setText(VNameF)
+
+				if tmp.isalnum():
+					if self.flagD2 != True:
+						print("dos digitos letra-numero")
+						dig = tmp[0]
+						dig2 = tmp[1]
+
+						if dig.isalpha():
+							digF = dig  #dig letra
+						else:
+							digF = int(dig) + 1  #dig numero
+
+						if dig2.isalpha():
+							dig2F = '0'  #dig2 letra
+						else:
+							dig2F = int(dig2) + 1	#dig2 numero
+
+						VNameF2 = str(x[0])+str(x[1])+str(tmp1)+str(digF)+str(dig2F)
+					#	self.valueMylistName(VNameF)
+						print("FN",VNameF2)
+						return VNameF2
+					#	self.lineName.setText(VNameF)
+
+		else:
+			lenAct = len(VNameF)
+			midAct = lenAct - 2 
+
+			valI = VNameF[0:midAct]
+			valS = VNameF[midAct:lenAct]
+
+			if valS.isdigit():
+				print("dos digitos numeros")
+				self.flagD2 = True
+				num = VNameF
+				numT = int(num) + 1
+				if num[0] == '0' and len(str(numT)) != len(num): ##agregar la cantidad de ceros
+					if len(num) > len(str(numT)):
+						dif = len(num) - len(str(numT))
+					dp = ''
+					for n in range(dif):
+						dp = dp + '0'
+					numT = dp + str(numT) 
+
+				VNameF2 = numT
+			#	self.valueMylistName(VNameF)
+				print("FN:",VNameF2)
+				return VNameF2
+			#	self.lineName.setText(VNameF)
+
+			if valS.isalpha():
+				print("dos digitos letra")
+				self.flagD2 = True
+				dig = valS[0]
+
+				for a in range(len(self.abc)):
+					if dig == self.abc[a]:
+						#print("abc:",abc[a+1])
+						if dig == 'Z':
+							digF = '-'
+							break
+						digF = self.abc[a+1]
+				dig2 = '0'
+				VNameF2 = str(valI)+str(digF)+str(dig2)
+			#	self.valueMylistName(VNameF)
+				print("FN:",VNameF2)
+				return VNameF2
+			#	self.lineName.setText(VNameF)
+
+			if valS.isalnum():
+				if self.flagD2 != True:
+					print("dos digitos letra-numero")
+					dig = valS[0]
+					dig2 = valS[1]
+
+					if dig.isalpha():
+						digF = dig	#dig letra
+					else:
+						digF = int(dig) + 1  #dig numero
+
+					if dig2.isalpha():
+						dig2F = '0'  #dig2 letra
+					else:
+						dig2F = int(dig2) + 1	#dig2 numero
+
+					VNameF2 = str(valI)+str(digF)+str(dig2F)
+				#	self.valueMylistName(VNameF)
+					print("FN:",VNameF2)
+					return VNameF2
+				#	self.lineName.setText(VNameF)
+
+
+	def nextVAddr(self,VAddr):
+		print("nextVAddr")
+		VAddrF = int(VAddr) + 1
+		self.valueMylistAddr(VAddrF)
+	
+	flagNext = False
+	def valueMylistAddr(self,VAddrF):
+		#print("valores de mylist")
+		t = 0
+		while t<len(self.parent.Auxmylist)/4:
+			t += 1
+			self.flagNext = False
+			for i in range(3,len(self.parent.Auxmylist),4):
+				if self.parent.Auxmylist[i] == 'A='+str(VAddrF):
+					VAddrF = int(VAddrF) + 1
+					self.flagNext = True
+			
+			if self.flagNext !=True:
+				self.flagNext = False
+				break
+
+		self.lineAddrs.setText(str(VAddrF))
+
 		
 	def bttnCancel(self): 
 		self.parent.totalMylist()
@@ -196,6 +536,13 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 							#self.parent.mylist.append("A="+addr)
 							self.parent.flagSaveF(False)
 							self.close()
+
+	def changeNameUpper(self):
+		#print("Upper")
+		tmpTxt = self.lineName.text()
+		sendTxt = tmpTxt.upper()
+		self.lineName.setText(sendTxt)
+
 '''
 if __name__ == "__main__":
 	import sys

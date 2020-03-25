@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 
 # Form implementation generated from reading ui file 'mainwindow.ui'
@@ -127,7 +128,6 @@ class Ui_MainWindow(object):
 		self.toolB.addAction(self.exittb)
 
 		#self.popMenu = QtGui.QMenu(self) 
-	
 		#self.popMenu.addSeparator() 
 		#self.popMenu.addAction(QtGui.QAction('test2', self)) 
 
@@ -178,7 +178,6 @@ class Ui_MainWindow(object):
 					MainWindow.close()
 		else:
 			MainWindow.close()
-
 
 	def populateTabs(self):
 		print("populateTabs")

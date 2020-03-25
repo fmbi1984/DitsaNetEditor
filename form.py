@@ -154,14 +154,44 @@ class Ui_Form(QtWidgets.QWidget):
 
 		if self.tableWidget.currentColumn()== y-1:
 			self.tableWidget.setColumnCount(y+1)
-	
+
+
 	def on_doubleClickedTableW(self):
+		self.verifyCell()
 		vz = self.parent.tabWidget.currentIndex() + 1 
-		if self.parent.rbCM.text()=='Circuit Mode':
-			if self.parent.rbCM.isChecked()==True:
+		if self.flagEmpty != False:
+			self.flagEmpty = False
+			print("CELL FULL")
+			if self.flagCell != False:
 				Ui_NewCircuit(str(vz)+"%",self).exec_()
 			else:
 				Ui_NewLabel(str(vz)+"%",self).exec_()
+		else:
+			print("CELL EMPTY")
+			if self.parent.rbCM.text()=='Circuit Mode':
+				if self.parent.rbCM.isChecked()==True:
+					Ui_NewCircuit(str(vz)+"%",self).exec_()
+				else:
+					Ui_NewLabel(str(vz)+"%",self).exec_()
+		
+
+	
+	flagCell = False
+	flagEmpty = False
+	def verifyCell(self):
+		print("verify")
+		for item in self.tableWidget.selectedItems():
+			if item.text()!='':
+				self.flagEmpty = True
+				mssg = item.text()
+				#print(mssg)
+				#y = 'N=' and 'A=' in mssg
+				#print("y:",y)
+				if 'N=' and 'A=' in mssg != False:
+					print("entroCELL y es CircuitMode")
+					self.flagCell = True
+				else:
+					self.flagCell = False
 
 	def items_cut(self):
 		print("CUT")
