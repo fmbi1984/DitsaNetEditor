@@ -67,6 +67,9 @@ class Ui_MainWindow(object):
 
 		self.mylist = list()
 		self.mylabel = list()
+
+		self.columns = list()
+		self.rows = list()
 		
 		self.tempCut = list()
 		self.newCut = list()
@@ -105,6 +108,7 @@ class Ui_MainWindow(object):
 	def retranslateUi(self, MainWindow):
 		_translate = QtCore.QCoreApplication.translate
 		MainWindow.setWindowTitle(_translate("MainWindow", "Layout Editor"))
+		##MainWindow.setWindowIcon(QtGui.QIcon('opt/Ditsa/DitsaNetEditor/LayoutEditor.png'))
 		#self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Tab 1"))
 		#self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Tab 2"))
 
@@ -132,22 +136,41 @@ class Ui_MainWindow(object):
 		#self.popMenu.addAction(QtGui.QAction('test2', self)) 
 
 	def showEvent(self,event):
-		print("ShowEvent")
+		print("ShowEvent") #None aplica cuando no hay settings # [] indica que hay settings pero esa lista no tiene algun dato
 		settings = QtCore.QSettings('Settings/archivo.ini', QtCore.QSettings.NativeFormat)
 		if settings.value('Settings/archivo.ini')!='':
 			self.settingsList = settings.value("mylist")
 			self.settingsLabel = settings.value("mylabel")
+			self.settingsColumns = settings.value("columns")
+			self.settingsRows = settings.value("rows")
+
+			print("COL:",self.settingsColumns)
+			print("RW:",self.settingsRows)
+
+			if self.settingsColumns != None and len(self.settingsColumns) != 0:
+				self.columns = self.settingsColumns[:]
+			else:
+				self.columns.append('1%')
+				self.columns.append('6')
+
+			if self.settingsRows != None and len(self.settingsRows) != 0:
+				self.rows = self.settingsRows[:]
+			else:
+				self.rows.append('1%')
+				self.rows.append('6')
+			
+
+			print("LISR:",self.settingsList)
+			print("LABEL:",self.settingsLabel)
 
 			if self.settingsList != None:
 				self.mylist = self.settingsList[:] #para que no se corresponden con el mismo objeto
-				#self.populateCircuit()
-				#Ui_Form(self)
-
+	
 			if self.settingsLabel != None:
 				self.mylabel = self.settingsLabel[:] #para que no se corresponden con el mismo objeto
-				#self.populateLabel()
 
-			self.populateTabs()
+			if self.settingsList != None or self.settingsLabel != None:
+				self.populateTabs()
 		
 			form = Ui_Form(self)
 			self.tabWidget.addTab(form, "Page 1")
@@ -155,9 +178,10 @@ class Ui_MainWindow(object):
 			tabC = self.tabWidget.count()
 			#print("tabC:",tabC)
 
-			for i in range(int(self.numTabT)-tabC):
-				#print("i",i)
-				self.newPage()
+			if self.settingsList != None or self.settingsLabel != None:
+				for i in range(int(self.numTabT)-tabC):
+					#print("i",i)
+					self.newPage()
 
 	def closeEvent(self,event): 
 		print("CloseEvent")
@@ -188,30 +212,30 @@ class Ui_MainWindow(object):
 			self.maxTabs.append(self.settingsLabel[i])
 
 		y = max(self.maxTabs)
-		self.numTabT = y[0].replace('%','')
+		self.numTabT = y.replace('%','')
 		#print(self.numTabT)
 		self.maxTabs.clear()
 
 	def newPage(self): ## verificar tab actual para poner al agregar 
-		print("newPage")
+		#print("newPage")
 		form = Ui_Form(self)
 		self.tabWidget.addTab(form,"Page "+str(self.tabWidget.count()+1))
 
 	def saveLayout(self): 
-		print("Save")
 		if len(self.mylist) != 0 or len(self.mylabel) != 0:
 			self.flagSave = True
-			print("hay algo que guardar")
+			print("Save")
 			settings = QtCore.QSettings('Settings/archivo.ini', QtCore.QSettings.NativeFormat)
 			settings.setValue("mylist",self.mylist)
 			settings.setValue("mylabel",self.mylabel)
+			settings.setValue("columns",self.columns)
+			settings.setValue("rows",self.rows)
 
 	flagDelete = False
 	def deletePage(self): #borrar y actualizar valores de tabs
 		print("DeletePage")
-
 		y = self.tabWidget.count()
-		print("actual:",y)
+		#print("actual:",y)
 		if y == 1:
 			msgTab = QtWidgets.QMessageBox()
 			msgTab.critical(self.MainWindow,'Error','You do not delete to current Tab')
@@ -220,13 +244,12 @@ class Ui_MainWindow(object):
 			print("index:",x)
 
 			dif = y - x
-			print("dif:",dif)
-			#self.tabWidget.setTabText(v,"Page"+str(v+1)) ## falta cambiar si hay mas tabs
+			#print("dif:",dif)
 			for k in range(0,dif+1):
 				#print("k:",k)
 				j = k + 1
 				#print("x+k",x+k)
-				#print("x+j:",x+j)
+				print("x+j:",x+j)
 				self.tabWidget.setTabText(x+j,"Page "+str(x+j))
 
 				for i in range(0,len(self.mylist)-1,4):
@@ -287,11 +310,8 @@ class Ui_MainWindow(object):
 			#print("ListFinish:",self.mylist)
 			#print("LabelFinish:",self.mylabel)
 
-	
 	def exitLayout(self):
 		print("Exit") 
-		#cl = QtGui.QCloseEvent 
-		#self.closeEvent(cl)
 		if (len(self.mylist) != 0 or len(self.mylabel) != 0) and self.flagSave != True: 
 			if self.settingsList != self.mylist or self.settingsLabel != self.mylabel:
 				print("se han hecho cambios y no se ha guardado")
@@ -334,7 +354,6 @@ class Ui_MainWindow(object):
 		
 		#print("ListClean:",self.mylist)
 		#print("LabelClean:",self.mylabel)
-	
 
 
 if __name__ == "__main__":

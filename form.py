@@ -45,7 +45,7 @@ class Ui_Form(QtWidgets.QWidget):
 		self.Auxmylabel = list() #list de label
 
 		self.tableWidget.contextMenuEvent = self.contextMenuEvent
-		self.tableWidget.keyPressEvent = self.keyPressEvent
+		self.tableWidget.keyPressEvent = self.keyPressEvent ##checar en !!
 
 		self.tableWidget.cellDoubleClicked.connect(self.on_doubleClickedTableW)
 		self.tableWidget.cellClicked.connect(self.on_cellClickedTableW)
@@ -54,12 +54,28 @@ class Ui_Form(QtWidgets.QWidget):
 	def retranslateUi(self, Form):
 		_translate = QtCore.QCoreApplication.translate
 		Form.setWindowTitle(_translate("Form", "Form"))
-
 	
 	def showEvent(self,event):
 		#print("showE")
+		self.populateColumnRow()
 		self.populateCircuit()
 		self.populateLabel()
+	
+	def populateColumnRow(self):
+		print("RWF:",self.parent.rows)
+		print("COLF:",self.parent.columns)
+		z = self.parent.tabWidget.currentIndex() + 1
+		if z == 0:
+			z = 1
+		for i in range(len(self.parent.columns)):
+			if self.parent.columns[i] == str(z)+'%':
+				print("sCC:",self.parent.columns[i])
+				self.tableWidget.setColumnCount(int(self.parent.columns[i+1]))
+
+		for i in range(len(self.parent.rows)):
+			if self.parent.rows[i] == str(z)+'%':
+				print("rSS:",self.parent.rows[i])
+				self.tableWidget.setRowCount(int(self.parent.rows[i+1]))
 
 	def populateCircuit(self): 
 		print("PopulateCircuit")
@@ -70,7 +86,7 @@ class Ui_Form(QtWidgets.QWidget):
 			addrCell = self.parent.mylist[i+3]
 
 			z = self.parent.tabWidget.currentIndex() + 1 
-			k = numberTab[0].replace('%','')
+			k = numberTab.replace('%','')
 
 			if z == 0:
 				z = 1
@@ -93,7 +109,7 @@ class Ui_Form(QtWidgets.QWidget):
 			nameCellL = self.parent.mylabel[i+2]
 
 			z = self.parent.tabWidget.currentIndex() + 1 
-			k = numberTabL[0].replace('%','')
+			k = numberTabL.replace('%','')
 
 			if z == 0:
 				z = 1
@@ -122,6 +138,7 @@ class Ui_Form(QtWidgets.QWidget):
 			self.on_doubleClickedTableW()
 
 	def contextMenuEvent(self,event):
+		self.on_cellClickedTableW()
 		self.popMenu = QtWidgets.QMenu(self)
 		cutAct = self.popMenu.addAction('Cut')
 		pasAct = self.popMenu.addAction('Paste')
@@ -145,22 +162,41 @@ class Ui_Form(QtWidgets.QWidget):
 			self.items_cut()
 
 	def on_cellClickedTableW(self):
-		print("mylist",self.parent.mylist)
-		print("mylabel",self.parent.mylabel)
+		#print("mylist",self.parent.mylist)
+		#print("mylabel",self.parent.mylabel)
+		print("UNCLICK")
 		y = self.tableWidget.columnCount()
 		x = self.tableWidget.rowCount()
+		z = self.parent.tabWidget.currentIndex() + 1
 		if self.tableWidget.currentRow() == x-1:
 			self.tableWidget.setRowCount(x+1)
+
+			for i in range(len(self.parent.rows)-1):
+				if self.parent.rows[i] == str(z)+'%':
+					self.parent.rows.pop(i+1)
+					self.parent.rows.pop(i)
+
+			self.parent.rows.append(str(z)+'%')
+			self.parent.rows.append(str(x+1))
+			print("rows:",self.parent.rows)
 
 		if self.tableWidget.currentColumn()== y-1:
 			self.tableWidget.setColumnCount(y+1)
 
+			for i in range(len(self.parent.columns)-1):
+				if self.parent.columns[i] == str(z)+'%':
+					self.parent.columns.pop(i+1)
+					self.parent.columns.pop(i)
+
+			self.parent.columns.append(str(z)+'%')
+			self.parent.columns.append(str(y+1))
+			print("columns:",self.parent.columns)
 
 	def on_doubleClickedTableW(self):
 		self.verifyCell()
 		vz = self.parent.tabWidget.currentIndex() + 1 
-		if self.flagEmpty != False:
-			self.flagEmpty = False
+		if self.flagEmpty2 != False:
+			self.flagEmpty2 = False
 			print("CELL FULL")
 			if self.flagCell != False:
 				Ui_NewCircuit(str(vz)+"%",self).exec_()
@@ -173,22 +209,16 @@ class Ui_Form(QtWidgets.QWidget):
 					Ui_NewCircuit(str(vz)+"%",self).exec_()
 				else:
 					Ui_NewLabel(str(vz)+"%",self).exec_()
-		
 
-	
+
 	flagCell = False
-	flagEmpty = False
+	flagEmpty2 = False
 	def verifyCell(self):
-		print("verify")
 		for item in self.tableWidget.selectedItems():
 			if item.text()!='':
-				self.flagEmpty = True
+				self.flagEmpty2 = True
 				mssg = item.text()
-				#print(mssg)
-				#y = 'N=' and 'A=' in mssg
-				#print("y:",y)
 				if 'N=' and 'A=' in mssg != False:
-					print("entroCELL y es CircuitMode")
 					self.flagCell = True
 				else:
 					self.flagCell = False
@@ -254,9 +284,9 @@ class Ui_Form(QtWidgets.QWidget):
 
 	def items_paste(self):
 		#print("PASTE") 
-		self.flagEmpty = False
+		self.parent.flagEmpty = False
 		self.parent.tmplist.clear()
-		#print("tc:",self.tempCut)
+		#print("tc:",self.parent.tempCut)
 		for i in range(len(self.parent.tempCut)):
 			tmp = self.parent.tempCut[i].split("/")
 			tmp2 = tmp[0].split("%")
@@ -284,7 +314,6 @@ class Ui_Form(QtWidgets.QWidget):
 		for i in range(len(self.parent.tmplist)):
 			if compT == self.parent.tmplist[i]:
 				#print("No hay espacio Vacio")
-				
 				self.parent.flagEmpty = True
 				self.parent.comp1.clear()
 				self.parent.comp2.clear()
@@ -306,8 +335,8 @@ class Ui_Form(QtWidgets.QWidget):
 		self.parent.newCut.append(str(vz)+"%")
 		self.parent.newCut.append("X="+str(vx)+" Y="+str(vy))
 		self.parent.newCut.append(x[1])
-		#print("Nuevo:",self.newCut)
-		#print("TE:",self.tempCut)
+		#print("Nuevo:",self.parent.newCut)
+		#print("TE:",self.parent.tempCut)
 
 		for i in range(len(self.parent.tempCut)-1):
 			copy2 = self.parent.tempCut[i+1]  #i+2
@@ -316,44 +345,54 @@ class Ui_Form(QtWidgets.QWidget):
 			#print("copy:",copy2)
 			y = copy2.split("/") 
 			#print("y:",y)
-			for i in range(4,10,4): #2,7,4	#(1,4,2): #es solo hasta 9 para dos o mas digitos cambia OJO!
+
+			x1 = ''.join(x[0])
+			y1 = ''.join(y[0])
+			#print("x1:",x1)
+			#print("y1:",y1)#teniendo esos datos verif cuatos dig son y de ahi clasificar
+			#print("xx",len(x1))
+			#print("yy",len(y1))
+
+			for i in range(len(x1)-5,len(x1),4): #2,7,4	#(1,4,2): #es solo hasta 9 para dos o mas digitos cambia OJO!
 				#print("CoPY:",copy)
 				#print("COPY2:",copy2)
 				#print("C2:",copy2[i])
 				#print("C1:",copy[i])
+
 				if copy[i] == copy2[i]:	#1,3
 					#print("same")
-					if i == 4:
+					if i == len(x1)-5: # 4,5,6,7
 						row = int(new[2]) #1
 					else:
 						column = int(new[6]) #3
 				else:
-					if i == 4:
-						if copy[4] > copy2[4]: #1
+					if i == len(x1)-5:
+						if copy[len(x1)-5] > copy2[len(x1)-5]: #4
 							#print("primerDigitoM")
-							row = int(copy[4]) - int(copy2[4])
+							row = int(copy[len(x1)-5]) - int(copy2[len(x1)-5])
 							row = int(new[2]) - row 
 						else:
 							#print("primerDigitom")
-							row = int(copy2[4]) - int(copy[4])
+							row = int(copy2[len(x1)-5]) - int(copy[len(x1)-5])
 							row = int(new[2]) + row
 						#print("row:",row)
 					else:
-						if copy[8] > copy2[8]:  #3
+						if copy[len(x1)-1] > copy2[len(x1)-1]:  #3
 							#print("SegundoDigitoM")
-							column = int(copy[8]) - int(copy2[8])
+							column = int(copy[len(x1)-1]) - int(copy2[len(x1)-1])
 							column = int(new[6]) - column
 						else:
 							#print("SegundoDigitom")
-							column = int(copy2[8]) - int(copy[8])
+							column = int(copy2[len(x1)-1]) - int(copy[len(x1)-1])
 							column = int(new[6]) + column
 						#print("column:",column)
 			
 			self.parent.newCut.append(str(vz)+"%")
 			self.parent.newCut.append("X="+str(row)+" Y="+str(column))
 			self.parent.newCut.append(y[1])
-			#print("Nuevo2:",self.newCut)
+			#print("Nuevo2:",self.parent.newCut)
 			#print("my:",self.parent.mylist)
+			self.verifyColumnRow()
 
 			for i in range(len(self.parent.mylist)):  #Mylist
 				for j in range(1,len(self.parent.newCut),3):
@@ -392,6 +431,35 @@ class Ui_Form(QtWidgets.QWidget):
 
 		#print("temCutClean:",self.tempCut)
 		#print("newCutFinal:",self.parent.newCut)
+
+	def verifyColumnRow(self):
+		y = self.tableWidget.columnCount()
+		x = self.tableWidget.rowCount()
+		z = self.parent.tabWidget.currentIndex() + 1
+
+		for k in range(1,len(self.parent.newCut),3):
+			cell = self.parent.newCut[k]
+			if int(cell[2]) >= x-1:
+				self.tableWidget.setRowCount(x+1)
+				
+				for i in range(len(self.parent.rows)-1):
+					if self.parent.rows[i] == str(z)+'%':
+						self.parent.rows.pop(i+1)
+						self.parent.rows.pop(i)
+
+				self.parent.rows.append(str(z)+'%')
+				self.parent.rows.append(str(x+1))
+
+			if int(cell[6]) >= y-1:
+				self.tableWidget.setColumnCount(y+1)
+				
+				for i in range(len(self.parent.columns)-1):
+					if self.parent.columns[i] == str(z)+'%':
+						self.parent.columns.pop(i+1)
+						self.parent.columns.pop(i)
+
+				self.parent.columns.append(str(z)+'%')
+				self.parent.columns.append(str(y+1))
 
 	def items_clear(self):
 		print("clearTable")
@@ -438,6 +506,7 @@ class Ui_Form(QtWidgets.QWidget):
 						self.parent.secondEdit = False
 
 	def newMylist(self):
+		#print("newMylist")
 		for j in range(len(self.parent.newCut)):
 			x = self.parent.newCut[j].split("\n")
 			if len(x) == 2:
@@ -458,8 +527,11 @@ class Ui_Form(QtWidgets.QWidget):
 				nw = x[0].replace('[]','')
 				w = str(nw)
 				#print("w:",w)
-
-				if w[0] != 'X' and w[1] != '%':
+				#print(len(w))
+				if 'X=' in w or '%' in w:
+					pass
+				else:
+				#if w[0] != 'X' and w[1] != '%':
 					t = self.parent.newCut[j-1]
 					if self.parent.newCut[j] == 'empty':
 						item = QtWidgets.QTableWidgetItem()
@@ -493,8 +565,9 @@ class Ui_Form(QtWidgets.QWidget):
 			self.flagCancel = True
 			c = item.text()
 			#print("c:",c)
-			if item.text():
-				print("Con text-Cancel")
+			#if item.text():
+				#pass
+				#print("Con text-Cancel")
 			#else:
 			#	self.continuesCancel()
 

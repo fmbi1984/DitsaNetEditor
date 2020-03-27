@@ -63,6 +63,8 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 		self.passEdit = False
 		QtCore.QMetaObject.connectSlotsByName(self) #NEw
 
+		self.keyPressEvent = self.keyPressEventE
+
 		self.abc = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','Ñ','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 		self.lineName.textChanged.connect(self.changeNameUpper)
 
@@ -104,18 +106,31 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 			self.lineAddrs.setText(valueAddr)
 
 		else:
-			print(self.parent.Auxmylist)
-			i = len(self.parent.Auxmylist)
-			#print("Tab:",self.parent.Auxmylist[i-4])
-			valueName = self.parent.Auxmylist[i-2]
-			valueAddr = self.parent.Auxmylist[i-1]
-			valueName = valueName.replace('N=','')
-			valueAddr = valueAddr.replace('A=','')
-			print("VName:",valueName)
-			print("VAddr:",valueAddr)
+			#print(len(self.parent.Auxmylist))
+			if len(self.parent.Auxmylist) != 0:
+				i = len(self.parent.Auxmylist)
+				#print("Tab:",self.parent.Auxmylist[i-4])
+				valueName = self.parent.Auxmylist[i-2]
+				valueAddr = self.parent.Auxmylist[i-1]
+				valueName = valueName.replace('N=','')
+				valueAddr = valueAddr.replace('A=','')
+				#print("VName:",valueName)
+				#print("VAddr:",valueAddr)
 
-			self.nextVName(valueName)
-			self.nextVAddr(valueAddr)
+				self.nextVName(valueName)
+				self.nextVAddr(valueAddr)
+			else:
+				#print("vacio ===")
+				self.lineName.setText('1')
+				self.lineAddrs.setText('1')
+
+
+	def keyPressEventE(self,event):
+		if event.key() == QtCore.Qt.Key_Enter: # mac fn + enter
+			self.bttnDone()
+
+		if event.key() == QtCore.Qt.Key_Escape:
+			self.bttnCancel()
 
 	def nextVName(self,VName):
 		print("nextVName")
@@ -145,12 +160,10 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 						dp = ''
 						for n in range(dif):
 							dp = dp + '0'
-						#print(dp)
+
 						numT = dp + str(numT) 
 					VNameF = str(x[0])+str(x[1])+str(tmp1)+str(numT)
 					self.valueMylistName(VNameF)
-				#	print("FinalMuestra:",VNameF)
-				#	self.lineName.setText(VNameF)
 
 				if tmp.isalpha():
 					print("dos digitos letra")
@@ -166,8 +179,6 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 					dig2 = '0'
 					VNameF = str(x[0])+str(x[1])+str(tmp1)+str(digF)+str(dig2)
 					self.valueMylistName(VNameF)
-				#	print(VNameF)
-				#	self.lineName.setText(VNameF)
 
 				if tmp.isalnum():
 					if self.flagD != True:
@@ -187,8 +198,6 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 
 						VNameF = str(x[0])+str(x[1])+str(tmp1)+str(digF)+str(dig2F)
 						self.valueMylistName(VNameF)
-					#	print(VNameF)
-					#	self.lineName.setText(VNameF)
 
 		else:
 			lenAct = len(VName)
@@ -212,8 +221,6 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 
 				VNameF = numT
 				self.valueMylistName(VNameF)
-			#	print("FinalMuestra:",VNameF)
-			#	self.lineName.setText(VNameF)
 
 			if valS.isalpha():
 				print("dos digitos letra")
@@ -222,7 +229,6 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 
 				for a in range(len(self.abc)):
 					if dig == self.abc[a]:
-						#print("abc:",abc[a+1])
 						if dig == 'Z':
 							digF = '-'
 							break
@@ -230,8 +236,6 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 				dig2 = '0'
 				VNameF = str(valI)+str(digF)+str(dig2)
 				self.valueMylistName(VNameF)
-			#	print(str(valI)+str(digF)+str(dig2))
-			#	self.lineName.setText(VNameF)
 
 			if valS.isalnum():
 				if self.flagD != True:
@@ -251,8 +255,6 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 
 					VNameF = str(valI)+str(digF)+str(dig2F)
 					self.valueMylistName(VNameF)
-				#	print(str(valI)+str(digF)+str(dig2F))
-				#	self.lineName.setText(VNameF)
 
 	flagName = False
 	def valueMylistName(self,VNameF): 
@@ -262,7 +264,7 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 			self.flagName = False
 			for i in range(2,len(self.parent.Auxmylist),4):
 				if self.parent.Auxmylist[i] == 'N='+str(VNameF):
-					VNameF = self.nextVNameW(VNameF)
+					VNameF = self.nextVNameW(str(VNameF))
 					self.flagName = True
 			
 			if self.flagName !=True:
@@ -274,7 +276,6 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 
 	def nextVNameW(self,VNameF):
 		print("neW")
-		y = '-' in VNameF 
 		if '-' in VNameF != False:
 			x = VNameF.rpartition('-')
 			v = VNameF.rindex('-')

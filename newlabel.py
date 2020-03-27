@@ -68,6 +68,7 @@ class Ui_NewLabel(QtWidgets.QDialog):
 		self.buttonBox.rejected.connect(self.bttnCancel)
 		QtCore.QMetaObject.connectSlotsByName(self)  ##NEw
 
+		self.keyPressEvent = self.keyPressEventE
 		self.cbFont.addItems(['Align Top','Align Bottom'])
 
 	def retranslateUi(self, NewLabel):
@@ -75,6 +76,15 @@ class Ui_NewLabel(QtWidgets.QDialog):
 		self.setWindowTitle(_translate("NewLabel", "New Label")) ##New
 		self.lblFont.setText(_translate("NewLabel", "Font Size"))
 	
+
+	def keyPressEventE(self,event):
+		if event.key() == QtCore.Qt.Key_Enter: # mac fn + enter
+			self.bttnOK()
+
+		if event.key() == QtCore.Qt.Key_Escape:
+			self.bttnCancel()
+
+
 	validatorLabel = False
 	def bttnOK(self):
 		text = self.lblLabel.text()
