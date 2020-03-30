@@ -82,6 +82,10 @@ class Ui_MainWindow(object):
 		self.tempTabsList = list()
 		self.tempTabsLabel =list()
 
+		self.tempVal = list()
+		self.tempColumns = list()
+		self.tempRows = list()
+
 		self.valCut = False
 		self.i = 0
 		self.flagLabel = False
@@ -144,9 +148,6 @@ class Ui_MainWindow(object):
 			self.settingsColumns = settings.value("columns")
 			self.settingsRows = settings.value("rows")
 
-			print("COL:",self.settingsColumns)
-			print("RW:",self.settingsRows)
-
 			if self.settingsColumns != None and len(self.settingsColumns) != 0:
 				self.columns = self.settingsColumns[:]
 			else:
@@ -158,10 +159,6 @@ class Ui_MainWindow(object):
 			else:
 				self.rows.append('1%')
 				self.rows.append('6')
-			
-
-			print("LISR:",self.settingsList)
-			print("LABEL:",self.settingsLabel)
 
 			if self.settingsList != None:
 				self.mylist = self.settingsList[:] #para que no se corresponden con el mismo objeto
@@ -178,7 +175,7 @@ class Ui_MainWindow(object):
 			tabC = self.tabWidget.count()
 			#print("tabC:",tabC)
 
-			if self.settingsList != None or self.settingsLabel != None:
+			if (self.settingsList != None  and len(self.settingsList)!=0) or (self.settingsLabel != None and len(self.settingsLabel)!=0):
 				for i in range(int(self.numTabT)-tabC):
 					#print("i",i)
 					self.newPage()
@@ -211,18 +208,20 @@ class Ui_MainWindow(object):
 		for i in range(0,len(self.settingsLabel),3):
 			self.maxTabs.append(self.settingsLabel[i])
 
-		y = max(self.maxTabs)
-		self.numTabT = y.replace('%','')
-		#print(self.numTabT)
-		self.maxTabs.clear()
+		if len(self.maxTabs)!= 0:
+			print("max")
+			y = max(self.maxTabs)
+			self.numTabT = y.replace('%','')
+			#print(self.numTabT)
+			self.maxTabs.clear()
 
-	def newPage(self): ## verificar tab actual para poner al agregar 
+	def newPage(self): 
 		#print("newPage")
 		form = Ui_Form(self)
 		self.tabWidget.addTab(form,"Page "+str(self.tabWidget.count()+1))
 
-	def saveLayout(self): 
-		if len(self.mylist) != 0 or len(self.mylabel) != 0:
+	def saveLayout(self): ##verificar 
+		if len(self.mylist) != None or len(self.mylabel) != None:
 			self.flagSave = True
 			print("Save")
 			settings = QtCore.QSettings('Settings/archivo.ini', QtCore.QSettings.NativeFormat)
@@ -230,11 +229,15 @@ class Ui_MainWindow(object):
 			settings.setValue("mylabel",self.mylabel)
 			settings.setValue("columns",self.columns)
 			settings.setValue("rows",self.rows)
+			print("S1:",self.columns)
+			print("S2:",self.rows)
 
 	flagDelete = False
 	def deletePage(self): #borrar y actualizar valores de tabs
 		print("DeletePage")
 		y = self.tabWidget.count()
+		print("C:",self.columns)
+		print("R:",self.rows)
 		#print("actual:",y)
 		if y == 1:
 			msgTab = QtWidgets.QMessageBox()
@@ -266,10 +269,7 @@ class Ui_MainWindow(object):
 							self.tempTabsList.append(self.mylist[i+3])
 
 				for i in range(0,len(self.mylabel)-1,3):
-					#if self.mylabel[i] == '0'+str(x+1)+'%':
-					#	self.tempCut.append(self.mylabel[i]+self.mylabel[i+1]+'/'+self.mylabel[i+2])
 					if self.mylabel[i] == str(x+j)+'%': #x+2
-						#print("cambia valor tabLabel")
 						self.flagDelete = True
 						self.tempCut.append(self.mylabel[i]+self.mylabel[i+1]+'/'+self.mylabel[i+2])
 						if k != 0:
@@ -277,6 +277,21 @@ class Ui_MainWindow(object):
 							self.tempTabsLabel.append(self.mylabel[i+1])
 							self.tempTabsLabel.append(self.mylabel[i+2])
 
+				for i in range(0,len(self.columns),2):
+					if self.columns[i] == str(x+j)+'%':
+						if k!=0:
+							self.tempColumns.append(self.columns[i])
+							self.tempColumns.append(self.columns[i+1])
+
+
+				for i in range(0,len(self.rows),2):
+					if self.rows[i] == str(x+j)+'%':
+						if k!=0:
+							self.tempRows.append(self.rows[i])
+							self.tempRows.append(self.rows[i+1])
+
+			self.rows.clear()
+			self.columns.clear()
 			self.cleanMylist()
 			self.tempCut.clear()
 
@@ -304,9 +319,25 @@ class Ui_MainWindow(object):
 							self.mylabel.append(self.tempTabsLabel[i+1])
 							self.mylabel.append(self.tempTabsLabel[i+2])
 
+					for i in range(0,len(self.tempColumns),2):
+						if self.tempColumns[i] == str(x+j)+'%':
+							self.columns.append(str(df-1)+'%')
+							self.columns.append(self.tempColumns[i+1])
+
+
+					for i in range(0,len(self.tempRows),2):
+						if self.tempRows[i] == str(x+j)+'%':
+							self.rows.append(str(df-1)+'%')
+							self.rows.append(self.tempRows[i+1])
+
+			self.tempRows.clear()
+			self.tempColumns.clear()
 			self.tempTabsList.clear()
 			self.tempTabsLabel.clear()
 			self.tabWidget.removeTab(x)
+
+			print("CCCC:",self.columns)
+			print("xxx:",self.rows)
 			#print("ListFinish:",self.mylist)
 			#print("LabelFinish:",self.mylabel)
 
@@ -354,6 +385,18 @@ class Ui_MainWindow(object):
 		
 		#print("ListClean:",self.mylist)
 		#print("LabelClean:",self.mylabel)
+
+	def cleanColumnRow(self):
+		print("cleanColRow")
+		for i in range(len(self.tempVal)):
+			for j in range(len(self.columns)-1):
+				if self.tempVal[i] == self.columns[j]:
+					print("VV:",self.columns[j])
+					self.columns.pop(j+1)
+					self.columns.pop(j)
+					break
+
+
 
 
 if __name__ == "__main__":

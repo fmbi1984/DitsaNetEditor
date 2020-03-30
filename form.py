@@ -62,19 +62,15 @@ class Ui_Form(QtWidgets.QWidget):
 		self.populateLabel()
 	
 	def populateColumnRow(self):
-		print("RWF:",self.parent.rows)
-		print("COLF:",self.parent.columns)
 		z = self.parent.tabWidget.currentIndex() + 1
 		if z == 0:
 			z = 1
 		for i in range(len(self.parent.columns)):
 			if self.parent.columns[i] == str(z)+'%':
-				print("sCC:",self.parent.columns[i])
 				self.tableWidget.setColumnCount(int(self.parent.columns[i+1]))
 
 		for i in range(len(self.parent.rows)):
 			if self.parent.rows[i] == str(z)+'%':
-				print("rSS:",self.parent.rows[i])
 				self.tableWidget.setRowCount(int(self.parent.rows[i+1]))
 
 	def populateCircuit(self): 
@@ -162,9 +158,11 @@ class Ui_Form(QtWidgets.QWidget):
 			self.items_cut()
 
 	def on_cellClickedTableW(self):
-		#print("mylist",self.parent.mylist)
-		#print("mylabel",self.parent.mylabel)
 		print("UNCLICK")
+		print("mylist",self.parent.mylist)
+		print("mylabel",self.parent.mylabel)
+		print("CO:",self.parent.columns)
+		print("RO:",self.parent.rows)
 		y = self.tableWidget.columnCount()
 		x = self.tableWidget.rowCount()
 		z = self.parent.tabWidget.currentIndex() + 1
@@ -178,7 +176,6 @@ class Ui_Form(QtWidgets.QWidget):
 
 			self.parent.rows.append(str(z)+'%')
 			self.parent.rows.append(str(x+1))
-			print("rows:",self.parent.rows)
 
 		if self.tableWidget.currentColumn()== y-1:
 			self.tableWidget.setColumnCount(y+1)
@@ -190,20 +187,19 @@ class Ui_Form(QtWidgets.QWidget):
 
 			self.parent.columns.append(str(z)+'%')
 			self.parent.columns.append(str(y+1))
-			print("columns:",self.parent.columns)
 
 	def on_doubleClickedTableW(self):
 		self.verifyCell()
 		vz = self.parent.tabWidget.currentIndex() + 1 
 		if self.flagEmpty2 != False:
 			self.flagEmpty2 = False
-			print("CELL FULL")
+			#print("CELL FULL")
 			if self.flagCell != False:
 				Ui_NewCircuit(str(vz)+"%",self).exec_()
 			else:
 				Ui_NewLabel(str(vz)+"%",self).exec_()
 		else:
-			print("CELL EMPTY")
+			#print("CELL EMPTY")
 			if self.parent.rbCM.text()=='Circuit Mode':
 				if self.parent.rbCM.isChecked()==True:
 					Ui_NewCircuit(str(vz)+"%",self).exec_()
