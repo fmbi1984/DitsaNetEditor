@@ -56,28 +56,38 @@ class Ui_Form(QtWidgets.QWidget):
 		Form.setWindowTitle(_translate("Form", "Form"))
 	
 	def showEvent(self,event):
-		#print("showE")
+		print("showE")
 		self.populateColumnRow()
 		self.populateCircuit()
 		self.populateLabel()
 	
 	def populateColumnRow(self):
+		print("populateColumnRow")
+		#print("RC0:",self.parent.rowCol)
 		z = self.parent.tabWidget.currentIndex() + 1
 		if z == 0:
 			z = 1
-		for i in range(len(self.parent.columns)):
-			if self.parent.columns[i] == str(z)+'%':
-				self.tableWidget.setColumnCount(int(self.parent.columns[i+1]))
 
-		for i in range(len(self.parent.rows)):
-			if self.parent.rows[i] == str(z)+'%':
-				self.tableWidget.setRowCount(int(self.parent.rows[i+1]))
+		for i in range(len(self.parent.rowCol)):
+			if self.parent.rowCol[i] == str(z)+'%':
+				j = self.parent.rowCol
+
+				tmp = j[i+1].split()
+				for i in range(2):
+					if i == 0:
+						y = tmp[0].partition('R=')
+						self.tableWidget.setRowCount(int(y[2]))
+					else:
+						y = tmp[1].partition('C=')
+						self.tableWidget.setColumnCount(int(y[2]))
+
+		#print("TT:",self.parent.rowCol)
 
 	def populateCircuit(self): 
 		print("PopulateCircuit")
 		for i in range(0,len(self.parent.mylist),4):
 			numberTab = self.parent.mylist[i]
-			coordCell = self.parent.mylist[i+1] 
+			coordCell = self.parent.mylist #i+1 
 			nameCell = self.parent.mylist[i+2]
 			addrCell = self.parent.mylist[i+3]
 
@@ -90,18 +100,27 @@ class Ui_Form(QtWidgets.QWidget):
 			#print("z",z)
 			#print("k",k)
 			if k == str(z):
+				tmp = coordCell[i+1].split()
+				for i in range(2):
+					if i == 0:
+						y = tmp[0].partition('X=')
+						coordx = y[2]
+					else:
+						y = tmp[1].partition('Y=')
+						coordy = y[2]
+
 				lblt = QtGui.QFont("Arial",10, QtGui.QFont.Normal)
 				item = QtWidgets.QTableWidgetItem(nameCell+'\n'+addrCell)
 				item.setFont(lblt)
 				item.setBackground(QtGui.QColor('lightblue'))
 				item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
-				self.tableWidget.setItem(int(coordCell[2]),int(coordCell[6]),item)
+				self.tableWidget.setItem(int(coordx),int(coordy),item)
 
 	def populateLabel(self):
 		print("PopulateLabel")
 		for i in range(0,len(self.parent.mylabel),3):
 			numberTabL = self.parent.mylabel[i]
-			coordCellL = self.parent.mylabel[i+1]  #2 - x  6- y
+			coordCellL = self.parent.mylabel #[i+1]
 			nameCellL = self.parent.mylabel[i+2]
 
 			z = self.parent.tabWidget.currentIndex() + 1 
@@ -126,8 +145,16 @@ class Ui_Form(QtWidgets.QWidget):
 			item.setBackground(QtGui.QColor('lightyellow'))
 
 			if k == str(z):
+				tmpL = coordCellL[i+1].split()
+				for i in range(2):
+					if i == 0:
+						y = tmpL[0].partition('X=')
+						coordx = y[2]
+					else:
+						y = tmpL[1].partition('Y=')
+						coordy = y[2]
 				item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
-				self.tableWidget.setItem(int(coordCellL[2]),int(coordCellL[6]),item)
+				self.tableWidget.setItem(int(coordx),int(coordy),item)
 
 	def keyPressEvent(self,event):
 		if event.key() == QtCore.Qt.Key_Enter: # mac fn + enter
@@ -157,36 +184,39 @@ class Ui_Form(QtWidgets.QWidget):
 		if action == cutAct:
 			self.items_cut()
 
+	flagClickedTableCol = False
+	flagClickedTableRow = False
 	def on_cellClickedTableW(self):
 		print("UNCLICK")
 		print("mylist",self.parent.mylist)
 		print("mylabel",self.parent.mylabel)
-		print("CO:",self.parent.columns)
-		print("RO:",self.parent.rows)
+		print("RowCol:",self.parent.rowCol)
+
 		y = self.tableWidget.columnCount()
 		x = self.tableWidget.rowCount()
 		z = self.parent.tabWidget.currentIndex() + 1
+
 		if self.tableWidget.currentRow() == x-1:
 			self.tableWidget.setRowCount(x+1)
-
-			for i in range(len(self.parent.rows)-1):
-				if self.parent.rows[i] == str(z)+'%':
-					self.parent.rows.pop(i+1)
-					self.parent.rows.pop(i)
-
-			self.parent.rows.append(str(z)+'%')
-			self.parent.rows.append(str(x+1))
+			self.flagClickedTableRow = True
 
 		if self.tableWidget.currentColumn()== y-1:
 			self.tableWidget.setColumnCount(y+1)
+			self.flagClickedTableCol = True
+	
+		if self.flagClickedTableCol != False or self.flagClickedTableRow != False:
+			self.flagClickedTableRow = False
+			self.flagClickedTableCol = False
 
-			for i in range(len(self.parent.columns)-1):
-				if self.parent.columns[i] == str(z)+'%':
-					self.parent.columns.pop(i+1)
-					self.parent.columns.pop(i)
+			for i in range(len(self.parent.rowCol)-1):
+				if self.parent.rowCol[i] == str(z)+'%':
+					#print("entra:",self.parent.rowCol[i])
+					self.parent.rowCol.pop(i+1)
+					self.parent.rowCol.pop(i)
+					break
 
-			self.parent.columns.append(str(z)+'%')
-			self.parent.columns.append(str(y+1))
+			self.parent.rowCol.append(str(z)+'%')
+			self.parent.rowCol.append('R='+str(self.tableWidget.rowCount())+' C='+str(self.tableWidget.columnCount()))
 
 	def on_doubleClickedTableW(self):
 		self.verifyCell()
@@ -205,7 +235,6 @@ class Ui_Form(QtWidgets.QWidget):
 					Ui_NewCircuit(str(vz)+"%",self).exec_()
 				else:
 					Ui_NewLabel(str(vz)+"%",self).exec_()
-
 
 	flagCell = False
 	flagEmpty2 = False
@@ -279,7 +308,7 @@ class Ui_Form(QtWidgets.QWidget):
 				print("tempCutElSE",self.parent.tempCut)
 
 	def items_paste(self):
-		#print("PASTE") 
+		print("PASTE") 
 		self.parent.flagEmpty = False
 		self.parent.tmplist.clear()
 		#print("tc:",self.parent.tempCut)
@@ -292,16 +321,18 @@ class Ui_Form(QtWidgets.QWidget):
 			self.parent.tmplist.append(tmp2[1]) 
 
 		for i in range(1,len(self.parent.tmplist),2):
-			new = self.parent.tmplist[i]
+			new = self.parent.tmplist[i].split()
 			#print("NEW:",new)
-			for j in range(2,7,4):
-				if j == 2:
-					self.parent.comp1.append(new[j])
-					
-				if j == 6:
-					self.parent.comp2.append(new[j])
 
-		compT = "X="+min(self.parent.comp1)+" Y="+min(self.parent.comp2)
+			for i in range(2):
+				if i == 0:
+					x1 = new[0].partition('X=')
+					self.parent.comp1.append(int(x1[2]))
+				else:
+					y1 = new[1].partition('Y=')
+					self.parent.comp2.append(int(y1[2]))
+
+		compT = "X="+str(min(self.parent.comp1))+" Y="+str(min(self.parent.comp2))
 
 		#print("Comp1:",self.parent.comp1)
 		#print("Comp2:",self.parent.comp2)
@@ -315,14 +346,16 @@ class Ui_Form(QtWidgets.QWidget):
 				self.parent.comp2.clear()
 
 		if self.parent.flagEmpty != True:
-			self.parent.tempCut.insert(0,tmp2[0]+"%"+"X="+min(self.parent.comp1)+" Y="+min(self.parent.comp2)+"/empty")
+			#print("flagEmpty")
+			self.parent.tempCut.insert(0,tmp2[0]+"%"+"X="+str(min(self.parent.comp1))+" Y="+str(min(self.parent.comp2))+"/empty")
 			self.parent.comp1.clear()
 			self.parent.comp2.clear()
 
-		#print("tempC:",self.tempCut)
-		#print("tempC:",self.tempCut[0])
+		#print("tempC:",self.parent.tempCut)
+		#print("tempC:",self.parent.tempCut[0])
 		copy = self.parent.tempCut[0] #1
 		x = copy.split("/")
+		#print("x:",x)
 		#///////////////////////////////////////////////////////////////////////////
 		vz = self.parent.tabWidget.currentIndex() + 1
 		vx = self.tableWidget.currentRow()
@@ -336,53 +369,77 @@ class Ui_Form(QtWidgets.QWidget):
 
 		for i in range(len(self.parent.tempCut)-1):
 			copy2 = self.parent.tempCut[i+1]  #i+2
-			new = u"X=%i Y=%i/" % (vx,vy)
+			#new = u"X=%i Y=%i/" % (vx,vy)
 			#print("new:",new)
 			#print("copy:",copy2)
 			y = copy2.split("/") 
 			#print("y:",y)
 
-			x1 = ''.join(x[0])
-			y1 = ''.join(y[0])
-			#print("x1:",x1)
-			#print("y1:",y1)#teniendo esos datos verif cuatos dig son y de ahi clasificar
+			x1 = x[0].split('%')
+			y1 = y[0].split('%')
+			#print("1x1:",x1)
+			#print("1y1:",y1)#teniendo esos datos verif cuatos dig son y de ahi clasificar
 			#print("xx",len(x1))
 			#print("yy",len(y1))
-
-			for i in range(len(x1)-5,len(x1),4): #2,7,4	#(1,4,2): #es solo hasta 9 para dos o mas digitos cambia OJO!
-				#print("CoPY:",copy)
-				#print("COPY2:",copy2)
-				#print("C2:",copy2[i])
-				#print("C1:",copy[i])
-
-				if copy[i] == copy2[i]:	#1,3
-					#print("same")
-					if i == len(x1)-5: # 4,5,6,7
-						row = int(new[2]) #1
-					else:
-						column = int(new[6]) #3
+			tmp1 = x1[1].split()
+			#print(tmp1)
+			tmp2 = y1[1].split()
+			#print(tmp2)
+			for i in range(2):
+				if i == 0:
+					temp1 = tmp1[0].partition('X=')
+					#print("X1:",temp1[2])
+					coord1x = temp1[2]
+	
 				else:
-					if i == len(x1)-5:
-						if copy[len(x1)-5] > copy2[len(x1)-5]: #4
-							#print("primerDigitoM")
-							row = int(copy[len(x1)-5]) - int(copy2[len(x1)-5])
-							row = int(new[2]) - row 
-						else:
-							#print("primerDigitom")
-							row = int(copy2[len(x1)-5]) - int(copy[len(x1)-5])
-							row = int(new[2]) + row
-						#print("row:",row)
-					else:
-						if copy[len(x1)-1] > copy2[len(x1)-1]:  #3
-							#print("SegundoDigitoM")
-							column = int(copy[len(x1)-1]) - int(copy2[len(x1)-1])
-							column = int(new[6]) - column
-						else:
-							#print("SegundoDigitom")
-							column = int(copy2[len(x1)-1]) - int(copy[len(x1)-1])
-							column = int(new[6]) + column
-						#print("column:",column)
-			
+					temp1 = tmp1[1].partition('Y=')
+					#print("Y1:",temp1[2])
+					coord1y = temp1[2]
+
+			for j in range(2):
+				if j == 0:
+					temp2 = tmp2[0].partition('X=')
+					#print("X2:",temp2[2])
+					coord2x = temp2[2]
+	
+				else:
+					temp2 = tmp2[1].partition('Y=')
+					#print("Y2:",temp2[2])
+					coord2y = temp2[2]
+
+			#print("vx:",vx)
+			#print("vy:",vy)
+			if coord1x == coord2x:
+				#print("row")
+				row = vx #1
+			else:
+				if int(coord1x) > int(coord2x): #4
+					#print("primerDigitoM")
+					row = int(coord1x) - int(coord2x)
+					row = vx - row 
+				else:
+					#print("primerDigitom")
+					row = int(coord2x) - int(coord1x)
+					row = vx + row
+				#print("rowR:",row)
+		
+			if coord1y == coord2y:
+				#print("column")
+				column = vy
+			else:
+				if int(coord1y) > int(coord2y):  #3
+					#print("SegundoDigitoM")
+					column = int(coord1y) - int(coord2y)
+					column = vy - column
+				else:
+					#print("SegundoDigitom")
+					column = int(coord2y) - int(coord1y)
+					column = vy + column
+				#print("columnR:",column)
+
+			#print("RowT:",row)
+			#print("columnT:",column)
+
 			self.parent.newCut.append(str(vz)+"%")
 			self.parent.newCut.append("X="+str(row)+" Y="+str(column))
 			self.parent.newCut.append(y[1])
@@ -418,7 +475,7 @@ class Ui_Form(QtWidgets.QWidget):
 			self.parent.valCut = True
 			self.parent.newCut.clear()
 		else:
-			print("NEWCUT:",self.parent.newCut)
+			#print("NEWCUT:",self.parent.newCut)
 			#self.cleanMylist()
 			self.newMylist()
 			self.parent.tempCut.clear()
@@ -429,33 +486,45 @@ class Ui_Form(QtWidgets.QWidget):
 		#print("newCutFinal:",self.parent.newCut)
 
 	def verifyColumnRow(self):
+		print("verifyColumnRow")
 		y = self.tableWidget.columnCount()
 		x = self.tableWidget.rowCount()
 		z = self.parent.tabWidget.currentIndex() + 1
+		#print("z:",z)
 
 		for k in range(1,len(self.parent.newCut),3):
-			cell = self.parent.newCut[k]
-			if int(cell[2]) >= x-1:
+			cell = self.parent.newCut
+
+			tmp = cell[k].split()
+			for i in range(2):
+				if i == 0:
+					num = tmp[0].partition('X=')
+					coordx = num[2]
+				else:
+					num = tmp[1].partition('Y=')
+					coordy = num[2]
+
+			if int(coordx) >= x-1:
+			#	self.flagVerifyRow = True
 				self.tableWidget.setRowCount(x+1)
-				
-				for i in range(len(self.parent.rows)-1):
-					if self.parent.rows[i] == str(z)+'%':
-						self.parent.rows.pop(i+1)
-						self.parent.rows.pop(i)
 
-				self.parent.rows.append(str(z)+'%')
-				self.parent.rows.append(str(x+1))
-
-			if int(cell[6]) >= y-1:
+			if int(coordy) >= y-1:
+			#	self.flagVerifyCol = True
 				self.tableWidget.setColumnCount(y+1)
-				
-				for i in range(len(self.parent.columns)-1):
-					if self.parent.columns[i] == str(z)+'%':
-						self.parent.columns.pop(i+1)
-						self.parent.columns.pop(i)
 
-				self.parent.columns.append(str(z)+'%')
-				self.parent.columns.append(str(y+1))
+			#if self.flagVerifyCol != False or self.flagVerifyRow != False:
+			#	self.flagVerifyRow = False
+			#	self.flagVerifyCol = False
+			for i in range(len(self.parent.rowCol)-1):
+				if self.parent.rowCol[i] == str(z)+'%':
+					#print("entroF")
+					self.parent.rowCol.pop(i+1)
+					self.parent.rowCol.pop(i)
+					break
+			
+			self.parent.rowCol.append(str(z)+'%')
+			self.parent.rowCol.append('R='+str(self.tableWidget.rowCount())+' C='+str(self.tableWidget.columnCount()))
+		#print("CT:",self.parent.rowCol)
 
 	def items_clear(self):
 		print("clearTable")
@@ -502,17 +571,25 @@ class Ui_Form(QtWidgets.QWidget):
 						self.parent.secondEdit = False
 
 	def newMylist(self):
-		#print("newMylist")
+		print("newMylist")
 		for j in range(len(self.parent.newCut)):
 			x = self.parent.newCut[j].split("\n")
 			if len(x) == 2:
-				t = self.parent.newCut[j-1]
+				t = self.parent.newCut[j-1].split()
+				for i in range(2):
+					if i == 0:
+						row = t[0].partition('X=')
+						coordx = row[2]
+					else:
+						col = t[1].partition('Y=')
+						coordy = col[2]
+				
 				lblt = QtGui.QFont("Arial",10, QtGui.QFont.Normal)
 				item = QtWidgets.QTableWidgetItem(self.parent.newCut[j])
 				item.setFont(lblt)
 				item.setBackground(QtGui.QColor('lightblue'))
 				item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
-				self.tableWidget.setItem(int(t[2]),int(t[6]),item)
+				self.tableWidget.setItem(int(coordx),int(coordy),item)
 
 				self.parent.mylist.append(self.parent.newCut[j-2])
 				self.parent.mylist.append(self.parent.newCut[j-1])
@@ -528,7 +605,15 @@ class Ui_Form(QtWidgets.QWidget):
 					pass
 				else:
 				#if w[0] != 'X' and w[1] != '%':
-					t = self.parent.newCut[j-1]
+					t = self.parent.newCut[j-1].split()
+					for i in range(2):
+						if i == 0:
+							row = t[0].partition('X=')
+							coordx = row[2]
+						else:
+							col = t[1].partition('Y=')
+							coordy = col[2]
+
 					if self.parent.newCut[j] == 'empty':
 						item = QtWidgets.QTableWidgetItem()
 						item.setBackground(QtGui.QColor('white'))
@@ -551,7 +636,7 @@ class Ui_Form(QtWidgets.QWidget):
 						self.parent.mylabel.append(nw)
 
 					item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
-					self.tableWidget.setItem(int(t[2]),int(t[6]),item)
+					self.tableWidget.setItem(int(coordx),int(coordy),item)
 
 	flagCancel = False
 	def bttnCancel(self):

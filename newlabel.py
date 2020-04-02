@@ -66,6 +66,8 @@ class Ui_NewLabel(QtWidgets.QDialog):
 		self.retranslateUi(self) ##New
 		self.buttonBox.accepted.connect(self.bttnOK)	#NewLabel.accept
 		self.buttonBox.rejected.connect(self.bttnCancel)
+		self.passEditL = False 
+
 		QtCore.QMetaObject.connectSlotsByName(self)  ##NEw
 
 		self.keyPressEvent = self.keyPressEventE
@@ -76,6 +78,29 @@ class Ui_NewLabel(QtWidgets.QDialog):
 		self.setWindowTitle(_translate("NewLabel", "New Label")) ##New
 		self.lblFont.setText(_translate("NewLabel", "Font Size"))
 	
+	def showEvent(self,event):
+		print("showLabel")
+		vx = self.parent.tableWidget.currentRow()
+		vy = self.parent.tableWidget.currentColumn()
+		value = "X="+str(vx)+" Y="+str(vy)
+
+		self.parent.totalMylabel()
+		for i in range(len(self.parent.Auxmylabel)): 
+			if self.parent.Auxmylabel[i] == value and self.parent.Auxmylabel[i-1] == self.currentTabL:
+				valueName = self.parent.Auxmylabel[i+1]
+				valueName = valueName.partition('#')
+				self.x = i
+				self.passEditL = True 
+		
+		if self.passEditL == True:
+			self.numberTabL = self.parent.Auxmylabel[self.x-1]
+			self.coord = self.parent.Auxmylabel[self.x]
+			self.LabelName = self.parent.Auxmylabel[self.x+1]
+
+			self.parent.deleteMylabel(self.x+1)
+			self.parent.deleteMylabel(self.x)
+			self.parent.deleteMylabel(self.x-1)
+			self.lblLabel.setText(valueName[0])
 
 	def keyPressEventE(self,event):
 		if event.key() == QtCore.Qt.Key_Enter: # mac fn + enter
@@ -84,12 +109,14 @@ class Ui_NewLabel(QtWidgets.QDialog):
 		if event.key() == QtCore.Qt.Key_Escape:
 			self.bttnCancel()
 
-
 	validatorLabel = False
 	def bttnOK(self):
 		text = self.lblLabel.text()
 		sizeW = self.lineFont.text()
 		txtA = None
+
+		if sizeW=='':
+			sizeW = '8'
 
 		if not self.lblLabel.text():
 			msgN = QtWidgets.QMessageBox()
@@ -172,6 +199,11 @@ class Ui_NewLabel(QtWidgets.QDialog):
 					self.close()
 		
 	def bttnCancel(self):
+		if self.passEditL != False:
+			self.parent.saveMylabel(self.numberTabL)
+			self.parent.saveMylabel(self.coord)
+			self.parent.saveMylabel(self.LabelName)
+
 		self.parent.bttnCancel()
 		self.close()
 

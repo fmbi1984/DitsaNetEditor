@@ -124,7 +124,6 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 				self.lineName.setText('1')
 				self.lineAddrs.setText('1')
 
-
 	def keyPressEventE(self,event):
 		if event.key() == QtCore.Qt.Key_Enter: # mac fn + enter
 			self.bttnDone()
@@ -442,16 +441,13 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 
 		
 	def bttnCancel(self): 
-		self.parent.totalMylist()
-		if len(self.parent.Auxmylist) != 0:
-			if self.passEdit != False:
-				self.parent.saveMylist(self.numberTab)
-				self.parent.saveMylist(self.coord)
-				self.parent.saveMylist(self.CircuitName)
-				self.parent.saveMylist(self.CircuitAddrs)
-				#self.parent.mylist.append(self.coord)
-				#self.parent.mylist.append(self.CircuitName)
-				#self.parent.mylist.append(self.CircuitAddrs)
+		#self.parent.totalMylist()
+		#if len(self.parent.Auxmylist) != 0:
+		if self.passEdit != False:
+			self.parent.saveMylist(self.numberTab)
+			self.parent.saveMylist(self.coord)
+			self.parent.saveMylist(self.CircuitName)
+			self.parent.saveMylist(self.CircuitAddrs)
 
 		self.parent.bttnCancel()
 		self.close()
