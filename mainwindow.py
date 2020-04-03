@@ -25,7 +25,7 @@ class Ui_MainWindow(object):
 		#object.__init__(parent)
 		#self.lineTable = lineTable
 		MainWindow.setObjectName("MainWindow")
-		MainWindow.resize(510, 507)
+		MainWindow.resize(810, 807)
 		self.centralWidget = QtWidgets.QWidget(MainWindow)
 		self.centralWidget.setObjectName("centralWidget")
 		self.verticalLayout = QtWidgets.QVBoxLayout(self.centralWidget)
@@ -158,7 +158,7 @@ class Ui_MainWindow(object):
 					self.rowCol = self.settingsRowCol[:]
 				else:
 					self.rowCol.append('1%')
-					self.rowCol.append('R=6 C=6')
+					self.rowCol.append('R=10 C=10')
 
 				if self.settingsList != None:
 					self.mylist = self.settingsList[:] #para que no se corresponden con el mismo objeto
