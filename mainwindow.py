@@ -99,6 +99,7 @@ class Ui_MainWindow(object):
 
 		self.flagSave = False
 		self.flagExit = False
+		#self.flagWmin = False 	#Flag para ubuntu
 
 		self.newtb.triggered.connect(self.newPage)
 		self.savetb.triggered.connect(self.saveLayout)
@@ -111,11 +112,11 @@ class Ui_MainWindow(object):
 	def retranslateUi(self, MainWindow):
 		_translate = QtCore.QCoreApplication.translate
 		MainWindow.setWindowTitle(_translate("MainWindow", "Layout Editor"))
-		##MainWindow.setWindowIcon(QtGui.QIcon('opt/Ditsa/DitsaNetEditor/LayoutEditor.png'))
+		##MainWindow.setWindowIcon(QtGui.QIcon('/opt/Ditsa/DitsaNetEditor/LayoutEditor.png'))
 		#self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Tab 1"))
 		#self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Tab 2"))
 
-		self.newtb = QtWidgets.QAction(QtGui.QIcon('image/nuevo.png'),'New',MainWindow) #'opt/Ditsa/DitsaNetEditor/LayoutEditor.png')
+		self.newtb = QtWidgets.QAction(QtGui.QIcon('image/nuevo.png'),'New',MainWindow) #'/opt/Ditsa/DitsaNetEditor/image/nuevo.png')
 		self.savetb = QtWidgets.QAction(QtGui.QIcon('image/guardar.png'),'Save',MainWindow)
 		self.deletetb = QtWidgets.QAction(QtGui.QIcon('image/borrar.png'),'Delete',MainWindow)
 		self.exittb = QtWidgets.QAction(QtGui.QIcon('image/salir.png'),'Exit',MainWindow)
@@ -139,7 +140,9 @@ class Ui_MainWindow(object):
 		#self.popMenu.addAction(QtGui.QAction('test2', self)) 
 
 	def showEvent(self,event):
-		if MainWindow.isMinimized():
+		#if self.flagWmin != True: #Para ubuntu se necesito esta bandera
+		#	self.flagWmin = True
+		if MainWindow.isMinimized(): #En mac funciona esta opcion
 			pass
 		else:	
 			print("ShowEvent") #None aplica cuando no hay settings # [] indica que hay settings pero esa lista no tiene algun dato
@@ -195,14 +198,6 @@ class Ui_MainWindow(object):
 					MainWindow.close()
 		else:
 			MainWindow.close()
-
-	def changeEvent(self, event):
-		print("changeEvent")
-		if event.type() == QtCore.QEvent.WindowStateChange:
-			if event.oldState() and	QtCore.Qt.WindowMinimized:
-				print("WindowMinimized")
-			elif event.oldState() == QtCore.Qt.WindowNoState or event.windowState() == QtCore.Qt.WindowMaximized:
-				print("WindowMaximized")
 
 	def populateTabs(self):
 		print("populateTabs")
