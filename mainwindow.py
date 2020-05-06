@@ -41,7 +41,7 @@ class Ui_MainWindow(object):
 		self.verticalLayout_2.setSpacing(6)
 		self.verticalLayout_2.setObjectName("verticalLayout_2")
 
-		form = Ui_Form(self)
+		#form = Ui_Form(self)
 		#self.tabWidget.addTab(form, "Page 1")
 
 		self.verticalLayout.addWidget(self.tabWidget)
@@ -216,8 +216,14 @@ class Ui_MainWindow(object):
 
 	def newPage(self): 
 		#print("newPage")
+		tab = self.tabWidget.count()+1
+		if tab != 1:
+			self.rowCol.append(str(tab)+'%')
+			self.rowCol.append('R=10 C=10')
+
 		form = Ui_Form(self)
 		self.tabWidget.addTab(form,"Page "+str(self.tabWidget.count()+1))
+		
 
 	def saveLayout(self): ##verificar 
 		if len(self.mylist) != None or len(self.mylabel) != None:

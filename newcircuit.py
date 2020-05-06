@@ -205,10 +205,13 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 			valI = VName[0:midAct]
 			valS = VName[midAct:lenAct]
 
+			#print("valI:",valI)
+			#print("valS:",valS)
 			if valS.isdigit():
 				print("dos digitos numeros")
 				self.flagD = True
-				num = VName
+				num = valS 	#VName
+				#print("VName:",VName)
 				numT = int(num) + 1
 				if num[0] == '0' and len(str(numT)) != len(num): ##agregar la cantidad de ceros
 					if len(num) > len(str(numT)):
@@ -218,7 +221,8 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 						dp = dp + '0'
 					numT = dp + str(numT) 
 
-				VNameF = numT
+				VNameF = str(valI) + str(numT)
+				print("Va:",VNameF)
 				self.valueMylistName(VNameF)
 
 			if valS.isalpha():
