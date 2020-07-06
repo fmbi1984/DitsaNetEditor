@@ -177,11 +177,11 @@ class Ui_Form(QtWidgets.QWidget):
 		if action == delAct:
 			self.items_clear()
 
-		if action == pasAct:
+		elif action == pasAct:
 			self.parent.valCut = False   
 			self.items_paste()
 
-		if action == cutAct:
+		elif action == cutAct:
 			self.items_cut()
 
 	flagClickedTableCol = False
