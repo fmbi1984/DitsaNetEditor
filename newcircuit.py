@@ -106,10 +106,8 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 			self.lineAddrs.setText(valueAddr)
 
 		else:
-			#print(len(self.parent.Auxmylist))
 			if len(self.parent.Auxmylist) != 0:
 				i = len(self.parent.Auxmylist)
-				#print("Tab:",self.parent.Auxmylist[i-4])
 				valueName = self.parent.Auxmylist[i-2]
 				valueAddr = self.parent.Auxmylist[i-1]
 				valueName = valueName.replace('N=','')
@@ -125,15 +123,14 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 				self.lineAddrs.setText('1')
 
 	def keyPressEventE(self,event):
-		if event.key() == QtCore.Qt.Key_Enter: # mac fn + enter
+		if event.key() == QtCore.Qt.Key_Return: # mac fn + enter
 			self.bttnDone()
 
 		if event.key() == QtCore.Qt.Key_Escape:
 			self.bttnCancel()
 
 	def nextVName(self,VName):
-		print("nextVName")
-		#y = '-' in VName 
+		#print("nextVName")
 		if '-' in VName != False:
 			x = VName.rpartition('-')
 			v = VName.rindex('-')
@@ -148,14 +145,10 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 					print("dos digitos numeros")
 					self.flagD = True
 					num = tmp
-					#print("NUM:",num)
 					numT = int(num) + 1
-					#print("numT:",numT)
 					if num[0] == '0' and len(str(numT)) != len(num): ##agregar la cantidad de ceros
-						#print("digito 0")
 						if len(num) > len(str(numT)):
 							dif = len(num) - len(str(numT))
-							#print("dif:",dif)
 						dp = ''
 						for n in range(dif):
 							dp = dp + '0'
@@ -205,13 +198,11 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 			valI = VName[0:midAct]
 			valS = VName[midAct:lenAct]
 
-			#print("valI:",valI)
-			#print("valS:",valS)
 			if valS.isdigit():
 				print("dos digitos numeros")
 				self.flagD = True
 				num = valS 	#VName
-				#print("VName:",VName)
+
 				numT = int(num) + 1
 				if num[0] == '0' and len(str(numT)) != len(num): ##agregar la cantidad de ceros
 					if len(num) > len(str(numT)):
@@ -222,7 +213,7 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 					numT = dp + str(numT) 
 
 				VNameF = str(valI) + str(numT)
-				print("Va:",VNameF)
+				#print("Va:",VNameF)
 				self.valueMylistName(VNameF)
 
 			if valS.isalpha():
@@ -293,24 +284,18 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 					print("dos digitos numeros")
 					self.flagD2 = True
 					num = tmp
-					#print("NUM:",num)
 					numT = int(num) + 1
-					#print("numT:",numT)
 					if num[0] == '0' and len(str(numT)) != len(num): ##agregar la cantidad de ceros
-						#print("digito 0")
 						if len(num) > len(str(numT)):
 							dif = len(num) - len(str(numT))
-							#print("dif:",dif)
 						dp = ''
 						for n in range(dif):
 							dp = dp + '0'
-						#print(dp)
 						numT = dp + str(numT) 
 					VNameF2 = str(x[0])+str(x[1])+str(tmp1)+str(numT)
-				#	self.valueMylistName(VNameF)
+
 					print("FN:",VNameF2)
 					return VNameF2
-				#	self.lineName.setText(VNameF)
 
 				if tmp.isalpha():
 					print("dos digitos letra")
@@ -325,10 +310,9 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 							digF = self.abc[a+1]
 					dig2 = '0'
 					VNameF2 = str(x[0])+str(x[1])+str(tmp1)+str(digF)+str(dig2)
-				#	self.valueMylistName(VNameF)
+
 					print("FN",VNameF2)
 					return VNameF2
-				#	self.lineName.setText(VNameF)
 
 				if tmp.isalnum():
 					if self.flagD2 != True:
@@ -347,10 +331,9 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 							dig2F = int(dig2) + 1	#dig2 numero
 
 						VNameF2 = str(x[0])+str(x[1])+str(tmp1)+str(digF)+str(dig2F)
-					#	self.valueMylistName(VNameF)
+
 						print("FN",VNameF2)
 						return VNameF2
-					#	self.lineName.setText(VNameF)
 
 		else:
 			lenAct = len(VNameF)
