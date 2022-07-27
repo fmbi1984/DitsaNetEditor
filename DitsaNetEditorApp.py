@@ -69,16 +69,33 @@ class Ui_Editor(object):
 		
 		self.tempCut = list()
 
+		self.newCut = list()
+		self.tmplist = list()
+		self.comp1 = list()
+		self.comp2 = list()
+
 		self.maxTabs = list()	#lista, se guarda valores de tabs 
 		self.tempTabsList = list()
 		self.tempTabsLabel =list()
 
 		self.tempVal = list()
 		self.tempRowCol = list()
+
+		self.valCut = False  
+		self.i = 0
+		self.flagLabel = False
+		self.flagOverLabel = False
+		self.flagOverList = False
+
+		self.flagEmpty = False
+		self.editDelete = False
+		self.secondEdit = False
+		self.flagEdit = False
  
 		self.flagSave = False
 		self.flagExit = False
 		self.flagWmin = False 	#Flag para ubuntu
+		
 
 		self.newtb.triggered.connect(self.newPage)
 		self.savetb.triggered.connect(self.saveLayout)

@@ -300,124 +300,125 @@ class Ui_Form(QtWidgets.QWidget):
 		self.parent.flagEmpty = False
 		self.parent.tmplist.clear()
 
-		for i in range(len(self.parent.tempCut)):
-			tmp = self.parent.tempCut[i].split("/")
-			tmp2 = tmp[0].split("%")
-			self.parent.tmplist.append(tmp2[0])
-			self.parent.tmplist.append(tmp2[1]) 
+		if len(self.parent.tempCut)!=0:
+			for i in range(len(self.parent.tempCut)):
+				tmp = self.parent.tempCut[i].split("/")
+				tmp2 = tmp[0].split("%")
+				self.parent.tmplist.append(tmp2[0])
+				self.parent.tmplist.append(tmp2[1]) 
 
-		for i in range(1,len(self.parent.tmplist),2):
-			new = self.parent.tmplist[i].split()
+			for i in range(1,len(self.parent.tmplist),2):
+				new = self.parent.tmplist[i].split()
 
-			for i in range(2):
-				if i == 0:
-					x1 = new[0].partition('X=')
-					self.parent.comp1.append(int(x1[2]))
-				else:
-					y1 = new[1].partition('Y=')
-					self.parent.comp2.append(int(y1[2]))
+				for i in range(2):
+					if i == 0:
+						x1 = new[0].partition('X=')
+						self.parent.comp1.append(int(x1[2]))
+					else:
+						y1 = new[1].partition('Y=')
+						self.parent.comp2.append(int(y1[2]))
 
-		compT = "X="+str(min(self.parent.comp1))+" Y="+str(min(self.parent.comp2))
+			compT = "X="+str(min(self.parent.comp1))+" Y="+str(min(self.parent.comp2))
 
-		for i in range(len(self.parent.tmplist)):
-			if compT == self.parent.tmplist[i]:
-				#print("No hay espacio Vacio")
-				self.parent.flagEmpty = True
+			for i in range(len(self.parent.tmplist)):
+				if compT == self.parent.tmplist[i]:
+					#print("No hay espacio Vacio")
+					self.parent.flagEmpty = True
+					self.parent.comp1.clear()
+					self.parent.comp2.clear()
+
+			if self.parent.flagEmpty != True:
+				self.parent.tempCut.insert(0,tmp2[0]+"%"+"X="+str(min(self.parent.comp1))+" Y="+str(min(self.parent.comp2))+"/empty")
 				self.parent.comp1.clear()
 				self.parent.comp2.clear()
 
-		if self.parent.flagEmpty != True:
-			self.parent.tempCut.insert(0,tmp2[0]+"%"+"X="+str(min(self.parent.comp1))+" Y="+str(min(self.parent.comp2))+"/empty")
-			self.parent.comp1.clear()
-			self.parent.comp2.clear()
+			copy = self.parent.tempCut[0] #1
+			x = copy.split("/")
 
-		copy = self.parent.tempCut[0] #1
-		x = copy.split("/")
-
-		#///////////////////////////////////////////////////////////////////////////
-		vz = self.parent.tabWidget.currentIndex() + 1
-		vx = self.tableWidget.currentRow()
-		vy = self.tableWidget.currentColumn()
-
-		self.parent.newCut.append(str(vz)+"%")
-		self.parent.newCut.append("X="+str(vx)+" Y="+str(vy))
-		self.parent.newCut.append(x[1])
-		#print("Nuevo:",self.parent.newCut)
-		#print("TE:",self.parent.tempCut)
-
-		for i in range(len(self.parent.tempCut)-1):
-			copy2 = self.parent.tempCut[i+1]  #i+2
-			y = copy2.split("/") 
-
-			x1 = x[0].split('%')
-			y1 = y[0].split('%')
-			tmp1 = x1[1].split()
-			tmp2 = y1[1].split()
-			for i in range(2):
-				if i == 0:
-					temp1 = tmp1[0].partition('X=')
-					coord1x = temp1[2]
-	
-				else:
-					temp1 = tmp1[1].partition('Y=')
-					coord1y = temp1[2]
-
-			for j in range(2):
-				if j == 0:
-					temp2 = tmp2[0].partition('X=')
-					coord2x = temp2[2]
-	
-				else:
-					temp2 = tmp2[1].partition('Y=')
-					coord2y = temp2[2]
-
-			if coord1x == coord2x:
-				row = vx #1
-			else:
-				if int(coord1x) > int(coord2x): #4
-					row = int(coord1x) - int(coord2x)
-					row = vx - row 
-				else:
-					row = int(coord2x) - int(coord1x)
-					row = vx + row
-		
-			if coord1y == coord2y:
-				column = vy
-			else:
-				if int(coord1y) > int(coord2y):  #3
-					column = int(coord1y) - int(coord2y)
-					column = vy - column
-				else:
-					column = int(coord2y) - int(coord1y)
-					column = vy + column
+			#///////////////////////////////////////////////////////////////////////////
+			vz = self.parent.tabWidget.currentIndex() + 1
+			vx = self.tableWidget.currentRow()
+			vy = self.tableWidget.currentColumn()
 
 			self.parent.newCut.append(str(vz)+"%")
-			self.parent.newCut.append("X="+str(row)+" Y="+str(column))
-			self.parent.newCut.append(y[1])
-			self.verifyColumnRow()
+			self.parent.newCut.append("X="+str(vx)+" Y="+str(vy))
+			self.parent.newCut.append(x[1])
+			#print("Nuevo:",self.parent.newCut)
+			#print("TE:",self.parent.tempCut)
 
-			for i in range(len(self.parent.mylist)):  #Mylist
-				for j in range(1,len(self.parent.newCut),3):
-					if self.parent.newCut[j] == self.parent.mylist[i] and self.parent.mylist[i-1] == str(vz)+"%":
-						self.parent.flagOverList = True
+			for i in range(len(self.parent.tempCut)-1):
+				copy2 = self.parent.tempCut[i+1]  #i+2
+				y = copy2.split("/") 
 
-			for i in range(len(self.parent.mylabel)): 
-				for j in range(1,len(self.parent.newCut),3):
-					if self.parent.newCut[j] == self.parent.mylabel[i] and self.parent.mylabel[i-1] == str(vz)+"%":
-						self.parent.flagOverLabel = True
+				x1 = x[0].split('%')
+				y1 = y[0].split('%')
+				tmp1 = x1[1].split()
+				tmp2 = y1[1].split()
+				for i in range(2):
+					if i == 0:
+						temp1 = tmp1[0].partition('X=')
+						coord1x = temp1[2]
+		
+					else:
+						temp1 = tmp1[1].partition('Y=')
+						coord1y = temp1[2]
 
-		if self.parent.flagOverLabel != False or self.parent.flagOverList != False:
-			self.parent.flagOverList = False
-			self.parent.flagOverLabel = False
-			msgPasteNot = QtWidgets.QMessageBox()
-			msgPasteNot.critical(self,'Error','The location is taken')
-			self.parent.valCut = True
-			self.parent.newCut.clear()
-		else:
-			self.newMylist()
-			self.parent.tempCut.clear()
-			self.parent.newCut.clear()
-			self.parent.i = 0
+				for j in range(2):
+					if j == 0:
+						temp2 = tmp2[0].partition('X=')
+						coord2x = temp2[2]
+		
+					else:
+						temp2 = tmp2[1].partition('Y=')
+						coord2y = temp2[2]
+
+				if coord1x == coord2x:
+					row = vx #1
+				else:
+					if int(coord1x) > int(coord2x): #4
+						row = int(coord1x) - int(coord2x)
+						row = vx - row 
+					else:
+						row = int(coord2x) - int(coord1x)
+						row = vx + row
+			
+				if coord1y == coord2y:
+					column = vy
+				else:
+					if int(coord1y) > int(coord2y):  #3
+						column = int(coord1y) - int(coord2y)
+						column = vy - column
+					else:
+						column = int(coord2y) - int(coord1y)
+						column = vy + column
+
+				self.parent.newCut.append(str(vz)+"%")
+				self.parent.newCut.append("X="+str(row)+" Y="+str(column))
+				self.parent.newCut.append(y[1])
+				self.verifyColumnRow()
+
+				for i in range(len(self.parent.mylist)):  #Mylist
+					for j in range(1,len(self.parent.newCut),3):
+						if self.parent.newCut[j] == self.parent.mylist[i] and self.parent.mylist[i-1] == str(vz)+"%":
+							self.parent.flagOverList = True
+
+				for i in range(len(self.parent.mylabel)): 
+					for j in range(1,len(self.parent.newCut),3):
+						if self.parent.newCut[j] == self.parent.mylabel[i] and self.parent.mylabel[i-1] == str(vz)+"%":
+							self.parent.flagOverLabel = True
+
+			if self.parent.flagOverLabel != False or self.parent.flagOverList != False:
+				self.parent.flagOverList = False
+				self.parent.flagOverLabel = False
+				msgPasteNot = QtWidgets.QMessageBox()
+				msgPasteNot.critical(self,'Error','The location is taken')
+				self.parent.valCut = True
+				self.parent.newCut.clear()
+			else:
+				self.newMylist()
+				self.parent.tempCut.clear()
+				self.parent.newCut.clear()
+				self.parent.i = 0
 
 	def verifyColumnRow(self):
 		print("verifyColumnRow")
