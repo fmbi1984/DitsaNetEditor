@@ -26,8 +26,8 @@ class Ui_Form(QtWidgets.QWidget):
 		self.tableWidget = QtWidgets.QTableWidget(self)
 		self.tableWidget.setGridStyle(QtCore.Qt.DotLine)
 		self.tableWidget.setWordWrap(True)
-		self.tableWidget.setRowCount(6)
-		self.tableWidget.setColumnCount(6)
+		self.tableWidget.setRowCount(10)
+		self.tableWidget.setColumnCount(10)
 		self.tableWidget.setObjectName("tableWidget")
 		self.tableWidget.horizontalHeader().setVisible(False)
 		self.tableWidget.horizontalHeader().setDefaultSectionSize(60)
@@ -63,7 +63,6 @@ class Ui_Form(QtWidgets.QWidget):
 	
 	def populateColumnRow(self):
 		print("populateColumnRow")
-		#print("RC0:",self.parent.rowCol)
 		z = self.parent.tabWidget.currentIndex() + 1
 		if z == 0:
 			z = 1
@@ -81,8 +80,6 @@ class Ui_Form(QtWidgets.QWidget):
 						y = tmp[1].partition('C=')
 						self.tableWidget.setColumnCount(int(y[2]))
 
-		#print("TT:",self.parent.rowCol)
-
 	def populateCircuit(self): 
 		print("PopulateCircuit")
 		for i in range(0,len(self.parent.mylist),4):
@@ -97,8 +94,6 @@ class Ui_Form(QtWidgets.QWidget):
 			if z == 0:
 				z = 1
 
-			#print("z",z)
-			#print("k",k)
 			if k == str(z):
 				tmp = coordCell[i+1].split()
 				for i in range(2):
@@ -129,8 +124,6 @@ class Ui_Form(QtWidgets.QWidget):
 			if z == 0:
 				z = 1
 
-			#print("z2",z)
-			#print("k2",k)
 			label = nameCellL.split('#')
 			number = label[1].split('$')
 			lblt = QtGui.QFont("Arial",int(number[0]), QtGui.QFont.Black)
@@ -140,6 +133,7 @@ class Ui_Form(QtWidgets.QWidget):
 				item.setTextAlignment(QtCore.Qt.AlignTop)
 			else:
 				item.setTextAlignment(QtCore.Qt.AlignBottom)
+				
 
 			item.setFont(lblt)
 			item.setBackground(QtGui.QColor('lightyellow'))
@@ -157,7 +151,8 @@ class Ui_Form(QtWidgets.QWidget):
 				self.tableWidget.setItem(int(coordx),int(coordy),item)
 
 	def keyPressEvent(self,event):
-		if event.key() == QtCore.Qt.Key_Enter: # mac fn + enter
+		#if event.key() == QtCore.Qt.Key_Enter: # mac fn + enter Intro
+		if event.key() == QtCore.Qt.Key_Return: #tecla enter
 			self.on_doubleClickedTableW()
 
 	def contextMenuEvent(self,event):
@@ -177,20 +172,20 @@ class Ui_Form(QtWidgets.QWidget):
 		if action == delAct:
 			self.items_clear()
 
-		if action == pasAct:
+		elif action == pasAct:
 			self.parent.valCut = False   
 			self.items_paste()
 
-		if action == cutAct:
+		elif action == cutAct:
 			self.items_cut()
 
 	flagClickedTableCol = False
 	flagClickedTableRow = False
 	def on_cellClickedTableW(self):
 		print("UNCLICK")
-		print("mylist",self.parent.mylist)
-		print("mylabel",self.parent.mylabel)
-		print("RowCol:",self.parent.rowCol)
+		#print("mylist",self.parent.mylist)
+		#print("mylabel",self.parent.mylabel)
+		#print("RowCol:",self.parent.rowCol)
 
 		y = self.tableWidget.columnCount()
 		x = self.tableWidget.rowCount()
@@ -210,7 +205,6 @@ class Ui_Form(QtWidgets.QWidget):
 
 			for i in range(len(self.parent.rowCol)-1):
 				if self.parent.rowCol[i] == str(z)+'%':
-					#print("entra:",self.parent.rowCol[i])
 					self.parent.rowCol.pop(i+1)
 					self.parent.rowCol.pop(i)
 					break
@@ -223,13 +217,11 @@ class Ui_Form(QtWidgets.QWidget):
 		vz = self.parent.tabWidget.currentIndex() + 1 
 		if self.flagEmpty2 != False:
 			self.flagEmpty2 = False
-			#print("CELL FULL")
 			if self.flagCell != False:
 				Ui_NewCircuit(str(vz)+"%",self).exec_()
 			else:
 				Ui_NewLabel(str(vz)+"%",self).exec_()
 		else:
-			#print("CELL EMPTY")
 			if self.parent.rbCM.text()=='Circuit Mode':
 				if self.parent.rbCM.isChecked()==True:
 					Ui_NewCircuit(str(vz)+"%",self).exec_()
@@ -272,16 +264,12 @@ class Ui_Form(QtWidgets.QWidget):
 					item.setBackground(QtGui.QColor('white'))
 					item.setText('')
 
-			print("tempCut1",self.parent.tempCut)
+			#print("tempCut1",self.parent.tempCut)
 			self.parent.cleanMylist()
 		else:
 			msgCut = QtWidgets.QMessageBox()
 			returnCut = msgCut.warning(self,'Warning','You alredy have circuit copied to memory. If you continue those circuit will be deleted. Are you sure you want to continue?',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
 			if returnCut == msgCut.Yes:
-				#print("YES-MEMORY")
-				#print("tempCutElse",self.tempCut)
-
-				#self.cleanMylist()
 				self.parent.tempCut.clear()
 
 				vz = self.parent.tabWidget.currentIndex() + 1 
@@ -305,192 +293,138 @@ class Ui_Form(QtWidgets.QWidget):
 						item.setText('')
 			
 				self.parent.cleanMylist()
-				print("tempCutElSE",self.parent.tempCut)
+				#print("tempCutElSE",self.parent.tempCut)
 
 	def items_paste(self):
 		print("PASTE") 
 		self.parent.flagEmpty = False
 		self.parent.tmplist.clear()
-		#print("tc:",self.parent.tempCut)
-		for i in range(len(self.parent.tempCut)):
-			tmp = self.parent.tempCut[i].split("/")
-			tmp2 = tmp[0].split("%")
-			#print("tmp:",tmp[0])
-			#print("tmp2:",tmp2)
-			self.parent.tmplist.append(tmp2[0])
-			self.parent.tmplist.append(tmp2[1]) 
 
-		for i in range(1,len(self.parent.tmplist),2):
-			new = self.parent.tmplist[i].split()
-			#print("NEW:",new)
+		if len(self.parent.tempCut)!=0:
+			for i in range(len(self.parent.tempCut)):
+				tmp = self.parent.tempCut[i].split("/")
+				tmp2 = tmp[0].split("%")
+				self.parent.tmplist.append(tmp2[0])
+				self.parent.tmplist.append(tmp2[1]) 
 
-			for i in range(2):
-				if i == 0:
-					x1 = new[0].partition('X=')
-					self.parent.comp1.append(int(x1[2]))
-				else:
-					y1 = new[1].partition('Y=')
-					self.parent.comp2.append(int(y1[2]))
+			for i in range(1,len(self.parent.tmplist),2):
+				new = self.parent.tmplist[i].split()
 
-		compT = "X="+str(min(self.parent.comp1))+" Y="+str(min(self.parent.comp2))
+				for i in range(2):
+					if i == 0:
+						x1 = new[0].partition('X=')
+						self.parent.comp1.append(int(x1[2]))
+					else:
+						y1 = new[1].partition('Y=')
+						self.parent.comp2.append(int(y1[2]))
 
-		#print("Comp1:",self.parent.comp1)
-		#print("Comp2:",self.parent.comp2)
-		#print("compT1:",compT)
-		#print("tmplist1:",self.parent.tmplist)
-		for i in range(len(self.parent.tmplist)):
-			if compT == self.parent.tmplist[i]:
-				#print("No hay espacio Vacio")
-				self.parent.flagEmpty = True
+			compT = "X="+str(min(self.parent.comp1))+" Y="+str(min(self.parent.comp2))
+
+			for i in range(len(self.parent.tmplist)):
+				if compT == self.parent.tmplist[i]:
+					#print("No hay espacio Vacio")
+					self.parent.flagEmpty = True
+					self.parent.comp1.clear()
+					self.parent.comp2.clear()
+
+			if self.parent.flagEmpty != True:
+				self.parent.tempCut.insert(0,tmp2[0]+"%"+"X="+str(min(self.parent.comp1))+" Y="+str(min(self.parent.comp2))+"/empty")
 				self.parent.comp1.clear()
 				self.parent.comp2.clear()
 
-		if self.parent.flagEmpty != True:
-			#print("flagEmpty")
-			self.parent.tempCut.insert(0,tmp2[0]+"%"+"X="+str(min(self.parent.comp1))+" Y="+str(min(self.parent.comp2))+"/empty")
-			self.parent.comp1.clear()
-			self.parent.comp2.clear()
+			copy = self.parent.tempCut[0] #1
+			x = copy.split("/")
 
-		#print("tempC:",self.parent.tempCut)
-		#print("tempC:",self.parent.tempCut[0])
-		copy = self.parent.tempCut[0] #1
-		x = copy.split("/")
-		#print("x:",x)
-		#///////////////////////////////////////////////////////////////////////////
-		vz = self.parent.tabWidget.currentIndex() + 1
-		vx = self.tableWidget.currentRow()
-		vy = self.tableWidget.currentColumn()
-
-		self.parent.newCut.append(str(vz)+"%")
-		self.parent.newCut.append("X="+str(vx)+" Y="+str(vy))
-		self.parent.newCut.append(x[1])
-		#print("Nuevo:",self.parent.newCut)
-		#print("TE:",self.parent.tempCut)
-
-		for i in range(len(self.parent.tempCut)-1):
-			copy2 = self.parent.tempCut[i+1]  #i+2
-			#new = u"X=%i Y=%i/" % (vx,vy)
-			#print("new:",new)
-			#print("copy:",copy2)
-			y = copy2.split("/") 
-			#print("y:",y)
-
-			x1 = x[0].split('%')
-			y1 = y[0].split('%')
-			#print("1x1:",x1)
-			#print("1y1:",y1)#teniendo esos datos verif cuatos dig son y de ahi clasificar
-			#print("xx",len(x1))
-			#print("yy",len(y1))
-			tmp1 = x1[1].split()
-			#print(tmp1)
-			tmp2 = y1[1].split()
-			#print(tmp2)
-			for i in range(2):
-				if i == 0:
-					temp1 = tmp1[0].partition('X=')
-					#print("X1:",temp1[2])
-					coord1x = temp1[2]
-	
-				else:
-					temp1 = tmp1[1].partition('Y=')
-					#print("Y1:",temp1[2])
-					coord1y = temp1[2]
-
-			for j in range(2):
-				if j == 0:
-					temp2 = tmp2[0].partition('X=')
-					#print("X2:",temp2[2])
-					coord2x = temp2[2]
-	
-				else:
-					temp2 = tmp2[1].partition('Y=')
-					#print("Y2:",temp2[2])
-					coord2y = temp2[2]
-
-			#print("vx:",vx)
-			#print("vy:",vy)
-			if coord1x == coord2x:
-				#print("row")
-				row = vx #1
-			else:
-				if int(coord1x) > int(coord2x): #4
-					#print("primerDigitoM")
-					row = int(coord1x) - int(coord2x)
-					row = vx - row 
-				else:
-					#print("primerDigitom")
-					row = int(coord2x) - int(coord1x)
-					row = vx + row
-				#print("rowR:",row)
-		
-			if coord1y == coord2y:
-				#print("column")
-				column = vy
-			else:
-				if int(coord1y) > int(coord2y):  #3
-					#print("SegundoDigitoM")
-					column = int(coord1y) - int(coord2y)
-					column = vy - column
-				else:
-					#print("SegundoDigitom")
-					column = int(coord2y) - int(coord1y)
-					column = vy + column
-				#print("columnR:",column)
-
-			#print("RowT:",row)
-			#print("columnT:",column)
+			#///////////////////////////////////////////////////////////////////////////
+			vz = self.parent.tabWidget.currentIndex() + 1
+			vx = self.tableWidget.currentRow()
+			vy = self.tableWidget.currentColumn()
 
 			self.parent.newCut.append(str(vz)+"%")
-			self.parent.newCut.append("X="+str(row)+" Y="+str(column))
-			self.parent.newCut.append(y[1])
-			#print("Nuevo2:",self.parent.newCut)
-			#print("my:",self.parent.mylist)
-			self.verifyColumnRow()
+			self.parent.newCut.append("X="+str(vx)+" Y="+str(vy))
+			self.parent.newCut.append(x[1])
+			#print("Nuevo:",self.parent.newCut)
+			#print("TE:",self.parent.tempCut)
 
-			for i in range(len(self.parent.mylist)):  #Mylist
-				for j in range(1,len(self.parent.newCut),3):
-					if self.parent.newCut[j] == self.parent.mylist[i] and self.parent.mylist[i-1] == str(vz)+"%":
-						#print("Entro list")
-						#print("mylist:",self.mylist[i])
-						#print(self.mylist[i-1])
-						#print("table:",table)
-						#print("newCut:",self.parent.newCut[j])
-						self.parent.flagOverList = True
+			for i in range(len(self.parent.tempCut)-1):
+				copy2 = self.parent.tempCut[i+1]  #i+2
+				y = copy2.split("/") 
 
-			for i in range(len(self.parent.mylabel)): 
-				for j in range(1,len(self.parent.newCut),3):
-					if self.parent.newCut[j] == self.parent.mylabel[i] and self.parent.mylabel[i-1] == str(vz)+"%":
-						#print("Entro label")
-						#print("mylabel:",self.mylabel[i])
-						#print(self.mylabel[i-1])
-						#print("table:",table)
-						#print("newCut:",self.parent.newCut[j])
-						self.parent.flagOverLabel = True
+				x1 = x[0].split('%')
+				y1 = y[0].split('%')
+				tmp1 = x1[1].split()
+				tmp2 = y1[1].split()
+				for i in range(2):
+					if i == 0:
+						temp1 = tmp1[0].partition('X=')
+						coord1x = temp1[2]
+		
+					else:
+						temp1 = tmp1[1].partition('Y=')
+						coord1y = temp1[2]
 
-		if self.parent.flagOverLabel != False or self.parent.flagOverList != False:
-			self.parent.flagOverList = False
-			self.parent.flagOverLabel = False
-			msgPasteNot = QtWidgets.QMessageBox()
-			msgPasteNot.critical(self,'Error','The location is taken')
-			self.parent.valCut = True
-			self.parent.newCut.clear()
-		else:
-			#print("NEWCUT:",self.parent.newCut)
-			#self.cleanMylist()
-			self.newMylist()
-			self.parent.tempCut.clear()
-			self.parent.newCut.clear()
-			self.parent.i = 0
+				for j in range(2):
+					if j == 0:
+						temp2 = tmp2[0].partition('X=')
+						coord2x = temp2[2]
+		
+					else:
+						temp2 = tmp2[1].partition('Y=')
+						coord2y = temp2[2]
 
-		#print("temCutClean:",self.tempCut)
-		#print("newCutFinal:",self.parent.newCut)
+				if coord1x == coord2x:
+					row = vx #1
+				else:
+					if int(coord1x) > int(coord2x): #4
+						row = int(coord1x) - int(coord2x)
+						row = vx - row 
+					else:
+						row = int(coord2x) - int(coord1x)
+						row = vx + row
+			
+				if coord1y == coord2y:
+					column = vy
+				else:
+					if int(coord1y) > int(coord2y):  #3
+						column = int(coord1y) - int(coord2y)
+						column = vy - column
+					else:
+						column = int(coord2y) - int(coord1y)
+						column = vy + column
+
+				self.parent.newCut.append(str(vz)+"%")
+				self.parent.newCut.append("X="+str(row)+" Y="+str(column))
+				self.parent.newCut.append(y[1])
+				self.verifyColumnRow()
+
+				for i in range(len(self.parent.mylist)):  #Mylist
+					for j in range(1,len(self.parent.newCut),3):
+						if self.parent.newCut[j] == self.parent.mylist[i] and self.parent.mylist[i-1] == str(vz)+"%":
+							self.parent.flagOverList = True
+
+				for i in range(len(self.parent.mylabel)): 
+					for j in range(1,len(self.parent.newCut),3):
+						if self.parent.newCut[j] == self.parent.mylabel[i] and self.parent.mylabel[i-1] == str(vz)+"%":
+							self.parent.flagOverLabel = True
+
+			if self.parent.flagOverLabel != False or self.parent.flagOverList != False:
+				self.parent.flagOverList = False
+				self.parent.flagOverLabel = False
+				msgPasteNot = QtWidgets.QMessageBox()
+				msgPasteNot.critical(self,'Error','The location is taken')
+				self.parent.valCut = True
+				self.parent.newCut.clear()
+			else:
+				self.newMylist()
+				self.parent.tempCut.clear()
+				self.parent.newCut.clear()
+				self.parent.i = 0
 
 	def verifyColumnRow(self):
 		print("verifyColumnRow")
 		y = self.tableWidget.columnCount()
 		x = self.tableWidget.rowCount()
 		z = self.parent.tabWidget.currentIndex() + 1
-		#print("z:",z)
 
 		for k in range(1,len(self.parent.newCut),3):
 			cell = self.parent.newCut
@@ -505,26 +439,20 @@ class Ui_Form(QtWidgets.QWidget):
 					coordy = num[2]
 
 			if int(coordx) >= x-1:
-			#	self.flagVerifyRow = True
 				self.tableWidget.setRowCount(x+1)
 
 			if int(coordy) >= y-1:
-			#	self.flagVerifyCol = True
 				self.tableWidget.setColumnCount(y+1)
 
-			#if self.flagVerifyCol != False or self.flagVerifyRow != False:
-			#	self.flagVerifyRow = False
-			#	self.flagVerifyCol = False
+
 			for i in range(len(self.parent.rowCol)-1):
 				if self.parent.rowCol[i] == str(z)+'%':
-					#print("entroF")
 					self.parent.rowCol.pop(i+1)
 					self.parent.rowCol.pop(i)
 					break
 			
 			self.parent.rowCol.append(str(z)+'%')
 			self.parent.rowCol.append('R='+str(self.tableWidget.rowCount())+' C='+str(self.tableWidget.columnCount()))
-		#print("CT:",self.parent.rowCol)
 
 	def items_clear(self):
 		print("clearTable")
@@ -599,8 +527,6 @@ class Ui_Form(QtWidgets.QWidget):
 			else:
 				nw = x[0].replace('[]','')
 				w = str(nw)
-				#print("w:",w)
-				#print(len(w))
 				if 'X=' in w or '%' in w:
 					pass
 				else:
@@ -645,12 +571,6 @@ class Ui_Form(QtWidgets.QWidget):
 		for item in self.tableWidget.selectedItems():
 			self.flagCancel = True
 			c = item.text()
-			#print("c:",c)
-			#if item.text():
-				#pass
-				#print("Con text-Cancel")
-			#else:
-			#	self.continuesCancel()
 
 		if self.flagCancel != True:
 			item = QtWidgets.QTableWidgetItem()
@@ -678,16 +598,12 @@ class Ui_Form(QtWidgets.QWidget):
 	############### MyList #####################
 	def saveMylist(self,saveText):
 		self.parent.mylist.append(saveText)
-		#print("saveList:",self.parent.mylist)
 
 	def deleteMylist(self,deleteIndex):
-		#print("Deletemylist")
 		self.parent.mylist.pop(deleteIndex)
-		#print(deleteIndex)
 		
 	def totalMylist(self):
 		self.Auxmylist = self.parent.mylist[:]
-		#print("selfAux:",self.Auxmylist)
 
 '''
 if __name__ == "__main__":

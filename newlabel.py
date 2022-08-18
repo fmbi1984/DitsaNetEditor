@@ -15,11 +15,6 @@ class Ui_NewLabel(QtWidgets.QDialog):
 		super(Ui_NewLabel, self).__init__()
 		self.parent = parent
 		self.currentTabL = currentTabL
-		#self.setupUi()
-
-	#def setupUi(self):
-		#NewLabel.setObjectName("NewLabel")
-		#NewLabel.resize(340, 228)
 
 		self.setObjectName("NewLabel")
 		self.setFixedSize(354, 200)
@@ -51,7 +46,7 @@ class Ui_NewLabel(QtWidgets.QDialog):
 		self.lineFont = QtWidgets.QLineEdit(self.widget)
 		self.lineFont.setEnabled(True)
 		self.lineFont.setObjectName("lineFont")
-		self.lineFont.setText("8")
+		self.lineFont.setText("10")
 		self.gridLayout.addWidget(self.lineFont, 3, 1, 1, 1)
 		self.cbFont = QtWidgets.QComboBox(self.widget)
 		self.cbFont.setEnabled(True)
@@ -103,7 +98,7 @@ class Ui_NewLabel(QtWidgets.QDialog):
 			self.lblLabel.setText(valueName[0])
 
 	def keyPressEventE(self,event):
-		if event.key() == QtCore.Qt.Key_Enter: # mac fn + enter
+		if event.key() == QtCore.Qt.Key_Return: # mac fn + enter
 			self.bttnOK()
 
 		if event.key() == QtCore.Qt.Key_Escape:
