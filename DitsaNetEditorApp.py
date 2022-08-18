@@ -12,14 +12,28 @@ sys.path.append("../sourcePath")
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+<<<<<<< HEAD:DitsaNetEditorApp.py
 from form import Ui_Form
 from form_empty import Ui_FormEmpty
 from Opath import ditsaNetIcon, pathImageNet, pathSettings 
+=======
+#from newlabel import Ui_NewLabel
+#from newcircuit import Ui_NewCircuit
+from form import Ui_Form
+from form_empty import Ui_FormEmpty
+>>>>>>> 50113c99f0994fbad6581e3413cb706469d921ed:DitsaNetEditorApp.py
 
 class Ui_Editor(object):
 	def __init__(self,MainWindow, parent=None):
 		object.__init__(parent)
 
+<<<<<<< HEAD:DitsaNetEditorApp.py
+=======
+		#self.setupUi()
+	#def setupUi(self):
+		#object.__init__(parent)
+		#self.lineTable = lineTable
+>>>>>>> 50113c99f0994fbad6581e3413cb706469d921ed:DitsaNetEditorApp.py
 		MainWindow.setObjectName("MainWindow")
 		MainWindow.setFixedSize(1530, 850) 	#MainWindow.resize(810, 807)
 		self.centralWidget = QtWidgets.QWidget(MainWindow)
@@ -65,6 +79,10 @@ class Ui_Editor(object):
 
 		self.rowCol = list()
 		self.tempCut = list()
+<<<<<<< HEAD:DitsaNetEditorApp.py
+=======
+
+>>>>>>> 50113c99f0994fbad6581e3413cb706469d921ed:DitsaNetEditorApp.py
 		self.newCut = list()
 		self.tmplist = list()
 		self.comp1 = list()
@@ -91,6 +109,10 @@ class Ui_Editor(object):
 		self.flagExit = False
 		self.flagWmin = False 	#Flag para ubuntu
 		
+<<<<<<< HEAD:DitsaNetEditorApp.py
+=======
+
+>>>>>>> 50113c99f0994fbad6581e3413cb706469d921ed:DitsaNetEditorApp.py
 		self.newtb.triggered.connect(self.newPage)
 		self.savetb.triggered.connect(self.saveLayout)
 		self.deletetb.triggered.connect(self.deletePage)
@@ -102,12 +124,23 @@ class Ui_Editor(object):
 		_translate = QtCore.QCoreApplication.translate
 
 		MainWindow.setWindowTitle(_translate("MainWindow", "Layout Editor"))
+<<<<<<< HEAD:DitsaNetEditorApp.py
 		MainWindow.setWindowIcon(QtGui.QIcon(ditsaNetIcon+'LayoutEditor.png'))
 
 		self.newtb = QtWidgets.QAction(QtGui.QIcon(pathImageNet+'nuevo.png'),'New',MainWindow) 
 		self.savetb = QtWidgets.QAction(QtGui.QIcon(pathImageNet+'guardar.png'),'Save',MainWindow)
 		self.deletetb = QtWidgets.QAction(QtGui.QIcon(pathImageNet+'borrar.png'),'Delete',MainWindow)
 		self.exittb = QtWidgets.QAction(QtGui.QIcon(pathImageNet+'salir.png'),'Exit',MainWindow)
+=======
+		MainWindow.setWindowIcon(QtGui.QIcon('/opt/Ditsa/DitsaNetEditor/LayoutEditor.png'))
+		#self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Tab 1"))
+		#self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Tab 2"))
+
+		self.newtb = QtWidgets.QAction(QtGui.QIcon('/opt/Ditsa/DitsaNetEditor/image/nuevo.png'),'New',MainWindow) #'/opt/Ditsa/DitsaNetEditor/image/nuevo.png')
+		self.savetb = QtWidgets.QAction(QtGui.QIcon('/opt/Ditsa/DitsaNetEditor/image/guardar.png'),'Save',MainWindow)
+		self.deletetb = QtWidgets.QAction(QtGui.QIcon('/opt/Ditsa/DitsaNetEditor/image/borrar.png'),'Delete',MainWindow)
+		self.exittb = QtWidgets.QAction(QtGui.QIcon('/opt/Ditsa/DitsaNetEditor/image/salir.png'),'Exit',MainWindow)
+>>>>>>> 50113c99f0994fbad6581e3413cb706469d921ed:DitsaNetEditorApp.py
 
 		self.toolB = MainWindow.addToolBar('ToolBar')
 		self.toolB.setMovable(False)
@@ -143,6 +176,10 @@ class Ui_Editor(object):
 		if (len(self.mylist) != 0 or len(self.mylabel) != 0) and self.flagSave != True: 
 			if self.flagExit != True:
 				if self.settingsList != self.mylist or self.settingsLabel != self.mylabel:
+<<<<<<< HEAD:DitsaNetEditorApp.py
+=======
+					#print("se han hecho cambios y no se ha guardado")
+>>>>>>> 50113c99f0994fbad6581e3413cb706469d921ed:DitsaNetEditorApp.py
 					msgExit = QtWidgets.QMessageBox()
 					returnExit = msgExit.warning(self.MainWindow,'Warning','Do you want to save changes?',QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No|QtWidgets.QMessageBox.Cancel)
 					if returnExit == msgExit.Yes:
@@ -158,8 +195,13 @@ class Ui_Editor(object):
 			MainWindow.close()
 
 	def principalForm(self):
+<<<<<<< HEAD:DitsaNetEditorApp.py
 		settings = QtCore.QSettings(pathSettings+'archivo.ini', QtCore.QSettings.NativeFormat)
 		if settings.value(pathSettings+'archivo.ini')!='':
+=======
+		settings = QtCore.QSettings('/home/ditsa/DitsaNet/Settings/archivo.ini', QtCore.QSettings.NativeFormat)
+		if settings.value('/home/ditsa/DitsaNet/Settings/archivo.ini')!='':
+>>>>>>> 50113c99f0994fbad6581e3413cb706469d921ed:DitsaNetEditorApp.py
 			self.settingsList = settings.value("mylist")
 			self.settingsLabel = settings.value("mylabel")
 			self.settingsRowCol = settings.value("rowcol")
@@ -224,7 +266,11 @@ class Ui_Editor(object):
 		if len(self.mylist) != None or len(self.mylabel) != None:
 			self.flagSave = True
 			print("Save")
+<<<<<<< HEAD:DitsaNetEditorApp.py
 			settings = QtCore.QSettings(pathSettings+'archivo.ini', QtCore.QSettings.NativeFormat)
+=======
+			settings = QtCore.QSettings('/home/ditsa/DitsaNet/Settings/archivo.ini', QtCore.QSettings.NativeFormat)
+>>>>>>> 50113c99f0994fbad6581e3413cb706469d921ed:DitsaNetEditorApp.py
 			settings.setValue("mylist",self.mylist)
 			settings.setValue("mylabel",self.mylabel)
 			settings.setValue("rowcol",self.rowCol)

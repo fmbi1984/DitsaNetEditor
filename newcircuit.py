@@ -290,7 +290,11 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 						numT = dp + str(numT) 
 					VNameF2 = str(x[0])+str(x[1])+str(tmp1)+str(numT)
 
+<<<<<<< HEAD
 					#print("FN:",VNameF2)
+=======
+					print("FN:",VNameF2)
+>>>>>>> 50113c99f0994fbad6581e3413cb706469d921ed
 					return VNameF2
 
 				if tmp.isalpha():
@@ -306,7 +310,11 @@ class Ui_NewCircuit(QtWidgets.QDialog):
 					dig2 = '0'
 					VNameF2 = str(x[0])+str(x[1])+str(tmp1)+str(digF)+str(dig2)
 
+<<<<<<< HEAD
 					#print("FN",VNameF2)
+=======
+					print("FN",VNameF2)
+>>>>>>> 50113c99f0994fbad6581e3413cb706469d921ed
 					return VNameF2
 
 				if tmp.isalnum():
