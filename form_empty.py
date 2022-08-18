@@ -62,10 +62,7 @@ class Ui_FormEmpty(QtWidgets.QWidget):
 	
 	def showEvent(self,event):
 		print("showempty")
-<<<<<<< HEAD
 		self.lineEdit.setFocus(True)
-=======
->>>>>>> 50113c99f0994fbad6581e3413cb706469d921ed
 
 	def closeEvent(self,event):
 		print("CloseEmpty")
